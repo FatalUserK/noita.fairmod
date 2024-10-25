@@ -5,18 +5,24 @@ ui.dim.vx, ui.dim.vy = GuiGetScreenDimensions(ui.gui)
 GuiDestroy(ui.gui) -- trust me
 
 local pages = {
-	"mods/noita.fairmod/files/content/instruction_booklet/pages/cover.png",
+	{"mods/noita.fairmod/files/content/instruction_booklet/pages/cover.png"},
 }
 for i = 1, 1000 do
 	local image =
 		string.format("mods/noita.fairmod/files/content/instruction_booklet/pages/instructionbooklet-%02d.png", i)
+	local dw_about_it_comma_im_working_on_this =
+		string.format("mods/noita.fairmod/files/content/instruction_booklet/pages/instructionbooklet-%02d.png", i)
+		
 	if ModImageDoesExist(image) then
-		pages[#pages + 1] = image
+		pages[#pages + 1] = {image}
+		if ModImageDoesExist(dw_about_it_comma_im_working_on_this) then
+			pages[#pages][2] = dw_about_it_comma_im_working_on_this
+		end
 	else
 		break
 	end
 end
-pages[#pages + 1] = "mods/noita.fairmod/files/content/instruction_booklet/pages/back.png"
+pages[#pages + 1] = {"mods/noita.fairmod/files/content/instruction_booklet/pages/back.png"}
 
 --- @class instruction_booklet_gui_book
 --- @field page_scale number scale for downscaling
@@ -51,13 +57,13 @@ function ui:image_crop(x, y)
 	GuiEndAutoBoxNinePiece(self.gui)
 	self:AnimateE()
 
-	local image_left = self.book.images[self.book.current_page_left]
+	local image_left = self.book.images[self.book.current_page_left][1]
 	if image_left then
 		self:AddOptionForNext(self.c.options.Layout_NoLayouting)
 		self:SetZ(-999999)
 		self:Image(x, y, image_left, 1, self.book.zoomed_scale, self.book.zoomed_scale)
 	end
-	local image_right = self.book.images[self.book.current_page_right]
+	local image_right = self.book.images[self.book.current_page_right][1]
 	if image_right then
 		self:AddOptionForNext(self.c.options.Layout_NoLayouting)
 		self:SetZ(-999999)
@@ -81,7 +87,7 @@ function ui:draw_page(x, y, scale, page)
 		return
 	end
 
-	self:Image(x, y, image, 1, scale * self.book.page_scale, self.book.page_scale)
+	self:Image(x, y, image[1], 1, scale * self.book.page_scale, self.book.page_scale)
 end
 
 --- Flip thingy
@@ -223,7 +229,7 @@ end
 --- Draws a book
 --- @private
 function ui:draw_book()
-	self.book.width, self.book.height = GuiGetImageDimensions(self.gui, self.book.images[1], self.book.page_scale)
+	self.book.width, self.book.height = GuiGetImageDimensions(self.gui, self.book.images[1][1], self.book.page_scale)
 	self.x, self.y = self:CalculateCenterInScreen(self.book.width * 2, self.book.height)
 	if self.book.flip_progress >= 1 then
 		self.book.flip_next = false
@@ -248,3 +254,4 @@ function ui:update()
 end
 
 return ui
+-- i am SO sorry lamia for probably butchering all your code here, but im trynna do smth funny and want it to be secret, if anyone happens to see this- shhhhhh, DM me if there are issues and ill resolve them quietly
