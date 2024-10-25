@@ -5,24 +5,24 @@ ui.dim.vx, ui.dim.vy = GuiGetScreenDimensions(ui.gui)
 GuiDestroy(ui.gui) -- trust me
 
 local pages = {
-	{"mods/noita.fairmod/files/content/instruction_booklet/pages/cover.png"},
+	{"mods/noita.fairmod/files/content/instruction_booklet/pages/cover.png", "mods/noita.fairmod/files/content/instruction_booklet/pages/blacklight/cover.png"},
 }
 for i = 1, 1000 do
 	local image =
 		string.format("mods/noita.fairmod/files/content/instruction_booklet/pages/instructionbooklet-%02d.png", i)
-	local dw_about_it_comma_im_working_on_this =
-		string.format("mods/noita.fairmod/files/content/instruction_booklet/pages/instructionbooklet-%02d.png", i)
+	local blacklight =
+		string.format("mods/noita.fairmod/files/content/instruction_booklet/pages/blacklight/instructionbooklet-%02d.png", i)
 		
 	if ModImageDoesExist(image) then
 		pages[#pages + 1] = {image}
-		if ModImageDoesExist(dw_about_it_comma_im_working_on_this) then
-			pages[#pages][2] = dw_about_it_comma_im_working_on_this
+		if ModImageDoesExist(blacklight) then
+			pages[#pages][2] = blacklight
 		end
 	else
 		break
 	end
 end
-pages[#pages + 1] = {"mods/noita.fairmod/files/content/instruction_booklet/pages/back.png"}
+pages[#pages + 1] = {"mods/noita.fairmod/files/content/instruction_booklet/pages/back.png", "mods/noita.fairmod/files/content/instruction_booklet/pages/blacklight/back.png"}
 
 --- @class instruction_booklet_gui_book
 --- @field page_scale number scale for downscaling
