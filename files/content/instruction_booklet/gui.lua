@@ -57,17 +57,17 @@ function ui:image_crop(x, y)
 	GuiEndAutoBoxNinePiece(self.gui)
 	self:AnimateE()
 
-	local image_left = self.book.images[self.book.current_page_left][1]
+	local image_left = self.book.images[self.book.current_page_left]
 	if image_left then
 		self:AddOptionForNext(self.c.options.Layout_NoLayouting)
 		self:SetZ(-999999)
-		self:Image(x, y, image_left, 1, self.book.zoomed_scale, self.book.zoomed_scale)
+		self:Image(x, y, image_left[1], 1, self.book.zoomed_scale, self.book.zoomed_scale)
 	end
-	local image_right = self.book.images[self.book.current_page_right][1]
+	local image_right = self.book.images[self.book.current_page_right]
 	if image_right then
 		self:AddOptionForNext(self.c.options.Layout_NoLayouting)
 		self:SetZ(-999999)
-		self:Image(x + self.book.zoomed_width, y, image_right, 1, self.book.zoomed_scale, self.book.zoomed_scale)
+		self:Image(x + self.book.zoomed_width, y, image_right[1], 1, self.book.zoomed_scale, self.book.zoomed_scale)
 	end
 	GuiEndScrollContainer(self.gui)
 end
@@ -192,7 +192,7 @@ function ui:draw_zoomed()
 	self:UpdateDimensions()
 
 	self.book.zoomed_width, self.book.zoomed_height =
-		GuiGetImageDimensions(self.gui, self.book.images[1], self.book.zoomed_scale)
+		GuiGetImageDimensions(self.gui, self.book.images[1][1], self.book.zoomed_scale)
 
 	local book_width = self.book.zoomed_width * 2
 
