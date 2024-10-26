@@ -60,14 +60,18 @@ function ui:image_crop(x, y)
 	local image_left = self.book.images[self.book.current_page_left]
 	if image_left then
 		self:AddOptionForNext(self.c.options.Layout_NoLayouting)
-		self:SetZ(-999999)
+		self:SetZ(-999998)
 		self:Image(x, y, image_left[1], 1, self.book.zoomed_scale, self.book.zoomed_scale)
+		self:SetZ(-999999)
+		self:Image(x, y, image_left[2], 1, self.book.zoomed_scale, self.book.zoomed_scale)
 	end
 	local image_right = self.book.images[self.book.current_page_right]
 	if image_right then
 		self:AddOptionForNext(self.c.options.Layout_NoLayouting)
-		self:SetZ(-999999)
+		self:SetZ(-999998)
 		self:Image(x + self.book.zoomed_width, y, image_right[1], 1, self.book.zoomed_scale, self.book.zoomed_scale)
+		self:SetZ(-999999)
+		self:Image(x + self.book.zoomed_width, y, image_right[2], 1, self.book.zoomed_scale, self.book.zoomed_scale)
 	end
 	GuiEndScrollContainer(self.gui)
 end
@@ -87,7 +91,9 @@ function ui:draw_page(x, y, scale, page)
 		return
 	end
 
+	self:SetZ(self.z + 1)
 	self:Image(x, y, image[1], 1, scale * self.book.page_scale, self.book.page_scale)
+	self:SetZ(self.z - 1)
 end
 
 --- Flip thingy
