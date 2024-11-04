@@ -13,5 +13,6 @@ It will be accepted as long as it makes the game a worse experience, and does no
 - Press the [Download](https://github.com/EvaisaDev/noita.fairmod/archive/refs/heads/main.zip) button
 - Extract the contents into your Noita `mods` folder.
 - Rename the folder from `noita.fairmod-main` to `noita.fairmod`.
+And then it should appear in the Mods menu!
 
 Alternatively, subscribe to the mod on the [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3357618827)
