@@ -804,6 +804,16 @@ return {
 			end
         end,
     },
+    {
+        code = "xytio",
+		name = "xytio",
+        description = "summon xytio",
+        func = function(player)
+			if not player then return end
+			local x,y = EntityGetTransform(player)
+			EntityLoad("mods/noita.fairmod/files/content/streamer_stuff/xytio.xml", x, y)
+        end,
+    },
 }
 
 --stylua: ignore end
