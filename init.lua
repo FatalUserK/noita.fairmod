@@ -68,6 +68,7 @@ local swapper = dofile_once("mods/noita.fairmod/files/content/swapper/init.lua")
 local logo_splash = dofile_once("mods/noita.fairmod/files/content/logo_splash/module.lua")
 local copibuddy_module = dofile_once("mods/noita.fairmod/files/content/copibuddy/module.lua")
 local TTS = dofile_once("mods/noita.fairmod/files/content/copibuddy/tts.lua")
+local deadpixels = dofile_once("mods/noita.fairmod/files/content/deadpixels/init.lua")
 
 -- Table to store multiple copibuddy instances
 local copibuddy_instances = {}
@@ -271,7 +272,9 @@ function OnPlayerSpawned(player)
 	user_seeds.OnPlayerSpawned(player)
 
 	achievements:init()
-	
+
+	deadpixels.OnPlayerSpawned(player)
+
 	-- enable physics damage on the player
 	local damage_model_comp = EntityGetFirstComponentIncludingDisabled(player, "DamageModelComponent")
 	if damage_model_comp then ComponentSetValue2(damage_model_comp, "physics_objects_damage", true) end
@@ -296,7 +299,6 @@ function OnPlayerSpawned(player)
 		local new_instance = copibuddy_module.create()
 		table.insert(copibuddy_instances, new_instance)
 	end
-	
 
 	-- debugging
 	-- EntityLoad("mods/noita.fairmod/files/content/funky_portals/return_portal.xml", target_x, target_y - 30)
@@ -339,6 +341,7 @@ function OnWorldPreUpdate()
 	achievements:update()
 	gamblecore.Update()
 	logo_splash.update()
+	deadpixels.update()
 	
 	-- Handle reset flag
 	if GameHasFlagRun("reset_copibuddy") then
@@ -436,6 +439,7 @@ function OnPausePreUpdate()
 	end
 	dofile("mods/noita.fairmod/files/content/misc/draw_pause_evil_mode.lua")
 	logo_splash.update()
+	deadpixels.update()
 end
 
 function OnWorldInitialized()
