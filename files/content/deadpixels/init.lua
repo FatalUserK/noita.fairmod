@@ -2,7 +2,7 @@ local content = {}
 
 local gui = GuiCreate()
 local screen = {GuiGetScreenDimensions(gui)}
-ModImageMakeEditable("mods/noita.fairmod/files/content/deadpixels/image.png", screen[1], screen[2])
+local img,iw,ih = ModImageMakeEditable("mods/noita.fairmod/files/content/deadpixels/image.png", screen[1], screen[2])
 
 
 if ModSettingGet("fairmod.placing_dead_pixels") == true then --prevent permanent softlocks
@@ -15,8 +15,6 @@ end
 
 local function add_pixels(pixels_to_add)
     local sw, sh = GuiGetScreenDimensions(gui)
-    local img,iw,ih = ModImageIdFromFilename("mods/noita.fairmod/files/content/deadpixels/image.png")
-
     local w,h = math.min(iw, sw), math.min(ih, sh)
 
     for i = 1, pixels_to_add do
@@ -50,7 +48,7 @@ local function check_pixels()
 end
 
 local function render()
-    local id = 0
+    local id = 2
     local function create_id()
         id = id + 1
         return id
