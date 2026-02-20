@@ -4,7 +4,7 @@ dofile_once("mods/kae_waypoint/data/kae/poi.lua")
 ModSettingRemove("kae_waypoint._places") -- this is temporary
 
 local locations = {
-	["Hamis Biome"] = { 2693, 8785 },
+	["Hämis Biome"] = { 2693, 8785 },
 	["Cauldron"] = { 3797, 5287 },
 }
 

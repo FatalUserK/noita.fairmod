@@ -814,7 +814,7 @@ local cheats = {
     },
     {
         code = "drug",
-		name = "Hamis Replacement Therapy",
+		name = "Hämis Replacement Therapy",
         description = ":D",
         func = function(player)
 			local x, y = EntityGetTransform(player)
