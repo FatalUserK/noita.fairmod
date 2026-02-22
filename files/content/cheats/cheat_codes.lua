@@ -936,6 +936,14 @@ local cheats = {
 			end
 		end
 	},
+	{
+		code = "ilovelarpa",
+		name = "I Love Larpa",
+		description = "Everyone does!",
+		func = function()
+			GameAddFlagRun("payphone_larpa")
+		end
+	},
 }
 
 local num_cheats = #cheats
