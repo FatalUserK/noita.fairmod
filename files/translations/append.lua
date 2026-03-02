@@ -6,6 +6,7 @@ local append_list = {
 	"mods/noita.fairmod/files/translations/content/chemical_horror.csv",
 	"mods/noita.fairmod/files/translations/content/bee_movie.csv",
 	"mods/noita.fairmod/files/translations/content/reformatted.csv",
+	"mods/noita.fairmod/files/translations/content/no_comma_more_shuffle.csv",
 }
 
 local translation = ModTextFileGetContent(game_translation_file)
