@@ -941,9 +941,74 @@ local cheats = {
 		name = "I Love Larpa",
 		description = "Everyone does!",
 		func = function()
-			GameAddFlagRun("payphone_larpa")
+			if GameHasFlagRun("payphone_larpa") then
+				GameRemoveFlagRun("payphone_larpa")
+			else
+				GameAddFlagRun("payphone_larpa")
+			end
 		end
 	},
+	{
+		code = "groundbreakingtechnology",
+		name = "Groundbreaking Technology",
+		description = "New leaps made every year!",
+		func = function(p, x, y)
+			EntityLoad("data/entities/projectiles/deck/crumbling_earth_effect.xml", x, y)
+		end
+	},
+	{
+		code = "neveragain",
+		name = "Never Again",
+		description = "Inside is best side!",
+		func = function(p, x, y)
+			--spawns a thick EDR box around the player
+		end
+	},
+	{
+		code = "",
+		name = "",
+		description = "",
+		func = function(p, x, y) --runs 10 random other cheats
+			for i = 1, 10 do
+				
+			end
+		end
+	},
+	{
+		code = "swapsies",
+		name = "Swapsies",
+		description = "Put yourself in someone else's shoes for once!",
+		func = function(p, x, y)
+			local targets = EntityGetWithTag("mortal")
+			SetRandomSeed(GameGetFrameNum() - x, y + #targets)
+			for i = 1, #targets do
+				local rnd = Random(1, #targets-1)
+				if rnd >= i then rnd = rnd + 1 end
+
+				local ax, ay = EntityGetTransform(targets[i])
+				local bx, by = EntityGetTransform(targets[rnd])
+				EntitySetTransform(targets[i], bx, by)
+				EntitySetTransform(targets[rnd], ax, ay)
+			end
+		end
+	},
+	{
+		code = "baldie",
+		name = "",
+		description = "",
+		func = function()
+			--dunk facecam in bottom right that says stuff sometimes, similar to copibuddy but without actual power
+		end
+	},
+	--gamemode3 spectator
+	--easymode increment ng+
+	--hardmode decrement ng+
+	--badinternet glitches movement
+	--lightmode
+	--cool freezes everything
+	--uncool sets everything on fire
+	--refill resets mana, flight and breath meters
+	--endofeverything summons end of everything
 }
 
 local num_cheats = #cheats
