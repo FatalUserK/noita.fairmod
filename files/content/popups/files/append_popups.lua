@@ -107,6 +107,8 @@ local Popups = {
 		"this joke is kinda overrated ngl",
 		"[IMG]mods/noita.fairmod/files/content/popups/imgur.png",
 		"[IMG]mods/noita.fairmod/files/content/popups/two_types_of_spells.png",
+		"The boys are back in town newline |*(to*| |*kill*| |*you)*|",
+		"it looks like you're trying to: newline *STEAL* *CLASSIFIED* *FILES* newline ||*let*|| ||*me*|| ||*help*||",
 	},
 
 	--in functions, the "self" will be the popup itself and info relating to stuff in the prefab,
