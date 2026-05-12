@@ -900,7 +900,7 @@ local cheats = {
 	{
 		code = "gottacatchthemall",
 		name = "I Choose Everyone.",
-		description = "Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!",
+		description = "Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!",
 		func = function(player)
 			local x, y = EntityGetTransform(player)
 
@@ -933,14 +933,14 @@ local cheats = {
 	},
 	{
 		code = "fixperformance",
-		name = "Fix Performance",
-		description = "removed of all those pesky entities!",
 		func = function(p, x, y)
+			SetRandomSeed(y, x-GameGetFrameNum())
+			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!")
 			local tags = {
 				"player_unit",
 				"world_state",
 			}
-			for _,entity_id in ipairs(EntityGetInRadius(x, y, 1000000)) do
+			for _,entity_id in ipairs(EntityGetInRadius(x, y, math.huge)) do
 				local kill = true
 				for _,tag in ipairs(tags) do
 					if EntityHasTag(EntityGetRootEntity(entity_id), tag) then kill = false break end
