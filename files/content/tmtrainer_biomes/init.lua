@@ -652,7 +652,8 @@ init.OnMagicNumbersAndWorldSeedInitialized = function()
 	local biomemap,w,h = ModImageMakeEditable("data/biome_impl/biome_map.png", 0, 0)
 	for y = 0, h-1 do
 		for x = 0, w-1 do
-			ModImageSetPixel(biomemap, x, y, Random(1, #biome_colours))
+			local hex = Random(1, #biome_colours)
+			ModImageSetPixel(biomemap, x, y, hex)
 		end
 	end
 
