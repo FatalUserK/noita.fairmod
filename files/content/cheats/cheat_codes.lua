@@ -606,7 +606,7 @@ local cheats = {
 		end,
 	},
 	{
-		code = "whereami",
+		code = "zz",
 		name = "Where am I?",
 		description = "Must've sleep walked..",
 		func = function(player)

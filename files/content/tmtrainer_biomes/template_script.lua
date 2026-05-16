@@ -1,342 +1,248 @@
 RegisteredFunctions = {}
 local Old_RegSpawnFunc = RegisterSpawnFunction
 RegisterSpawnFunction = function(x, y)
-    if RegisteredFunctions[x] then return end
-	RegisteredFunctions[x] = y
-	Old_RegSpawnFunc(x, y)
+	if RegisteredFunctions[x] then
+		RegisteredFunctions[x][2] = RegisteredFunctions[x][2] + 1
+		return
+	end
+	RegisteredFunctions[x] = {y, 1}
+	--Old_RegSpawnFunc(x, y)
 end
 --RSF DOCUMENTED
 
-RegisterSpawnFunction(4290497536, "random")
-RegisterSpawnFunction(4289221716, "random")
-RegisterSpawnFunction(4294886288, "random")
-RegisterSpawnFunction(4290367524, "random")
-RegisterSpawnFunction(4294924826, "random")
-RegisterSpawnFunction(4283450880, "random")
-RegisterSpawnFunction(4284775805, "random")
-RegisterSpawnFunction(4283576672, "random")
-RegisterSpawnFunction(4280451071, "random")
-RegisterSpawnFunction(4290957492, "random")
-RegisterSpawnFunction(4284425133, "random")
-RegisterSpawnFunction(4288558079, "random")
-RegisterSpawnFunction(4288132443, "random")
-RegisterSpawnFunction(4285371212, "random")
-RegisterSpawnFunction(4291710696, "random")
-RegisterSpawnFunction(4280973567, "random")
-RegisterSpawnFunction(4291416100, "random")
-RegisterSpawnFunction(4290991872, "random")
-RegisterSpawnFunction(4281570124, "random")
-RegisterSpawnFunction(4282597440, "random")
-RegisterSpawnFunction(4289898240, "random")
-RegisterSpawnFunction(4278443693, "random")
-RegisterSpawnFunction(4292201826, "random")
-RegisterSpawnFunction(4281238146, "random")
-RegisterSpawnFunction(4288532672, "random")
-RegisterSpawnFunction(4289885696, "random")
-RegisterSpawnFunction(4287112371, "random")
-RegisterSpawnFunction(4292464676, "random")
-RegisterSpawnFunction(4294948976, "random")
-RegisterSpawnFunction(4278213885, "random")
-RegisterSpawnFunction(4285083284, "random")
-RegisterSpawnFunction(4284253520, "random")
-RegisterSpawnFunction(4280380415, "random")
-RegisterSpawnFunction(4286611456, "random")
-RegisterSpawnFunction(4291480064, "random")
-RegisterSpawnFunction(4291041435, "random")
-RegisterSpawnFunction(4284980224, "random")
-RegisterSpawnFunction(4286136466, "random")
-RegisterSpawnFunction(4286599168, "random")
-RegisterSpawnFunction(4293513252, "random")
-RegisterSpawnFunction(4288904290, "random")
-RegisterSpawnFunction(4290675270, "random")
-RegisterSpawnFunction(4281381872, "random")
-RegisterSpawnFunction(4281570143, "random")
-RegisterSpawnFunction(4292725484, "random")
-RegisterSpawnFunction(4287049390, "random")
-RegisterSpawnFunction(4283043965, "random")
-RegisterSpawnFunction(4286931669, "random")
-RegisterSpawnFunction(4284249051, "random")
-RegisterSpawnFunction(4291041376, "random")
-RegisterSpawnFunction(4294912372, "random")
-RegisterSpawnFunction(4284249050, "random")
-RegisterSpawnFunction(4288532688, "random")
-RegisterSpawnFunction(4285923497, "random")
-RegisterSpawnFunction(4289746992, "random")
-RegisterSpawnFunction(4290670669, "random")
-RegisterSpawnFunction(4294561828, "random")
-RegisterSpawnFunction(4285173113, "random")
-RegisterSpawnFunction(4291333547, "random")
-RegisterSpawnFunction(4283215019, "random")
-RegisterSpawnFunction(4290343680, "random")
-RegisterSpawnFunction(4287918788, "random")
-RegisterSpawnFunction(4289473140, "random")
-RegisterSpawnFunction(4283452260, "random")
-RegisterSpawnFunction(4292214655, "random")
-RegisterSpawnFunction(4285585311, "random")
-RegisterSpawnFunction(4294917375, "random")
-RegisterSpawnFunction(4290759334, "random")
-RegisterSpawnFunction(4291041387, "random")
-RegisterSpawnFunction(4290805810, "random")
-RegisterSpawnFunction(4291041386, "random")
-RegisterSpawnFunction(4294909695, "random")
-RegisterSpawnFunction(4291268384, "random")
-RegisterSpawnFunction(4294618043, "random")
-RegisterSpawnFunction(4284904960, "random")
-RegisterSpawnFunction(4294618042, "random")
-RegisterSpawnFunction(4292608096, "random")
-RegisterSpawnFunction(4291874996, "random")
-RegisterSpawnFunction(4287312895, "random")
-RegisterSpawnFunction(4294962897, "random")
-RegisterSpawnFunction(4289934058, "random")
-RegisterSpawnFunction(4286862420, "random")
-RegisterSpawnFunction(4288129792, "random")
-RegisterSpawnFunction(4294962899, "random")
-RegisterSpawnFunction(4283497210, "random")
-RegisterSpawnFunction(4294962898, "random")
-RegisterSpawnFunction(4281238116, "random")
-RegisterSpawnFunction(4294962901, "random")
-RegisterSpawnFunction(4278224220, "random")
-RegisterSpawnFunction(4282478669, "random")
-RegisterSpawnFunction(4294962900, "random")
-RegisterSpawnFunction(4291059579, "random")
-RegisterSpawnFunction(4284907018, "random")
-RegisterSpawnFunction(4286080096, "random")
-RegisterSpawnFunction(4290717227, "random")
-RegisterSpawnFunction(4284618697, "random")
-RegisterSpawnFunction(4283826060, "random")
-RegisterSpawnFunction(4291348480, "random")
-RegisterSpawnFunction(4293995189, "random")
-RegisterSpawnFunction(4286066784, "random")
-RegisterSpawnFunction(4291041403, "random")
-RegisterSpawnFunction(4290527936, "random")
-RegisterSpawnFunction(4286062688, "random")
-RegisterSpawnFunction(4278255530, "random")
-RegisterSpawnFunction(4294962906, "random")
-RegisterSpawnFunction(4286720255, "random")
-RegisterSpawnFunction(4288423120, "random")
-RegisterSpawnFunction(4294962909, "random")
-RegisterSpawnFunction(4291041404, "random")
-RegisterSpawnFunction(4294944345, "random")
-RegisterSpawnFunction(4288621056, "random")
-RegisterSpawnFunction(4294962908, "random")
-RegisterSpawnFunction(4294962911, "random")
-RegisterSpawnFunction(4289177351, "random")
-RegisterSpawnFunction(4282449870, "random")
-RegisterSpawnFunction(4294962910, "random")
-RegisterSpawnFunction(4285792167, "random")
-RegisterSpawnFunction(4294945501, "random")
-RegisterSpawnFunction(4294955425, "random")
-RegisterSpawnFunction(4294297924, "random")
-RegisterSpawnFunction(4285744607, "random")
-RegisterSpawnFunction(4281892177, "random")
-RegisterSpawnFunction(4289761302, "random")
-RegisterSpawnFunction(4284339092, "random")
-RegisterSpawnFunction(4278234163, "random")
-RegisterSpawnFunction(4281831108, "random")
-RegisterSpawnFunction(4294938914, "random")
-RegisterSpawnFunction(4279271981, "random")
-RegisterSpawnFunction(4290314209, "random")
-RegisterSpawnFunction(4281454768, "random")
-RegisterSpawnFunction(4288706660, "random")
-RegisterSpawnFunction(4284565072, "random")
-RegisterSpawnFunction(4281753976, "random")
-RegisterSpawnFunction(4284573141, "random")
-RegisterSpawnFunction(4289348351, "random")
-RegisterSpawnFunction(4294945450, "random")
-RegisterSpawnFunction(4281454772, "random")
-RegisterSpawnFunction(4284121645, "random")
-RegisterSpawnFunction(4290727046, "random")
-RegisterSpawnFunction(4286273963, "random")
-RegisterSpawnFunction(4286106178, "random")
-RegisterSpawnFunction(4286081279, "random")
-RegisterSpawnFunction(4284565080, "random")
-RegisterSpawnFunction(4289551540, "random")
-RegisterSpawnFunction(4290675390, "random")
-RegisterSpawnFunction(4281238086, "random")
-RegisterSpawnFunction(4287243476, "random")
-RegisterSpawnFunction(4286721627, "random")
-RegisterSpawnFunction(4282671260, "random")
-RegisterSpawnFunction(4282951006, "random")
-RegisterSpawnFunction(4290675330, "random")
-RegisterSpawnFunction(4294927920, "random")
-RegisterSpawnFunction(4282110875, "random")
-RegisterSpawnFunction(4282664092, "random")
-RegisterSpawnFunction(4283625728, "random")
-RegisterSpawnFunction(4282518077, "random")
-RegisterSpawnFunction(4283652488, "random")
-RegisterSpawnFunction(4281381808, "random")
-RegisterSpawnFunction(4282518079, "random")
-RegisterSpawnFunction(4291297306, "random")
-RegisterSpawnFunction(4287651532, "random")
-RegisterSpawnFunction(4287651531, "random")
-RegisterSpawnFunction(4294948153, "random")
-RegisterSpawnFunction(4281968480, "random")
-RegisterSpawnFunction(4292117599, "random")
-RegisterSpawnFunction(4282814919, "random")
-RegisterSpawnFunction(4278229178, "random")
-RegisterSpawnFunction(4289855385, "random")
-RegisterSpawnFunction(4283196384, "random")
-RegisterSpawnFunction(4291041312, "random")
-RegisterSpawnFunction(4285585313, "random")
-RegisterSpawnFunction(4294962896, "random")
-RegisterSpawnFunction(4285585310, "random")
-RegisterSpawnFunction(4280068095, "random")
-RegisterSpawnFunction(4284565062, "random")
-RegisterSpawnFunction(4281151148, "random")
-RegisterSpawnFunction(4278341887, "random")
-RegisterSpawnFunction(4278276351, "random")
-RegisterSpawnFunction(4278210815, "random")
-RegisterSpawnFunction(4289355988, "random")
-RegisterSpawnFunction(4278234222, "random")
-RegisterSpawnFunction(4294922495, "random")
-RegisterSpawnFunction(4294925151, "random")
-RegisterSpawnFunction(4290497538, "random")
-RegisterSpawnFunction(4290497537, "random")
-RegisterSpawnFunction(4283731831, "random")
-RegisterSpawnFunction(4289396480, "random")
-RegisterSpawnFunction(4285568533, "random")
-RegisterSpawnFunction(4294945280, "random")
-RegisterSpawnFunction(4294962902, "random")
-RegisterSpawnFunction(4281956224, "random")
-RegisterSpawnFunction(4283196385, "random")
-RegisterSpawnFunction(4288961279, "random")
-RegisterSpawnFunction(4292043733, "random")
-RegisterSpawnFunction(4294346932, "random")
-RegisterSpawnFunction(4289524043, "random")
-RegisterSpawnFunction(4291297535, "random")
-RegisterSpawnFunction(4294057456, "random")
-RegisterSpawnFunction(4278450910, "random")
-RegisterSpawnFunction(4292796077, "random")
-RegisterSpawnFunction(4291402239, "random")
-RegisterSpawnFunction(4278248342, "random")
-RegisterSpawnFunction(4294953038, "random")
-RegisterSpawnFunction(4284666717, "random")
-RegisterSpawnFunction(4294121753, "random")
-RegisterSpawnFunction(4286775130, "random")
-RegisterSpawnFunction(4286074322, "random")
-RegisterSpawnFunction(4294924800, "random")
-RegisterSpawnFunction(4287901744, "random")
-RegisterSpawnFunction(4290851839, "random")
-RegisterSpawnFunction(4286644058, "random")
-RegisterSpawnFunction(4290849023, "random")
-RegisterSpawnFunction(4289486045, "random")
-RegisterSpawnFunction(4285585312, "random")
-RegisterSpawnFunction(4289084329, "random")
-RegisterSpawnFunction(4281696459, "random")
-RegisterSpawnFunction(4289761328, "random")
-RegisterSpawnFunction(4287507128, "random")
-RegisterSpawnFunction(4284565040, "random")
-RegisterSpawnFunction(4294913280, "random")
-RegisterSpawnFunction(4287875584, "random")
-RegisterSpawnFunction(4281469157, "random")
-RegisterSpawnFunction(4294924827, "random")
-RegisterSpawnFunction(4294909568, "random")
-RegisterSpawnFunction(4278234212, "random")
-RegisterSpawnFunction(4287063363, "random")
-RegisterSpawnFunction(4290675360, "random")
-RegisterSpawnFunction(4283805580, "random")
-RegisterSpawnFunction(4294962907, "random")
-RegisterSpawnFunction(4281238176, "random")
-RegisterSpawnFunction(4284565045, "random")
-RegisterSpawnFunction(4287861714, "random")
-RegisterSpawnFunction(4292174967, "random")
-RegisterSpawnFunction(4284404942, "random")
-RegisterSpawnFunction(4290337465, "random")
-RegisterSpawnFunction(4290781941, "random")
-RegisterSpawnFunction(4287710911, "random")
-RegisterSpawnFunction(4292107951, "random")
-RegisterSpawnFunction(4280531395, "random")
-RegisterSpawnFunction(4292444031, "random")
-RegisterSpawnFunction(4290851267, "random")
-RegisterSpawnFunction(4285278357, "random")
-RegisterSpawnFunction(4281925632, "random")
-RegisterSpawnFunction(4294924811, "random")
-RegisterSpawnFunction(4285695428, "random")
-RegisterSpawnFunction(4288532656, "random")
-RegisterSpawnFunction(4282048804, "random")
-RegisterSpawnFunction(4294924810, "random")
-RegisterSpawnFunction(4288928000, "random")
-RegisterSpawnFunction(4282384384, "random")
-RegisterSpawnFunction(4284565048, "random")
-RegisterSpawnFunction(4294924813, "random")
-RegisterSpawnFunction(4289581236, "random")
-RegisterSpawnFunction(4286353632, "random")
-RegisterSpawnFunction(4278255520, "random")
-RegisterSpawnFunction(4294924812, "random")
-RegisterSpawnFunction(4283463880, "random")
-RegisterSpawnFunction(4289875421, "random")
-RegisterSpawnFunction(4289989494, "random")
-RegisterSpawnFunction(4294924815, "random")
-RegisterSpawnFunction(4281389390, "random")
-RegisterSpawnFunction(4281631431, "random")
-RegisterSpawnFunction(4290786099, "random")
-RegisterSpawnFunction(4283935848, "random")
-RegisterSpawnFunction(4290027530, "random")
-RegisterSpawnFunction(4287485022, "random")
-RegisterSpawnFunction(4290432424, "random")
-RegisterSpawnFunction(4294252259, "random")
-RegisterSpawnFunction(4281622983, "random")
-RegisterSpawnFunction(4283805515, "random")
-RegisterSpawnFunction(4278236668, "random")
-RegisterSpawnFunction(4289986560, "random")
-RegisterSpawnFunction(4288059000, "random")
-RegisterSpawnFunction(4278245762, "random")
-RegisterSpawnFunction(4284565054, "random")
-RegisterSpawnFunction(4288051350, "random")
-RegisterSpawnFunction(4290675300, "random")
-RegisterSpawnFunction(4288051320, "random")
-RegisterSpawnFunction(4289318948, "random")
-RegisterSpawnFunction(4281766359, "random")
-RegisterSpawnFunction(4289736792, "random")
-RegisterSpawnFunction(4280506901, "random")
-RegisterSpawnFunction(4284573186, "random")
-RegisterSpawnFunction(4278190335, "random")
-RegisterSpawnFunction(4278866175, "random")
-RegisterSpawnFunction(4284523732, "random")
-RegisterSpawnFunction(4289087949, "random")
-RegisterSpawnFunction(4287832096, "random")
-RegisterSpawnFunction(4291418457, "random")
-RegisterSpawnFunction(4292174474, "random")
-RegisterSpawnFunction(4290944553, "random")
-RegisterSpawnFunction(4284783485, "random")
-RegisterSpawnFunction(4281146970, "random")
-RegisterSpawnFunction(4294954282, "random")
-RegisterSpawnFunction(4278443695, "random")
-RegisterSpawnFunction(4286604070, "random")
-RegisterSpawnFunction(4282384512, "random")
-RegisterSpawnFunction(4282823720, "random")
-RegisterSpawnFunction(4283307870, "random")
-RegisterSpawnFunction(4278297082, "random")
+local biomeseed = {BIOMESEED1, BIOMESEED2}
+local chest_level = CHESTLEVEL
 
-function random(x, y, w, h)
-    --print(x .. ", " .. y)
+
+
+local function spawn_camerabound(t,x,y)
+	local target = RandomFromTableConditional(t, {
+		x=x, y=y,
+		biomeseed=biomeseed,
+		chest_level=chest_level,
+		biome_name=BIOMENAME
+	})
 end
 
+local function spawn_load(t,x,y)
+
+end
+
+g_lamp = {}
+g_unique_enemy = {}
+g_small_enemies = {}
+g_big_enemies = {}
+g_props = {}
+g_props2 = {}
+g_props3 = {}
+g_pixel_scene_01 = {}
+g_pixel_scene_02 = {}
+g_unique_enemy = {}
+g_unique_enemy2 = {}
+g_unique_enemy3 = {}
+g_ghostlamp = {}
+g_candles = {}
+g_items = {}
+
+
+dofile_once("data/scripts/director_helpers.lua")
+dofile_once("data/scripts/director_helpers_design.lua")
+dofile_once("data/scripts/biome_scripts.lua")
+dofile_once("data/scripts/biome_modifiers.lua")
+dofile( "data/scripts/items/generate_shop_item.lua" )
+
+dofile_once("FILE1")
+dofile_once("FILE2")
+dofile_once("FILE3")
+dofile_once("FILE4")
+dofile_once("FILE5")
+
+--function init() end
+
+SetRandomSeed(biomeseed[1], biomeseed[2])
+CHEST_LEVEL = chest_level
+
+--dofile_once("mods/noita.fairmod/files/content/tmtrainer_biomes/register_spawn_funcs.lua")
+
+
+function random(x, y, w, h)
+	print(x .. ", " .. y)
+	--EntityLoad()
+end
+
+function spawn_small_enemies(x, y, w, h)
+	--spawn(g_small_enemies,x,y)
+end
+
+function spawn_big_enemies(x, y, w, h)
+
+end
+
+function spawn_items(x, y, w, h)
+
+end
+
+function spawn_props(x, y, w, h)
+
+end
+
+function spawn_props2(x, y, w, h)
+
+end
+
+function spawn_props3(x, y, w, h)
+
+end
+
+function spawn_lamp(x, y, w, h)
+
+end
+
+function load_pixel_scene(x, y, w, h)
+
+end
+
+function load_pixel_scene2(x, y, w, h)
+
+end
+
+function spawn_unique_enemy(x, y, w, h)
+
+end
+
+function spawn_unique_enemy2(x, y, w, h)
+
+end
+
+function spawn_unique_enemy3(x, y, w, h)
+
+end
+
+function spawn_ghostlamp(x, y, w, h)
+
+end
+
+function spawn_candles(x, y, w, h)
+
+end
+
+function spawn_potion_altar(x, y, w, h)
+
+end
+
+function spawn_potions(x, y, w, h)
+
+end
+
+function spawn_apparition(x, y, w, h)
+
+end
+
+function spawn_heart(x, y, w, h)
+
+end
+
+function spawn_wands(x, y, w, h)
+
+end
+
+function spawn_portal(x, y, w, h)
+
+end
+
+function spawn_end_portal(x, y, w, h)
+
+end
+
+function spawn_orb(x, y, w, h)
+
+end
+
+function spawn_perk(x, y, w, h)
+
+end
+
+function spawn_all_perks(x, y, w, h)
+
+end
+
+function spawn_wand_trap(x, y, w, h)
+
+end
+
+function spawn_wand_trap_ignite(x, y, w, h)
+
+end
+
+function spawn_wand_trap_electricity_source(x, y, w, h)
+
+end
+
+function spawn_wand_trap_electricity(x, y, w, h)
+
+end
+
+function spawn_moon(x, y, w, h)
+
+end
+
+function spawn_collapse(x, y, w, h)
+
+end
+
+
+
 local funcs = {
-    "spawn_lamp",
-    "spawn_small_enemies",
-    "spawn_big_enemies",
-    "spawn_items",
-    "spawn_apparition",
-    "spawn_props",
-    "spawn_heart",
-    "load_pixel_scene2",
-    "spawn_potion_altar",
-    "load_pixel_scene",
-    --"",
-    --"",
-    --"",
-    --"",
-    --"",
-    --"",
-    --"",
-    --"",
-    --"",
-    --"",
+	"spawn_small_enemies",
+	"spawn_big_enemies",
+	"spawn_items",--
+	"spawn_props",
+	"spawn_props2",
+	"spawn_props3",
+	"spawn_lamp",
+	"load_pixel_scene",
+	"load_pixel_scene2",
+	"spawn_unique_enemy",
+	"spawn_unique_enemy2",
+	"spawn_unique_enemy3",
+	"spawn_ghostlamp",
+	"spawn_candles",
+	"spawn_wands",
+	"spawn_potion_altar",--
+	"spawn_potions",--
+	"spawn_apparition",--
+	"spawn_heart",--
+	"spawn_portal",--
+	"spawn_end_portal",--
+	"spawn_orb",--
+	"spawn_perk",--
+	"spawn_all_perks",--
+	"spawn_wand_trap",--
+	"spawn_wand_trap_ignite",--
+	"spawn_wand_trap_electricity_source",--
+	"spawn_wand_trap_electricity",--
+	"spawn_moon",--
+	"spawn_collapse",--
 }
 
+local lamp_lists = {
+
+}
+
+local global_lists = {
+	"g_small_enemies",
+	"g_big_enemies",
+	"g_lamp",
+	"g_props",
+	"g_unique_enemy",
+}
+
+
 for index, value in ipairs(funcs) do
-    _G[value] = random
+	if _G[value] == nil then
+		print("Setting function " .. value .. " to empty")
+		_G[value] = random
+	end
 end
 
 print("done.")

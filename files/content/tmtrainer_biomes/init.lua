@@ -228,6 +228,19 @@ local backgrounds = {
 }
 
 local scripts = {
+	--"data/scripts/biomes/orbrooms/orbroom_02.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_06.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_04.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_09.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_07.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_11.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_08.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_10.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_00.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_03.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_01.lua",
+	--"data/scripts/biomes/orbrooms/orbroom_05.lua",
+
 	"mods/noita.fairmod/files/content/milk_biome/scripts/milk_biome.lua",
 	"mods/noita.fairmod/files/content/hamis_biome/biome/hamis_biome.lua",
 	"mods/noita.fairmod/files/content/backrooms/backrooms.lua",
@@ -252,7 +265,6 @@ local scripts = {
 	"data/scripts/biomes/secret_entrance.lua",
 	"data/scripts/biomes/snowcastle_cavern.lua",
 	"data/scripts/biomes/temple_altar_right_snowcastle_empty.lua",
-	"data/scripts/biomes/orbrooms/orbroom_02.lua",
 	"data/scripts/biomes/mountain/mountain_right_stub.lua",
 	"data/scripts/biomes/rainforest_dark.lua",
 	"data/scripts/biomes/smokecave_left.lua",
@@ -271,7 +283,6 @@ local scripts = {
 	"data/scripts/biomes/niilo_testroom_c.lua",
 	"data/scripts/biomes/liquidcave.lua",
 	"data/scripts/biomes/pyramid_top.lua",
-	"data/scripts/biomes/orbrooms/orbroom_06.lua",
 	"data/scripts/biomes/sandcave.lua",
 	"data/scripts/biomes/coalmine.lua",
 	"data/scripts/biomes/mountain/mountain_floating_island.lua",
@@ -280,11 +291,9 @@ local scripts = {
 	"data/scripts/biomes/mystery_teleport.lua",
 	"data/scripts/biomes/vault_frozen.lua",
 	"data/scripts/biomes/temple_wall.lua",
-	"data/scripts/biomes/orbrooms/orbroom_04.lua",
 	"data/scripts/biomes/shop_room.lua",
 	"data/scripts/biomes/tower_end.lua",
 	"data/scripts/biomes/snowcastle.lua",
-	"data/scripts/biomes/orbrooms/orbroom_09.lua",
 	"data/scripts/biomes/lavalake_racing.lua",
 	"data/scripts/biomes/friend_4.lua",
 	"data/scripts/biomes/gun_room.lua",
@@ -306,7 +315,6 @@ local scripts = {
 	"data/scripts/biomes/vault.lua",
 	"data/scripts/biomes/hills.lua",
 	"data/scripts/biomes/alchemist_secret.lua",
-	"data/scripts/biomes/orbrooms/orbroom_07.lua",
 	"data/scripts/biomes/temple_wall_ending.lua",
 	"data/scripts/biomes/mountain/mountain_right_2.lua",
 	"data/scripts/biomes/pyramid_right.lua",
@@ -316,8 +324,6 @@ local scripts = {
 	"data/scripts/biomes/sandroom.lua",
 	"data/scripts/biomes/meat.lua",
 	"data/scripts/biomes/dragoncave.lua",
-	"data/scripts/biomes/orbrooms/orbroom_11.lua",
-	"data/scripts/biomes/orbrooms/orbroom_08.lua",
 	"data/scripts/biomes/lake_deep.lua",
 	"data/scripts/biomes/lavalake_pit.lua",
 	"data/scripts/biomes/mountain/mountain_left_2.lua",
@@ -350,22 +356,17 @@ local scripts = {
 	"data/scripts/biomes/clouds.lua",
 	"data/scripts/biomes/boss_limbs_arena.lua",
 	"data/scripts/biomes/robobase.lua",
-	"data/scripts/biomes/orbrooms/orbroom_10.lua",
 	"data/scripts/biomes/friend_5.lua",
 	"data/scripts/biomes/song_room.lua",
 	"data/scripts/biomes/watercave.lua",
-	"data/scripts/biomes/orbrooms/orbroom_00.lua",
 	"data/scripts/biomes/essenceroom.lua",
-	"data/scripts/biomes/orbrooms/orbroom_03.lua",
 	"data/scripts/biomes/smokecave_middle.lua",
 	"data/scripts/biomes/greed_room.lua",
 	"data/scripts/biomes/temple_altar.lua",
 	"data/scripts/biomes/laboratory.lua",
 	"data/scripts/biomes/rock_room.lua",
 	"data/scripts/biomes/secret_altar.lua",
-	"data/scripts/biomes/orbrooms/orbroom_01.lua",
 	"data/scripts/biomes/end_wall.lua",
-	"data/scripts/biomes/orbrooms/orbroom_05.lua",
 	"data/scripts/biomes/niilo_testroom_d.lua",
 	"data/scripts/biomes/fungicave.lua",
 	"data/scripts/biomes/temple_altar_right_snowcave.lua",
@@ -380,19 +381,24 @@ local scripts = {
 }
 
 local tilesets = {
-	"mods/noita.fairmod/files/content/hamis_biome/biome/wang.png",
-	"mods/noita.fairmod/files/content/backrooms/wang/rooms_test.png",
-	"mods/noita.fairmod/files/content/milk_biome/wang_tiles/milk_biome.png",
+	--no worky
+	--"data/biome_impl/static_tile/temples-assets/darkness_fg.png",
+	--"data/biome_impl/static_tile/temples-assets/barren_fg.png",
+	--"data/biome_impl/static_tile/temples-assets/watchtower_fg.png",
+	--"data/biome_impl/static_tile/temples-assets/boss_fg.png",
+	--"data/biome_impl/static_tile/temples-assets/potion_mimics_fg.png",
 
+
+	--"mods/noita.fairmod/files/content/backrooms/wang/rooms_test.png",
+	--"mods/noita.fairmod/files/content/milk_biome/wang_tiles/milk_biome.png",
+
+
+	"mods/noita.fairmod/files/content/hamis_biome/biome/wang.png",
 	"data/wang_tiles/coalmine_alt.png",
 	"data/wang_tiles/the_sky.png",
 	"data/wang_tiles/clouds.png",
 	"data/wang_tiles/water.png",
-	"data/biome_impl/static_tile/temples-assets/darkness_fg.png",
 	"data/wang_tiles/town_under.png",
-	"data/biome_impl/static_tile/temples-assets/barren_fg.png",
-	"data/biome_impl/static_tile/temples-assets/watchtower_fg.png",
-	"data/biome_impl/static_tile/temples-assets/boss_fg.png",
 	"data/wang_tiles/wizardcave.png",
 	"data/wang_tiles/robobase.png",
 	"data/wang_tiles/liquidcave.png",
@@ -402,7 +408,6 @@ local tilesets = {
 	"data/wang_tiles/sandcave.png",
 	"data/wang_tiles/snowchasm.png",
 	"data/wang_tiles/fungicave.png",
-	"data/biome_impl/static_tile/temples-assets/potion_mimics_fg.png",
 	"data/wang_tiles/wand.png",
 	"data/wang_tiles/rainforest.png",
 	"data/wang_tiles/vault.png",
@@ -417,50 +422,31 @@ local tilesets = {
 	"data/wang_tiles/fungiforest.png",
 }
 
-local music_options = {
-	"ancient_tracks",
-	"oneshot",
-	"potion_mimics",
-	"robobase",
-	"oneshot",
-	"temple",
-	"mountain",
-	"menu",
-	"intro",
-	"lavalake",
-	"credits",
-	"barren",
-	"miniboss",
-	"menu",
-	"winter",
-	"wizardcave",
-}
-
 local ground_material_options = {
-	{
-		material = "fairmod_swiss",
-		weight = 2,
-	},
-	{
-		material = "fairmod_cheddar",
-		weight = 2,
-	},
-	{
-		material = "milk",
-		weight = 3,
-	},
-	{
-		material = "fairmod_mozzarella",
-		weight = 2,
-	},
-	{
-		material = "fairmod_parmesan",
-		weight = 1,
-	},
-	{
-		material = "rock_hard_border",
-		weight = 10,
-	},
+	--testing{
+	--testing	material = "fairmod_swiss",
+	--testing	weight = 2,
+	--testing},
+	--testing{
+	--testing	material = "fairmod_cheddar",
+	--testing	weight = 2,
+	--testing},
+	--testing{
+	--testing	material = "milk",
+	--testing	weight = 3,
+	--testing},
+	--testing{
+	--testing	material = "fairmod_mozzarella",
+	--testing	weight = 2,
+	--testing},
+	--testing{
+	--testing	material = "fairmod_parmesan",
+	--testing	weight = 1,
+	--testing},
+	--testing{
+	--testing	material = "rock_hard_border",
+	--testing	weight = 10,
+	--testing},
 	{
 		material = "rock_hard",
 		weight = 10,
@@ -469,9 +455,228 @@ local ground_material_options = {
 		material = "templebrickdark_static",
 		weight = 10,
 	},
+	--testing{
+	--testing	material = "cloud",
+	--testing	weight = 10,
+	--testing},
+	--testing{
+	--testing	material = "rock_static_cursed",
+	--testing	weight = 10,
+	--testing},
+	--testing{
+	--testing	material = "rock_static_cursed_green",
+	--testing	weight = 3,
+	--testing},
+	--testing{
+	--testing	material = "rock_static_poison",
+	--testing	weight = 5,
+	--testing},
 	{
-		material = "cloud",
+		material = "skullrock",
 		weight = 10,
+	},
+	{
+		material = "rock_static_wet",
+		weight = 10,
+	},
+	{
+		material = "lavarock_static",
+		weight = 10,
+	},
+	{
+		material = "meteorite_static",
+		weight = 10,
+	},
+	{
+		material = "templerock_static",
+		weight = 10,
+	},
+	{
+		material = "templebrick_static_broken",
+		weight = 5,
+	},
+	--testing{
+	--testing	material = "templebrick_golden_static",
+	--testing	weight = 5,
+	--testing},
+	--testing{
+	--testing	material = "templebrick_diamond_static",
+	--testing	weight = 5,
+	--testing},
+	{
+		material = "templebrick_static_ruined",
+		weight = 10,
+	},
+	{
+		material = "glowstone",
+		weight = 3,
+	},
+	--testing{
+	--testing	material = "templebrick_red",
+	--testing	weight = 10,
+	--testing},
+	{
+		material = "glowstone_potion",
+		weight = 2,
+	},
+	{
+		material = "glowstone_altar_hdr",
+		weight = 2,
+	},
+	{
+		material = "the_end",
+		weight = 10,
+	},
+	{
+		material = "steel_static",
+		weight = 5,
+	},
+	{
+		material = "steelmoss_static",
+		weight = 5,
+	},
+	{
+		material = "steel_rusted_no_holes",
+		weight = 5,
+	},
+	{
+		material = "steel_grey_static",
+		weight = 5,
+	},
+	{
+		material = "steelfrost_static",
+		weight = 5,
+	},
+	{
+		material = "steelmoss_slanted",
+		weight = 5,
+	},
+	{
+		material = "steelpipe_static",
+		weight = 5,
+	},
+	{
+		material = "steel_static_strong",
+		weight = 5,
+	},
+	{
+		material = "steel_static_unmeltable",
+		weight = 5,
+	},
+	{
+		material = "rock_static_glow",
+		weight = 10,
+	},
+	{
+		material = "snow_static",
+		weight = 10,
+	},
+	{
+		material = "sand_static",
+		weight = 10,
+	},
+	{
+		material = "sand_static_rainforest",
+		weight = 4,
+	},
+	{
+		material = "sand_static_rainforest_dark",
+		weight = 4,
+	},
+	{
+		material = "bone_static",
+		weight = 10,
+	},
+	{
+		material = "rust_static",
+		weight = 2,
+	},
+	{
+		material = "meat_static",
+		weight = 10,
+	},
+	{
+		material = "sand_static_red",
+		weight = 10,
+	},
+	{
+		material = "nest_static",
+		weight = 3,
+	},
+	{
+		material = "rock_static_trip_secret",
+		weight = 20,
+	},
+	{
+		material = "rock_static_trip_secret2",
+		weight = 20,
+	},
+	{
+		material = "rock_static_purple",
+		weight = 8,
+	},
+	{
+		material = "water_static",
+		weight = 10,
+	},
+	{
+		material = "spore_pod_stalk",
+		weight = 4,
+	},
+	{
+		material = "rock_hard",
+		weight = 10,
+	},
+	{
+		material = "rock_static_fungal",
+		weight = 20,
+	},
+	{
+		material = "wood_tree",
+		weight = 5,
+	},
+	{
+		material = "rock_magic_gate",
+		weight = 7,
+	},
+	{
+		material = "rock_vault",
+		weight = 14,
+	},
+	{
+		material = "rock_static_grey",
+		weight = 10,
+	},
+	{
+		material = "rock_static_radioactive",
+		weight = 10,
+	},
+	{
+		material = "gold",
+		weight = 1,
+	},
+	{
+		material = "gold_radioactive",
+		weight = 1,
+	},
+}
+
+local ore_material_options = {
+	{
+		material = "gold",
+		weight = 10,
+	},
+	{
+		material = "gold_radioactive",
+		weight = 10,
+	},
+	{
+		material = "water_static",
+		weight = 10,
+	},
+	{
+		material = "just_death",
+		weight = 5,
 	},
 }
 
@@ -501,6 +706,17 @@ local ambience_and_music = {
 	"surface0",
 	"smokecave",
 	"desert",
+	"ancient_tracks",
+	"oneshot",
+	"robobase",
+	"mountain",
+	"menu",
+	"intro",
+	"lavalake",
+	"credits",
+	"miniboss",
+	"winter",
+	"wizardcave",
 }
 
 local music_sound_events = {
@@ -561,21 +777,47 @@ local music_sound_events = {
 	"music/watercave/00",
 }
 
-local function GenerateRandomBiome()
+for key, t in pairs(backgrounds) do
+	for key, value in pairs(t) do
+		if not ModDoesFileExist(value) then print(value) end
+	end
+end
+
+local biomes = 0
+local function GenerateRandomBiome(name, script)
 	--SetRandomSeed(491, 412)
 
 	local bg = backgrounds[Random(1, #backgrounds)]
 
+	local colour_gradings = {
+		1 - Random()^3,
+		1 - Random()^3,
+		1 - Random()^3,
+	}
+	if Random(1, 8) == 8 then
+		if Random(1, 5) == 5 then
+			for _,value in ipairs(colour_gradings) do
+				value = value * Randomf(-10, 10)
+			end
+		else
+			local mult = Randomf(-10, 10)
+			for _,value in ipairs(colour_gradings) do
+				value = value * mult
+			end
+		end
+	end
+
+	local tileset = tilesets[Random(1, #tilesets)]
 	local biome = nxml.new_element("Biome", nil, {
 		nxml.new_element("Topology", {
-			name="$biome_hamis_biome",
+			name = name,
 			type = "BIOME_WANG_TILE",
-			wang_template_file = tilesets[Random(1, #tilesets)],
-			lua_script = "mods/noita.fairmod/files/content/tmtrainer_biomes/template_script.lua", --scripts[Random(1, #scripts)],
+			wang_template_file = tileset,
+			lua_script = script, --scripts[Random(1, #scripts)],
 
-			color_grading_r = tostring(1 - Random()^2),
-			color_grading_g = tostring(1 - Random()^2),
-			color_grading_b = tostring(1 - Random()^2),
+			color_grading_r = colour_gradings[1],
+			color_grading_g = colour_gradings[2],
+			color_grading_b = colour_gradings[3],
 			background_image = bg.image,
 			background_edge_left = bg.edge_left,
 			background_edge_right = bg.edge_right,
@@ -585,13 +827,13 @@ local function GenerateRandomBiome()
 			audio_music_2 = ambience_and_music[Random(1, #ambience_and_music)],
 			audio_ambience = ambience_and_music[Random(1, #ambience_and_music)],
 			audio_ambience_surface = ambience_and_music[Random(1, #ambience_and_music)],
-			audio_music_enter = music_sound_events[Random(1, #music_sound_events)]
-		}), nxml.new_element("Materials", {name = "test_biome"})
+			audio_music_enter = music_sound_events[Random(1, #music_sound_events)],
+		})
 	})
 
-	local materials = nxml.new_element("Materials", {name = ""})
+	local materials = nxml.new_element("Materials", {name = "test_biome"})
 
-	for i = 1, Random(1,5) do
+	for i = 1, Random(0,6) do
 		materials:add_child(nxml.new_element("MaterialComponent", {
 			material_name = RandomFromTable(ground_material_options).material,
 			material_index = Random(-9, 10),
@@ -614,18 +856,26 @@ local biome_index = {}
 init.OnMagicNumbersAndWorldSeedInitialized = function()
 	SetRandomSeed(2352, -1354)
 
-
-	print(tostring(tonumber("00FF00", 16)))
-	print(("%08x"):format(1358))
-
 	local biome_colours = {}
 	local current_colour = tonumber("FF000000", 16)
 	for xml in nxml.edit_file("data/biome/_biomes_all.xml") do
 		for biome in xml:each_of("Biome") do
 			biome_index[(biome.attr.color):lower()] = biome.attr.biome_filename
 		end
-		for i = 0, 9 do
-			local biomexml = tostring(GenerateRandomBiome())
+		for i = 0, 199 do
+			local scriptpath = "mods/noita.fairmod/generated/biome_"..i..".lua"
+			ModTextFileSetContent(scriptpath,
+				ModTextFileGetContent("mods/noita.fairmod/files/content/tmtrainer_biomes/template_script.lua")
+					:gsub("FILE1", scripts[Random(1, #scripts)])
+					:gsub("FILE2", scripts[Random(1, #scripts)])
+					:gsub("FILE3", scripts[Random(1, #scripts)])
+					:gsub("FILE4", scripts[Random(1, #scripts)])
+					:gsub("FILE5", scripts[Random(1, #scripts)])
+					:gsub("BIOMESEED1", Random())
+					:gsub("BIOMESEED2", Random())
+			)
+			local biomexml = tostring(GenerateRandomBiome(i, scriptpath))
+			--print(biomexml)
 			ModTextFileSetContent("mods/noita.fairmod/generated/biome_"..i..".xml", biomexml)
 
 			--print(current_colour)
@@ -638,8 +888,6 @@ init.OnMagicNumbersAndWorldSeedInitialized = function()
 				+ bit.lshift(bit.band(current_colour, 0xFF), 16)
 				+ bit.lshift(bit.band(bit.rshift(current_colour, 8), 0xFF), 8)
 				+ bit.band(bit.rshift(current_colour, 16), 0xFF)
-			print("biome: " .. ("%08x"):format(current_colour))
-			print("modimage:" .. ("%08x"):format(biome_colours[#biome_colours]))
 
 			xml:add_child(nxml.new_element("Biome", {
 				biome_filename = "mods/noita.fairmod/generated/biome_"..i..".xml",
@@ -652,39 +900,8 @@ init.OnMagicNumbersAndWorldSeedInitialized = function()
 	local biomemap,w,h = ModImageMakeEditable("data/biome_impl/biome_map.png", 0, 0)
 	for y = 0, h-1 do
 		for x = 0, w-1 do
-			local hex = Random(1, #biome_colours)
-			ModImageSetPixel(biomemap, x, y, hex)
-		end
-	end
-
-	local outputs = {
-		wang_template_file = {},
-		lua_script = {},
-		wang_map_width = {},
-		wang_map_height = {},
-		audio_ambience = {},
-		audio_ambience_surface = {},
-		audio_music_2 = {},
-		audio_music_enter = {},
-	}
-	for _,value in pairs(biome_index) do
-		for biome in nxml.edit_file(value) do
-			local topology = biome:first_of("Topology")
-			if not topology then goto continue end
-			for key,index in pairs(outputs) do
-				if topology.attr[key] then
-					index[topology.attr[key]] = true
-				end
-			end
-			::continue::
-		end
-	end
-
-	for key, output in pairs(outputs) do
-		do break end
-		print(key .. ":")
-		for value in pairs(output) do
-			print("  " .. value)
+			local hex = biome_colours[Random(1, #biome_colours)]
+			if Random() < .1 or true then ModImageSetPixel(biomemap, x, y, hex) end
 		end
 	end
 end
