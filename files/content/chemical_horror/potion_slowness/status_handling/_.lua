@@ -18,8 +18,10 @@ for i = 1, 1000 do
 end
 pages[#pages + 1] = "mods/noita.fairmod/files/content/instruction_booklet/pages/back.png"
 
-local _lmao = "/thgilkcalb/tnetnoc_sunob/nordluac/tnetnoc/selif/domriaf.ation/sdom"
-_lmao = string.reverse(_lmao)
+local current_filepath = "mods/noita.fairmod/"
+
+local _lmao = "/thgilkcalb/tnetnoc_sunob/nordluac/tnetnoc/selif"
+_lmao = current_filepath .. string.reverse(_lmao)
 local bl_pages = {
 	_lmao .. "cover.png",
 	_lmao .. "instructionbooklet-01.png",

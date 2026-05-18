@@ -13,7 +13,7 @@ function clipboard.OnPlayerSpawned()
 		"https://github.com/Copious-Modding-Industries/copis_things",
 		"I'm using tilt controls!",
 		":3",
-		"I am a professional hacker. If you are reading this, you have been hacked. Send 500 Hämisket to my hamiswallet or I'll send your friends Unfair Noita community collab",
+		"I am a professional hacker. If you are reading this, you have been hacked. Send 500 Hämisket to my hämiswallet or I'll send your friends Unfair Noita community collab",
 		"Erm... what the scallop!",
 		[[Own a musket for home defense, since that's what the founding fathers intended. Four ruffians break into my house. "What the devil?" As I grab my powdered wig and Kentucky rifle. Blow a golf ball sized hole through the first man, he's dead on the spot. Draw my pistol on the second man, miss him entirely because it's smoothbore and nails the neighbors dog. I have to resort to the cannon mounted at the top of the stairs loaded with grape shot, "Tally ho lads" the grape shot shreds two men in the blast, the sound and extra shrapnel set off car alarms. Fix bayonet and charge the last terrified rapscallion. He Bleeds out waiting on the police to arrive since triangular bayonet wounds are impossible to stitch up. Just as the founding fathers intended.]],
 		"This clipboard is sponsored by Hämiscaped",
@@ -32,13 +32,13 @@ function clipboard.OnPlayerSpawned()
 		"KILL!! KILL KILL KILL!!!",
 		"Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy. Crazy? I was crazy once. They locked me in a room- a rubber room. A rubber room with rats. I hate rats. Rats make me crazy.",
 		"Crazy? Me too, buddy, me too.",
-		"Chemical Curiosites is good, I swear!",
 		"image.png",
 		"message.txt",
-		'"Why so Jonkler"\n-Sirius Black, from hit-game; LEGO Harry Potter 7',
+		'"Why so Jonkler"\n-[---], from hit-game; LEGO [---] 7\n\nSorry, viewing of this joke is limited to avoid association with [---], we ask for your understanding.',
 		"https://discord.gg/noita",
 		"https://discord.gg/erHfpxGDq6", --this is another noitacord link, but without "/noita"
 		"https://noita.wiki.gg/",
+		"https://steamcommunity.com/sharedfiles/filedetails/?id=3357618827", --fairmod workshop page
 		"Terraria is just a Minecraft clone imo",
 		"Minecraft is just a Noita clone imo",
 		GameTextGet("$bee_movie_script"), --lmao
@@ -50,8 +50,33 @@ function clipboard.OnPlayerSpawned()
 		"",
 	}
 
-	if imgui and not GameHasFlagRun("fairmod_developer_mode") then
+	local awesome_mods = { --add mods by you or others you think are neat here, or some sillies
+		"[AWESOME MOD]",
+		"Chemical Curiosities",
+		"Copi's Things",
+		"Graham's Things",
+		"Apotheosis",
+		"Acopiosis",
+		"Parallel Parity",
+		"Fairmod",
+		"Noita",
+		"the Noita Fair-Mod",
+		"Boss Reworks",
+		"Asbestosis",
+		"the Noita Thingsmod",
+		"Thingsmod",
+		"Immersive Mimics",
+		"[Actual Fucking Malware]",
+		"sudo rm -rf /* --no-preserve-root",
+		"going outside",
+		"-- add skullflys after this step",
+	}
+
+
+	if imgui and not GameHasFlagRun("fairmod_developer_mode") then --unfortunately more annoying than its worth for development lmao
 		SetRandomSeed(123, 456)
+		messages[#messages+1] = "Wow, I should try " .. awesome_mods[Random(1, #awesome_mods)] .. "!"
+		messages[#messages+1] = "Wow, I should NEVER try " .. awesome_mods[Random(1, #awesome_mods)] .. "!"
 		imgui.SetClipboardText(messages[Random(1, #messages)])
 	end
 end

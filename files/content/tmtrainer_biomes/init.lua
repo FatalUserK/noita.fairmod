@@ -380,6 +380,11 @@ local scripts = {
 	"data/scripts/biomes/temple_altar_right_snowcastle.lua",
 }
 
+local presets = {
+	"mods/noita.fairmod/files/content/tmtrainer_biomes/preset_random.lua",
+	"mods/noita.fairmod/files/content/tmtrainer_biomes/preset_reward.lua",
+}
+
 local tilesets = {
 	--no worky
 	--"data/biome_impl/static_tile/temples-assets/darkness_fg.png",
@@ -423,30 +428,67 @@ local tilesets = {
 }
 
 local ground_material_options = {
-	--testing{
-	--testing	material = "fairmod_swiss",
-	--testing	weight = 2,
-	--testing},
-	--testing{
-	--testing	material = "fairmod_cheddar",
-	--testing	weight = 2,
-	--testing},
-	--testing{
-	--testing	material = "milk",
-	--testing	weight = 3,
-	--testing},
-	--testing{
-	--testing	material = "fairmod_mozzarella",
-	--testing	weight = 2,
-	--testing},
-	--testing{
-	--testing	material = "fairmod_parmesan",
-	--testing	weight = 1,
-	--testing},
-	--testing{
-	--testing	material = "rock_hard_border",
-	--testing	weight = 10,
-	--testing},
+	{
+		material = "fairmod_swiss",
+		weight = 2,
+	},
+	{
+		material = "fairmod_cheddar",
+		weight = 2,
+	},
+	{
+		material = "milk",
+		weight = 3,
+	},
+	{
+		material = "fairmod_mozzarella",
+		weight = 2,
+	},
+	{
+		material = "fairmod_parmesan",
+		weight = 1,
+	},
+	{
+		material = "backrooms_zone_1_wall",
+		weight = 5,
+	},
+	{
+		material = "backrooms_zone_1_ceiling",
+		weight = 5,
+	},
+	{
+		material = "backrooms_zone_1_floor",
+		weight = 5,
+	},
+	{
+		material = "fairmod_hamis_meat",
+		weight = 5,
+	},
+	{
+		material = "fairmod_hamis_soil_lush",
+		weight = 2,
+	},
+	{
+		material = "fairmod_hamis_sand_static_rainforest_dark",
+		weight = 2,
+	},
+	{
+		material = "hescoming",
+		weight = 3.33,
+	},
+	{
+		material = "snail_static_shell",
+		weight = 5,
+	},
+	{
+		material = "snail_static_meat",
+		weight = 5,
+	},
+
+	{
+		material = "rock_hard_border",
+		weight = 10,
+	},
 	{
 		material = "rock_hard",
 		weight = 10,
@@ -455,22 +497,22 @@ local ground_material_options = {
 		material = "templebrickdark_static",
 		weight = 10,
 	},
-	--testing{
-	--testing	material = "cloud",
-	--testing	weight = 10,
-	--testing},
-	--testing{
-	--testing	material = "rock_static_cursed",
-	--testing	weight = 10,
-	--testing},
-	--testing{
-	--testing	material = "rock_static_cursed_green",
-	--testing	weight = 3,
-	--testing},
-	--testing{
-	--testing	material = "rock_static_poison",
-	--testing	weight = 5,
-	--testing},
+	{
+		material = "cloud",
+		weight = 10,
+	},
+	{
+		material = "rock_static_cursed",
+		weight = 10,
+	},
+	{
+		material = "rock_static_cursed_green",
+		weight = 3,
+	},
+	{
+		material = "rock_static_poison",
+		weight = 5,
+	},
 	{
 		material = "skullrock",
 		weight = 10,
@@ -777,11 +819,68 @@ local music_sound_events = {
 	"music/watercave/00",
 }
 
-for key, t in pairs(backgrounds) do
-	for key, value in pairs(t) do
-		if not ModDoesFileExist(value) then print(value) end
-	end
-end
+local override_whitelist = {
+	[0xff454412] = .005, --coal pits
+	[0xffD57517] = .005, --snowy depths
+	[0xffFF4600] = .005, --hiisi base
+	[0xff008080] = .005, --top jungle
+	[0xff0084A0] = .005, --bottom jungle
+	[0xff008000] = .01, --vault
+	[0xff426C78] = .005, --temple of the art
+
+	[0xff3D3D3D] = .02, --edr
+	[0xff3E3D3F] = .02, --cursed rock
+	[0xff026AFF] = .02, --volcanic lake
+
+	[0xff373E3D] = .005, --tower1
+	[0xff383E3D] = .005, --tower2
+	[0xff393E3D] = .005, --tower3
+	[0xff3A3E3D] = .005, --tower4
+	[0xff3B3E3D] = .005, --tower5
+	[0xff3C3E3D] = .005, --tower6
+	[0xff3D3E3D] = .005, --tower7
+	[0xff3E3E3D] = .005, --tower8
+	[0xff3F3E3D] = .005, --tower9
+	[0xff403E3D] = .005, --tower10
+
+	[0xffF061E8] = .005, --fungal caverns
+	[0xffFF61A8] = .005, --overgrown cavern
+	[0xff4BA089] = .005, --abandoned alchemy lab
+	[0xff005C37] = .005, --lukki lair
+	[0xff282857] = .005, --meat
+	[0xff426E00] = .005, --magical temple
+	[4282543104] = .005, --alt magical temple id cuz idk the VERY CORRECT ABGR VALUE isnt working at all
+	[0xff866172] = .005, --wizards' den
+	[0xff67524E] = .005, --powerplant
+	[0xff32CDE1] = .005, --underground desert
+	[0xffA88000] = .005, --frozen vault
+	[0xffBDA577] = .005, --forgotten cavern
+	[0xff11E37B] = .005, --bottom of lava pit
+
+	[0xff17D536] = .005, --overworld hills
+	[0xff4499CC] = .005, --desert
+	[0xffE3D8D6] = .005, --frozen wasteland
+	[0xffF15811] = .025, --lake
+	[0xffF13311] = .005, --lake surface
+	[0xff11E348] = .005, --rainbow steps
+	[0xff8DCFF7] = .005, --pond?
+	[0xff0000B7] = .005, --watchtower?
+	[0xff5F8F96] = .005, --pyramid left side
+	[0xff117F96] = .005, --pyramid
+	[0xff968F96] = .005, --pyramid right side
+
+	[0xffC9D536] = .005, --cloudscape
+	[0xffF0E6D3] = .005, --work (sky)
+	[0xff0A0F3C] = .005, --work (hell)
+	[0xff11E333] = 1, --hills2
+	[0xff0000FE] = .005, --bottom of floating terrain
+}
+
+local a,b,c,d,e,f,g = GameGetDateAndTimeLocal()
+local BIOMES_TO_GENERATE = 40
+local seed_offset = d*e*f+e+f
+local chance_to_place_biome = .1
+
 
 local biomes = 0
 local function GenerateRandomBiome(name, script)
@@ -854,7 +953,7 @@ local init = {}
 local biome_index = {}
 
 init.OnMagicNumbersAndWorldSeedInitialized = function()
-	SetRandomSeed(2352, -1354)
+	SetRandomSeed(2352, -1354+seed_offset)
 
 	local biome_colours = {}
 	local current_colour = tonumber("FF000000", 16)
@@ -862,17 +961,18 @@ init.OnMagicNumbersAndWorldSeedInitialized = function()
 		for biome in xml:each_of("Biome") do
 			biome_index[(biome.attr.color):lower()] = biome.attr.biome_filename
 		end
-		for i = 0, 199 do
+		for i = 0, BIOMES_TO_GENERATE-1 do
 			local scriptpath = "mods/noita.fairmod/generated/biome_"..i..".lua"
 			ModTextFileSetContent(scriptpath,
 				ModTextFileGetContent("mods/noita.fairmod/files/content/tmtrainer_biomes/template_script.lua")
+					:gsub("BIOMESEED1", Random())
+					:gsub("BIOMESEED2", Random())
 					:gsub("FILE1", scripts[Random(1, #scripts)])
 					:gsub("FILE2", scripts[Random(1, #scripts)])
 					:gsub("FILE3", scripts[Random(1, #scripts)])
 					:gsub("FILE4", scripts[Random(1, #scripts)])
 					:gsub("FILE5", scripts[Random(1, #scripts)])
-					:gsub("BIOMESEED1", Random())
-					:gsub("BIOMESEED2", Random())
+					:gsub("PRESET", presets[2])
 			)
 			local biomexml = tostring(GenerateRandomBiome(i, scriptpath))
 			--print(biomexml)
@@ -900,8 +1000,13 @@ init.OnMagicNumbersAndWorldSeedInitialized = function()
 	local biomemap,w,h = ModImageMakeEditable("data/biome_impl/biome_map.png", 0, 0)
 	for y = 0, h-1 do
 		for x = 0, w-1 do
+			local logging = false
+			if x == 49 and y == 36 then logging = true end
 			local hex = biome_colours[Random(1, #biome_colours)]
-			if Random() < .1 or true then ModImageSetPixel(biomemap, x, y, hex) end
+			local pixel = ModImageGetPixel(biomemap, x, y) % 2 ^ 32
+			if logging then print(pixel) print(0xff11E333) end
+			local placement_chance = override_whitelist[pixel]
+			if placement_chance and Random() < placement_chance then ModImageSetPixel(biomemap, x, y, hex) end
 		end
 	end
 end
