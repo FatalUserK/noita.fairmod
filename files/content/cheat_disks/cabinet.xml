@@ -1,0 +1,5 @@
+<Entity>
+	<SpriteComponent
+		image_file="mods/noita.fairmod/files/content/cheat_disks/cabinetthey.png"
+	/>
+</Entity>
