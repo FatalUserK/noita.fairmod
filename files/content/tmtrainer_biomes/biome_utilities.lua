@@ -465,6 +465,10 @@ local ceiling_props = {
 		weight = 10
 	},
 	{
+		"data/entities/props/physics/temple_lantern.xml",
+		weight = 10
+	},
+	{
 		"data/entities/props/dripping_acid_gas.xml",
 		weight = 3
 	},
@@ -491,10 +495,6 @@ local ceiling_props = {
 	{
 		"data/entities/props/suspended_tank_radioactive.xml",
 		weight = 4
-	},
-	{
-		"data/entities/props/physics/temple_lantern.xml",
-		weight = 10
 	},
 }
 

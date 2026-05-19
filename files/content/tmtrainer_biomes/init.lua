@@ -876,10 +876,10 @@ local override_whitelist = {
 	[0xff0000FE] = .005, --bottom of floating terrain
 }
 
-local a,b,c,d,e,f,g = GameGetDateAndTimeLocal()
+local a,b,c,d,e,f,g = GameGetDateAndTimeLocal() --doing this fn to experiment with diff permutations more easily
 local BIOMES_TO_GENERATE = 40
 local seed_offset = d*e*f+e+f
-local chance_to_place_biome = .1
+local force_override_all = true
 
 
 local biomes = 0
@@ -1006,7 +1006,7 @@ init.OnMagicNumbersAndWorldSeedInitialized = function()
 			local pixel = ModImageGetPixel(biomemap, x, y) % 2 ^ 32
 			if logging then print(pixel) print(0xff11E333) end
 			local placement_chance = override_whitelist[pixel]
-			if placement_chance and Random() < placement_chance then ModImageSetPixel(biomemap, x, y, hex) end
+			if (placement_chance and Random() < placement_chance) or force_override_all then ModImageSetPixel(biomemap, x, y, hex) end
 		end
 	end
 end

@@ -170,8 +170,6 @@ function ImageOverlay(destination, image, offset_x, offset_y, alpha_multiplier)
 
 	offset_x = offset_x or 0
 	offset_y = offset_y or 0
-	local logging
-	if offset_x ~= 0 then logging = true end
 	alpha_multiplier = alpha_multiplier or 1
 
 	local dest_data = {}
@@ -189,7 +187,7 @@ function ImageOverlay(destination, image, offset_x, offset_y, alpha_multiplier)
 			if img_pixel[4] == 0 then goto continue end
 
 			for i = 1, 3 do
-				local difference = (img_pixel[i] - dest_pixel[i]) * (img_pixel[4]/255) * alpha_multiplier
+				local difference = (img_pixel[i] - dest_pixel[i]) * (dest_pixel[4]/255) * alpha_multiplier
 				dest_pixel[i] = math.clamp(dest_pixel[i] + difference, 0, 255)
 			end
 
