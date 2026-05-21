@@ -36,7 +36,7 @@ function do_newgame_plus(iteration, override_data)
 			slice = 2,
 			ice = 2,
 			radioactive = 2,
-		}
+		},
 	}
 
 	for key, value in pairs(override_data) do

@@ -107,16 +107,13 @@ function paint_cave( x, y, dir, biome_color, length )
 end
 
 -------------------------------------------------
- 
-
-local newgame_n = tonumber( SessionNumbersGetValue("NEW_GAME_PLUS_COUNT") )
 
 -- local w = 64
 -- local h = 48
 
-
 BiomeMapSetSize( BIOME_MAP_WIDTH, BIOME_MAP_HEIGHT )
 BiomeMapLoadImage( 0, 0, "data/biome_impl/biome_map_newgame_plus.png" )
+
 
 SetRandomSeed( 4573, 4621 )
 
@@ -136,6 +133,8 @@ local biome_sandcaves = 0xFFE1CD32
 local biomes_snowvault = 0xFF0080A8
 local biome_wandcave = 0xFF006C42
 local biome_crypt = 0xFF786C42
+ 
+local newgame_n = tonumber( SessionNumbersGetValue("NEW_GAME_PLUS_COUNT") )
 
 if( newgame_n % 2 == 0 ) then
 
