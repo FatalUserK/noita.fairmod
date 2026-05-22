@@ -848,6 +848,15 @@ local cheats = {
         end,
     },
 	{
+		code = "photocopier",
+		not_cheat = true,
+		do_not_random = true,
+		do_not_sudo = true,
+		func = function() --counter to track gullible idiots
+			ModSettingSet("fairmod.photocopier_attempts", (ModSettingGet("fairmod.photocopier_attempts") or 0) + 1)
+		end
+	},
+	{
 		code = "praisethelord",
 		twitch = true,
 		not_cheat = true,
@@ -893,7 +902,7 @@ local cheats = {
 	{
 		code = "gottacatchthemall",
 		name = "I Choose Everyone.",
-		description = "Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!",
+		description = "Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!Wild MISSINGNO. appeared!",
 		func = function(player)
 			local x, y = EntityGetTransform(player)
 
@@ -926,14 +935,14 @@ local cheats = {
 	},
 	{
 		code = "fixperformance",
-		name = "Fix Performance",
-		description = "removed of all those pesky entities!",
 		func = function(p, x, y)
+			SetRandomSeed(y, x-GameGetFrameNum())
+			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!")
 			local tags = {
 				"player_unit",
 				"world_state",
 			}
-			for _,entity_id in ipairs(EntityGetInRadius(x, y, 1000000)) do
+			for _,entity_id in ipairs(EntityGetInRadius(x, y, math.huge)) do
 				local kill = true
 				for _,tag in ipairs(tags) do
 					if EntityHasTag(EntityGetRootEntity(entity_id), tag) then kill = false break end
@@ -976,16 +985,6 @@ local cheats = {
 		end
 	},
 	{
-		code = "",
-		name = "",
-		description = "",
-		func = function(p, x, y) --runs 10 random other cheats
-			for i = 1, 10 do
-				
-			end
-		end
-	},
-	{
 		code = "swapsies",
 		name = "Swapsies",
 		description = "Put yourself in someone else's shoes for once!",
@@ -1001,6 +1000,73 @@ local cheats = {
 				EntitySetTransform(targets[i], bx, by)
 				EntitySetTransform(targets[rnd], ax, ay)
 			end
+		end
+	},
+	{
+		code = "refreshimg",
+		name = "REFRESHIMG",
+		description = "You are filled with joy and wonder.",
+		func = function(p,x,y) --maybe remove status effects too?
+			if not p then  return end
+			GameRegenItemActionsInPlayer(p)
+
+			local current_frame = GameGetFrameNum()
+
+			local cdata = EntityGetFirstComponent(p, "CharacterDataComponent")
+			if cdata then
+				ComponentSetValue2(cdata, "mFlyingTimeLeft", ComponentGetValue2(cdata, "fly_time_max"))
+			end
+
+			local dmc = EntityGetFirstComponent(p, "DamageModelComponent")
+			if dmc then
+				ComponentSetValue2(dmc, "air_in_lungs", ComponentGetValue2(dmc, "air_in_lungs_max"))
+			end
+
+			for _,item in ipairs(GameGetAllInventoryItems(p) or {}) do
+				local ability_comp = EntityGetFirstComponentIncludingDisabled(item, "AbilityComponent")
+				if ability_comp then
+					ComponentSetValue2(ability_comp, "mana", ComponentGetValue2(ability_comp, "mana_max"))
+					ComponentSetValue2(ability_comp, "mNextFrameUsable", current_frame)
+					ComponentSetValue2(ability_comp, "mReloadNextFrameUsable", current_frame)
+				end
+			end
+		end
+	},
+	{
+		code = "refreshing",
+		name = "REFRESHING",
+		description = "You are filled with FUCKING HATE AND MALICE.",
+		func = function(p,x,y) --todo, make it deplete all charges on spells
+			if not p then  return end
+			local current_frame = GameGetFrameNum()
+
+			local cdata = EntityGetFirstComponent(p, "CharacterDataComponent")
+			if cdata then
+				ComponentSetValue2(cdata, "mFlyingTimeLeft", 0)
+			end
+
+			local dmc = EntityGetFirstComponent(p, "DamageModelComponent")
+			if dmc then
+				ComponentSetValue2(dmc, "air_in_lungs", 0)
+			end
+
+			for index, item in ipairs(GameGetAllInventoryItems(p) or {}) do
+				local ability_comp = EntityGetFirstComponentIncludingDisabled(item, "AbilityComponent")
+				if ability_comp then
+					ComponentSetValue2(ability_comp, "mana", 0)
+					ComponentSetValue2(ability_comp, "mNextFrameUsable", current_frame + ComponentGetValue2(ability_comp, "charge_wait_frames"))
+					ComponentSetValue2(ability_comp, "mReloadNextFrameUsable", current_frame + ComponentGetValue2(ability_comp, "reload_time_frames"))
+				end
+			end
+		end
+	},
+	{
+		code = "endofeverything",
+		name = "End of Everything",
+		description = "genuinely what were you expecting",
+		func = function(p,x,y)
+			local eoe = EntityLoad("data/entities/projectiles/deck/all_spells_loader.xml", x, y)
+			if p then EntityAddChild(p, eoe) end
 		end
 	},
 	{
@@ -1044,7 +1110,7 @@ table.insert(cheats, {
 	code = "nullpointerexception",
 })
 
-local r = 0
+local r = 0 --external recursion factor to avoid infinite recursion
 cheats[#cheats].func = function(p, x, y) --set up like this so it can call itself
 	SetRandomSeed(GameGetFrameNum() - x, y + p - r)
 	r = r + 1
@@ -1069,7 +1135,7 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 			list_of_cheats[#list_of_cheats+1] = cheat
 		end
 	end
-	for i = 1, 10 do
+	for _=1, 10 do
 		local target = list_of_cheats[Random(1,#list_of_cheats)]
 		targets[#targets+1] = target
 	end
@@ -1080,7 +1146,7 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 	for i = 1, 10 do
 		print("Calling cheat:" .. tostring(targets[i].code))
 		local target_desc = tostring(targets[i].description)
-		description = description .. target_desc:sub(Random(0,#target_desc), Random(0,#target_desc))
+		description = description .. target_desc:sub(Random(1,#target_desc), Random(1,#target_desc))
 	end
 
 	local amounts = {
