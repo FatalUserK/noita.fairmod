@@ -4,7 +4,7 @@ local module = {}
 
 -- processing limits
 local max_projectiles = 100  -- maximum number of projectiles to modify
-local search_radius   = 200   -- search radius
+local search_radius   = 300   -- search radius
 
 function module.update(player_entity)
 
@@ -47,32 +47,32 @@ function module.update(player_entity)
         EntityAddComponent2(proj, "VariableStorageComponent", {
             _tags = "orbit_projectile_speed",
             name = "orbit_projectile_speed",
-            value_float = "0"
+            value_float = 0
         })
         EntityAddComponent2(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/orbit_projectile.lua",
-            execute_every_n_frame = "1",
-            remove_after_executed = "1"
+            execute_every_n_frame = 1,
+            remove_after_executed = true
         })
         EntityAddComponent2(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/orbit_projectile_rotation.lua",
-            execute_every_n_frame = "1"
+            execute_every_n_frame = 1
         })
 
         -- explosion modification
         EntityAddComponent2(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_death.lua",
-            execute_every_n_frame = "-1",
-            execute_on_removed = "1"
+            execute_every_n_frame = -1,
+            execute_on_removed = true
         })
 
         -- bounce modification
         EntityAddComponent2(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/bounce_larpa.lua",
-            execute_every_n_frame = "1",
-            remove_after_executed = "1"
+            execute_every_n_frame = 1,
+            remove_after_executed = true
         })
-        local proj_components = EntityGetComponent(proj, "ProjectileComponent")
+        local proj_components = EntityGetComponent(proj, "ProjectileComponent") or {}
         for _, comp in ipairs(proj_components) do
             ComponentSetValue2(comp, "bounce_always", true)
             ComponentSetValue2(comp, "bounces_left", 1)
@@ -81,38 +81,38 @@ function module.update(player_entity)
         -- trail modification
         EntityAddComponent2(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_chaos_2.lua",
-            execute_every_n_frame = "5"
+            execute_every_n_frame = 5
         })
         EntityAddComponent2(proj, "LifetimeComponent", {
-            lifetime = "200"
-        })
+            lifetime = 200
+        }) --this is the lowest lifetime added by this script, thus it is the primary one used
 
         -- chaos modification
         EntityAddComponent2(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_chaos.lua",
-            execute_every_n_frame = "10"
+            execute_every_n_frame = 10
         })
-        EntityAddComponent2(proj, "LifetimeComponent", {
-            lifetime = "300"
-        })
+        --EntityAddComponent2(proj, "LifetimeComponent", {
+        --    lifetime = 300
+        --}) commented to avoid redundancy
 
         -- upwards modification
         EntityAddComponent2(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_upwards.lua",
-            execute_every_n_frame = "10"
+            execute_every_n_frame = 10
         })
-        EntityAddComponent2(proj, "LifetimeComponent", {
-            lifetime = "300"
-        })
+        --EntityAddComponent2(proj, "LifetimeComponent", {
+        --    lifetime = 300
+        --}) commented to avoid redundancy
 
         -- downwards modification
         EntityAddComponent2(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_downwards.lua",
-            execute_every_n_frame = "10"
+            execute_every_n_frame = 10
         })
-        EntityAddComponent2(proj, "LifetimeComponent", {
-            lifetime = "300"
-        })
+        --EntityAddComponent2(proj, "LifetimeComponent", {
+        --    lifetime = 300
+        --}) commented to avoid redundancy
 
         count_modified = count_modified + 1
 
