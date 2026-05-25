@@ -4,7 +4,7 @@ local bad_dynamite = {
 	description = "$actiondesc_dynamite",
 	sprite = "data/ui_gfx/gun_actions/dynamite.png",
 	sprite_unidentified = "data/ui_gfx/gun_actions/dynamite_unidentified.png",
-	related_projectiles = { "mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt.xml" },
+	related_projectiles = { "mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt.xml" },
 	type = ACTION_TYPE_PROJECTILE,
 	spawn_level = "0,1,2,3,4", -- DYNAMITE
 	spawn_probability = "1,0.9,0.8,0.7,0.6", -- DYNAMITE
@@ -12,7 +12,7 @@ local bad_dynamite = {
 	mana = 50,
 	max_uses = 16,
 	action = function()
-		add_projectile("mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt.xml")
+		add_projectile("mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt.xml")
 		c.fire_rate_wait = c.fire_rate_wait + 50
 		c.spread_degrees = c.spread_degrees + 6.0
 	end,
@@ -25,7 +25,7 @@ local long_dynamite = {
 	description = "$actiondesc_dynamite",
 	sprite = "data/ui_gfx/gun_actions/dynamite.png",
 	sprite_unidentified = "data/ui_gfx/gun_actions/dynamite_unidentified.png",
-	related_projectiles = { "mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt_long.xml" },
+	related_projectiles = { "mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt_long.xml" },
 	type = ACTION_TYPE_PROJECTILE,
 	spawn_level = "0,1,2,3,4", -- DYNAMITE
 	spawn_probability = "1,0.9,0.8,0.7,0.6", -- DYNAMITE
@@ -33,7 +33,7 @@ local long_dynamite = {
 	mana = 50,
 	max_uses = 16,
 	action = function()
-		add_projectile("mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt_long.xml")
+		add_projectile("mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt_long.xml")
 		c.fire_rate_wait = c.fire_rate_wait + 50
 		c.spread_degrees = c.spread_degrees + 6.0
 	end,
@@ -46,7 +46,7 @@ local beeg_dynamite = {
 	description = "$actiondesc_dynamite",
 	sprite = "data/ui_gfx/gun_actions/dynamite.png",
 	sprite_unidentified = "data/ui_gfx/gun_actions/dynamite_unidentified.png",
-	related_projectiles = { "mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt_beeg.xml" },
+	related_projectiles = { "mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt_beeg.xml" },
 	type = ACTION_TYPE_PROJECTILE,
 	spawn_level = "0,1,2,3,4", -- DYNAMITE
 	spawn_probability = "1,0.9,0.8,0.7,0.6", -- DYNAMITE
@@ -56,7 +56,7 @@ local beeg_dynamite = {
     pandorium_ignore = true,
 	ai_never_uses = true,
 	action = function()
-		add_projectile("mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt_beeg.xml")
+		add_projectile("mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt_beeg.xml")
 		c.fire_rate_wait = c.fire_rate_wait + 50
 		c.spread_degrees = c.spread_degrees + 6.0
 	end,
@@ -69,7 +69,7 @@ local bad_bomb = {
 	description = "$actiondesc_bomb",
 	sprite = "data/ui_gfx/gun_actions/bomb.png",
 	sprite_unidentified = "data/ui_gfx/gun_actions/bomb_unidentified.png",
-	related_projectiles = { "mods/noita.fairmod/files/content/new_spells/bad_bombs/bomb.xml" },
+	related_projectiles = { "mods/noita.fairmod/files/content/better_spells/bad_bombs/bomb.xml" },
 	type = ACTION_TYPE_PROJECTILE,
 	spawn_level = "0,1,2,3,4,5,6", -- BOMB
 	spawn_probability = "1,1,1,1,0.5,0.5,0.1", -- BOMB
@@ -77,7 +77,7 @@ local bad_bomb = {
 	mana = 25,
 	max_uses = 3,
 	action = function()
-		add_projectile("mods/noita.fairmod/files/content/new_spells/bad_bombs/bomb.xml")
+		add_projectile("mods/noita.fairmod/files/content/better_spells/bad_bombs/bomb.xml")
 		c.fire_rate_wait = c.fire_rate_wait + 100
 	end,
 }
@@ -89,7 +89,7 @@ local long_bomb = {
 	description = "$actiondesc_bomb",
 	sprite = "data/ui_gfx/gun_actions/bomb.png",
 	sprite_unidentified = "data/ui_gfx/gun_actions/bomb_unidentified.png",
-	related_projectiles = { "mods/noita.fairmod/files/content/new_spells/bad_bombs/bomb_long.xml" },
+	related_projectiles = { "mods/noita.fairmod/files/content/better_spells/bad_bombs/bomb_long.xml" },
 	type = ACTION_TYPE_PROJECTILE,
 	spawn_level = "0,1,2,3,4,5,6", -- BOMB
 	spawn_probability = "1,1,1,1,0.5,0.5,0.1", -- BOMB
@@ -97,7 +97,7 @@ local long_bomb = {
 	mana = 25,
 	max_uses = 3,
 	action = function()
-		add_projectile("mods/noita.fairmod/files/content/new_spells/bad_bombs/bomb_long.xml")
+		add_projectile("mods/noita.fairmod/files/content/better_spells/bad_bombs/bomb_long.xml")
 		c.fire_rate_wait = c.fire_rate_wait + 100
 	end,
 }
@@ -109,7 +109,7 @@ local rocket = {
 	description = "$actiondesc_rocket",
 	sprite = "data/ui_gfx/gun_actions/rocket.png",
 	sprite_unidentified = "data/ui_gfx/gun_actions/rocket_unidentified.png",
-	related_projectiles = { "mods/noita.fairmod/files/content/new_spells/bad_bombs/rocket.xml" },
+	related_projectiles = { "mods/noita.fairmod/files/content/better_spells/bad_bombs/rocket.xml" },
 	type = ACTION_TYPE_PROJECTILE,
 	spawn_level = "1,2,3,4,5", -- ROCKET
 	spawn_probability = "1,1,1,0.5,0.3", -- ROCKET
@@ -117,7 +117,7 @@ local rocket = {
 	mana = 70,
 	max_uses = 10,
 	action = function()
-		add_projectile("mods/noita.fairmod/files/content/new_spells/bad_bombs/rocket.xml")
+		add_projectile("mods/noita.fairmod/files/content/better_spells/bad_bombs/rocket.xml")
 		c.fire_rate_wait = c.fire_rate_wait + 60
 		c.ragdoll_fx = 2
 		shot_effects.recoil_knockback = 120.0
@@ -140,7 +140,7 @@ local very_unstable = {
 	mana = 20,
 	max_uses = 15,
 	action = function()
-		add_projectile("mods/noita.fairmod/files/content/new_spells/bad_bombs/very_unstable_mine.xml")
+		add_projectile("mods/noita.fairmod/files/content/better_spells/bad_bombs/very_unstable_mine.xml")
 		c.fire_rate_wait = c.fire_rate_wait + 30
 		c.child_speed_multiplier = c.child_speed_multiplier * 0.75
 		c.speed_multiplier = c.speed_multiplier * 0.75
@@ -170,7 +170,7 @@ local stable = {
 	mana = 20,
 	max_uses = 15,
 	action = function()
-		add_projectile("mods/noita.fairmod/files/content/new_spells/bad_bombs/stable_mine.xml")
+		add_projectile("mods/noita.fairmod/files/content/better_spells/bad_bombs/stable_mine.xml")
 		c.fire_rate_wait = c.fire_rate_wait + 30
 		c.child_speed_multiplier = c.child_speed_multiplier * 0.75
 		c.speed_multiplier = c.speed_multiplier * 0.75

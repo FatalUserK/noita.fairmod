@@ -186,7 +186,7 @@
 
 	<VariableStorageComponent
 		name="projectile_file"
-		value_string="mods/noita.fairmod/files/content/new_spells/spakr_bolt/light_bullet.xml"
+		value_string="mods/noita.fairmod/files/content/better_spells/spakr_bolt/light_bullet.xml"
 	>
 	</VariableStorageComponent>
 

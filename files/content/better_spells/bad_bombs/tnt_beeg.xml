@@ -3,7 +3,7 @@
 	<Base file="data/entities/base_projectile_physics.xml">
 
 		<PhysicsImageShapeComponent
-			image_file="data/projectiles_gfx/tnt.png"
+			image_file="mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt_beeg.png"
 			material="fuse_tnt">
 		</PhysicsImageShapeComponent>
 
@@ -18,12 +18,30 @@
 			lifetime="300"
 		>
 			<config_explosion
-				damage="2.5"
-				explosion_radius="56"
-				explosion_sprite="data/particles/explosion_032.xml"
-				load_this_entity="data/entities/particles/particle_explosion/main_gunpowder_medium.xml"
-				audio_event_name="explosions/tnt"
-				max_durability_to_destroy="11"
+				never_cache="0" 
+				damage="20"
+				camera_shake="80" 
+				explosion_radius="320" 
+				explosion_sprite="data/particles/explosion_128.xml" 
+				explosion_sprite_lifetime="0" 
+				load_this_entity="data/entities/particles/particle_explosion/main_large_radius.xml,data/entities/misc/loose_ground.xml,data/entities/misc/loose_chunks_huge.xml,data/entities/misc/explosion_was_here.xml"
+				create_cell_probability="80" 
+				hole_destroy_liquid="1" 
+				hole_enabled="1" 
+				ray_energy="12400000"
+				particle_effect="1" 
+				damage_mortals="1"
+				physics_explosion_power.min="4.5"
+				physics_explosion_power.max="9" 
+				shake_vegetation="1" 
+				sparks_count_max="1500" 
+				sparks_count_min="1600" 
+				sparks_enabled="1" 
+				stains_enabled="1" 
+				stains_radius="35"
+				background_lightning_count="5" 
+				max_durability_to_destroy="14" 
+			audio_event_name="explosions/nuke" 
 			>
 			</config_explosion>
 		</ProjectileComponent>
@@ -34,8 +52,8 @@
 
 	<ParticleEmitterComponent
 		emitted_material_name="smoke"
-		offset.x="2"
-		offset.y="-3"
+		offset.x="4"
+		offset.y="-6"
 		x_pos_offset_min="-1"
 		y_pos_offset_min="-1"
 		x_pos_offset_max="1"
@@ -57,8 +75,8 @@
 
 	<ParticleEmitterComponent
 		emitted_material_name="spark"
-		offset.x="2"
-		offset.y="-3"
+		offset.x="4"
+		offset.y="-6"
 		fade_based_on_lifetime="1"
 		x_pos_offset_min="-1"
 		y_pos_offset_min="-1"
@@ -82,8 +100,8 @@
 	<!-- very sparse emitter -->
 	<ParticleEmitterComponent
 		emitted_material_name="spark"
-		offset.x="2"
-		offset.y="-3"
+		offset.x="4"
+		offset.y="-6"
 		x_vel_min="10"
 		x_vel_max="20"
 		y_vel_min="0"
@@ -120,7 +138,7 @@
 
 	<VariableStorageComponent
 		name="projectile_file"
-		value_string="mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt_long.xml"
+		value_string="mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt_beeg.xml"
 	>
 	</VariableStorageComponent>
 
