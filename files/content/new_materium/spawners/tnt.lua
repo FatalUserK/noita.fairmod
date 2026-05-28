@@ -1,7 +1,7 @@
 local files = {
 	"data/entities/projectiles/tnt.xml",
-	"mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt.xml",
-	"mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt_long.xml",
+	"mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt.xml",
+	"mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt_long.xml",
 }
 
 local max = 40

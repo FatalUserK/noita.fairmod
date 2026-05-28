@@ -108,7 +108,7 @@
 
   <VariableStorageComponent
     name="projectile_file"
-    value_string="mods/noita.fairmod/files/content/new_spells/rubba_ball/rubber_ball.xml"
+    value_string="mods/noita.fairmod/files/content/better_spells/rubba_ball/rubber_ball.xml"
   >
   </VariableStorageComponent>
 

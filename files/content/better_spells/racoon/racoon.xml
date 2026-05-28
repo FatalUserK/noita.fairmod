@@ -25,7 +25,7 @@
 	</HomingComponent>
 
 	<SpriteComponent
-		image_file="mods/noita.fairmod/files/content/new_spells/racoon/racoon_gfx.xml"
+		image_file="mods/noita.fairmod/files/content/better_spells/racoon/racoon_gfx.xml"
 		z_index="0">
 	</SpriteComponent>
 
@@ -58,6 +58,6 @@
 
 	<VariableStorageComponent
 		name="projectile_file"
-		value_string="mods/noita.fairmod/files/content/new_spells/racoon/racoon.xml">
+		value_string="mods/noita.fairmod/files/content/better_spells/racoon/racoon.xml">
 	</VariableStorageComponent>
 </Entity>
