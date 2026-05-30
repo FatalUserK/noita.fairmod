@@ -1051,6 +1051,24 @@ local cheats = {
 			if p then EntityAddChild(p, eoe) end
 		end
 	},
+	{
+		code = "endofeverything",
+		name = "End of Everything",
+		description = "genuinely what were you expecting",
+		func = function(p,x,y)
+			local eoe = EntityLoad("data/entities/projectiles/deck/all_spells_loader.xml", x, y)
+			if p then EntityAddChild(p, eoe) end
+		end
+	},
+	{
+		code = "starcrossedlovers",
+		name = "Star-Crossed Lovers",
+		description = "ADD A SHAKESPEARE QUOTE HERE",
+		func = function(p,x,y)
+			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x-15, y-10), "romeo")
+			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x+15, y-10), "juliet")
+		end
+	},
 }
 
 local num_cheats = #cheats

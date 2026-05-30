@@ -4,12 +4,16 @@ if old_pec then EntityRemoveComponent(entity_id, old_pec) end
 
 local x,y = EntityGetTransform(entity_id)
 local player = EntityGetInRadiusWithTag(x, y, math.huge, "player_unit")[1]
+local bank = "data/audio/Desktop/misc.bank"
+local event = "player_projectiles/wall/create"
 if player then
+	x,y = EntityGetTransform(player)
+	GamePlaySound(bank, event, x, y)
 	EntityInflictDamage(player, math.huge, "NONE", "Congratulations on beating the Dream Ending!", "PLAYER_RAGDOLL_CAMERA", -10, -30, nil, nil, nil, 100)
+else
+	x,y = GameGetCameraPos()
+	GamePlaySound(bank, event, x, y)
 end
-GameTriggerMusicFadeOutAndDequeueAll(1)
-x,y = GameGetCameraPos()
-GamePlaySound( "data/audio/Desktop/event_cues.bank", "event_cues/happy_ending/create", x, y )
 
 local new_pec = EntityAddComponent2(entity_id, "ParticleEmitterComponent", {
 	image_animation_file="mods/noita.fairmod/files/dream/ending/particle_emitter/text.png",
