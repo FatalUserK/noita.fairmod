@@ -3,6 +3,8 @@ dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 ---@type nxml
 local nxml = dofile_once("mods/noita.fairmod/files/lib/nxml.lua")
 
+--spawn in boss arena
+--function OnPlayerSpawned(player) EntitySetTransform(player, 2779, 13207) end
 
 --Hämis shall never be harmed, not even in the absence of the Fairmod.
 for xml in nxml.edit_file("data/entities/animals/longleg.xml") do
@@ -22,24 +24,8 @@ end
 --disable saving
 ModMagicNumbersFileAdd("mods/noita.fairmod/files/dream/magic_numbers_override.xml")
 
---remove sampo from gtc.
-modifile("data/scripts/items/chest_random_super.lua", [[data/entities/animals/boss_centipede/sampo.xml]], [[]])
-
 --make sampo not pick up.
 modifile("data/entities/animals/boss_centipede/sampo.xml", [[data/entities/animals/boss_centipede/sampo_pickup.lua]], [[mods/noita.fairmod/files/dream/kill_fake_sampo.lua]])
-
-local px,py = 0,0
-function OnPlayerSpawned(player)
-	do return end
-	if GameHasFlagRun("fairmod_lovely_dream_player_spawn_flag") then return end
-	GameAddFlagRun("fairmod_lovely_dream_player_spawn_flag")
-
-	if true then EntitySetTransform(player, px, py) end
-end
-px,py = 2779,13207 --final boss arena
-
-function OnPlayerSpawned(player)
-end
 
 
 local hm_y_levels = {
@@ -57,7 +43,8 @@ for xml in nxml.edit_file("data/entities/animals/boss_centipede/boss_centipede.x
 	local dmc = xml:first_of("DamageModelComponent")
 	if not dmc then return end
 	dmc.attr.wait_for_kill_flag_on_death = "0"
-	dmc.attr.ragdoll_material = "air"
+	--dmc.attr.ragdoll_material = "air"
+	dmc.attr.ragdoll_fx_forced = "DISINTEGRATED"
 
 	for luacomp in xml:each_of("LuaComponent") do
 		luacomp.attr.script_death = nil
