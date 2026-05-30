@@ -69,7 +69,7 @@ function wrong_answer()
 									local plyrs = EntityGetWithTag("player_unit")
 									for l = 1, #plyrs do
 										EntityInflictDamage( plyrs[l], 999999999999999999999, "DAMAGE_CURSE", "bad answer", "NONE", 0, 0, plyrs[l] )
-										EntityInflictDamage( plyrs[l], 999999999999999999999, "DAMAGE_PHYSICS_BODY_DAMAGED", "bad answer", "NONE", 0, 0, plyrs[l] )
+										EntityInflictDamage( plyrs[l], 999999999999999999999, "NONE", "bad answer", "NONE", 0, 0, plyrs[l] )
 										EntityKill(plyrs[l])
 										dialog.close()
 									end

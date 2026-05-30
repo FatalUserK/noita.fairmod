@@ -1,10 +1,4 @@
--- de-patterning function for dealing with string.gsub() and other pattern-utilising Lua functions.
-local function escape(str) return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1") end
-
--- Convenient function to simplify modifying files, gsub \r\n to \n to edit multiple lines at a time.
-local function modifile(file, target, sub)
-	ModTextFileSetContent(file, ModTextFileGetContent(file):gsub("\r\n", "\n"):gsub(escape(target), sub))
-end
+dofile_once("utilities.lua")
 
 if ModSettingGet("noita.fairmod.streamer_mode") then
 	local nxml = dofile_once("mods/noita.fairmod/files/lib/nxml.lua") --- @type nxml
