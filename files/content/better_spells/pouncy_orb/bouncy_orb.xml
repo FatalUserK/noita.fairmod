@@ -228,7 +228,7 @@
 
 	<VariableStorageComponent
 		name="projectile_file"
-		value_string="mods/noita.fairmod/files/content/new_spells/pouncy_orb/bouncy_orb.xml"
+		value_string="mods/noita.fairmod/files/content/better_spells/pouncy_orb/bouncy_orb.xml"
 	>
 	</VariableStorageComponent>
 

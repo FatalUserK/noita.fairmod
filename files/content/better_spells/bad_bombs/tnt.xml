@@ -120,7 +120,7 @@
 
 	<VariableStorageComponent
 		name="projectile_file"
-		value_string="mods/noita.fairmod/files/content/new_spells/bad_bombs/tnt.xml"
+		value_string="mods/noita.fairmod/files/content/better_spells/bad_bombs/tnt.xml"
 	>
 	</VariableStorageComponent>
 

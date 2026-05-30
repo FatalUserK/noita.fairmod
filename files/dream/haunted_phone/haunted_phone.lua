@@ -1,4 +1,4 @@
-local ring_max_vol = .04
+local ring_max_vol = .05
 local ring_max_distance = 125
 local ring_distance_buffer = 15
 local tone_vol = .6

@@ -1,9 +1,6 @@
 <Entity name="$projectile_default">
-  <Base file="data/entities/base_projectile_physics.xml">
 
-    <DamageModelComponent
-      hp="5">
-    </DamageModelComponent>
+  <Base file="data/entities/base_projectile_physics.xml">
 
     <PhysicsImageShapeComponent
       image_file="data/items_gfx/bomb.png"
@@ -11,18 +8,19 @@
     </PhysicsImageShapeComponent>
 
     <ProjectileComponent
-      lifetime="600"
+      lifetime="60"
       damage="0"
       muzzle_flash_file="data/entities/particles/muzzle_flashes/muzzle_flash_launcher_large.xml"
       shoot_light_flash_radius="120"
       shoot_light_flash_r="255"
       shoot_light_flash_g="240"
-      shoot_light_flash_b="30">
+      shoot_light_flash_b="30"
+    >
       <config_explosion
         never_cache="0"
         damage="5"
         camera_shake="50"
-        explosion_radius="120"
+        explosion_radius="60"
         explosion_sprite="data/particles/explosion_128.xml"
         explosion_sprite_lifetime="0"
         load_this_entity="data/entities/particles/particle_explosion/main_gunpowder_large.xml,data/entities/misc/loose_ground.xml,data/entities/misc/explosion_was_here.xml"
@@ -41,7 +39,8 @@
         sparks_enabled="1"
         stains_enabled="1"
         stains_radius="15"
-        max_durability_to_destroy="11">
+        max_durability_to_destroy="11"
+        create_cell_material="cement">
       </config_explosion>
     </ProjectileComponent>
 
@@ -142,7 +141,8 @@
 
   <VariableStorageComponent
     name="projectile_file"
-    value_string="mods/noita.fairmod/files/content/new_spells/bad_bombs/bomb_long.xml">
+    value_string="mods/noita.fairmod/files/content/better_spells/bad_bombs/bomb.xml"
+  >
   </VariableStorageComponent>
 
 </Entity>
