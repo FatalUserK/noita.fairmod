@@ -6,6 +6,13 @@
 	</Base>
 	<!--actually I was going to be cruel and make them take fall damage, have less HP, lung capacity, etc, but the lover script is already mean enough.-->
 
+	<MaterialInventoryComponent
+		_tags="ingestion"
+		on_death_spill="1"
+	/>
+
+	<IngestionComponent/>
+
 	<LuaComponent
 		script_source_file="mods/noita.fairmod/files/content/cheats/lovers/lover.lua"
 		execute_every_n_frame="60"

@@ -1068,7 +1068,7 @@ local cheats = {
 			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x-15, y-10), "romeo")
 			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x+15, y-10), "juliet")
 		end
-	},
+	}, --todo, add "romeo" and "juliet" cheatcodes that only spawn one of each, use those for cheat disks
 }
 
 local num_cheats = #cheats
