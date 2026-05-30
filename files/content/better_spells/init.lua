@@ -26,7 +26,7 @@ modifile("data/scripts/projectiles/black_hole_big.lua", [[math.min(64, radius + 
 		local particle_attractor_force = radius * 0.25
 		if radius > 64 then
 			local mult = radius/64
-			particle_attractor_force = particle_attractor_force * mult
+			particle_attractor_force = particle_attractor_force * mult^2
 			local sprite = EntityGetFirstComponent(entity_id, "SpriteComponent")
 			if sprite then
 				ComponentSetValue2(sprite, "has_special_scale", true)
@@ -35,7 +35,7 @@ modifile("data/scripts/projectiles/black_hole_big.lua", [[math.min(64, radius + 
 			end
 			for _,c in ipairs(EntityGetAllChildren(entity_id) or {}) do
 				for _,loosegroundcomp in ipairs(EntityGetComponent(c, "LooseGroundComponent") or {}) do
-					ComponentSetValue2(loosegroundcomp, "probability", .2 * mult)
+					ComponentSetValue2(loosegroundcomp, "probability", .2 * mult^2)
 				end
 			end
 		end
@@ -48,7 +48,7 @@ modifile("data/scripts/projectiles/white_hole_big.lua", [[math.min(64, radius + 
 		local particle_attractor_force = radius * -0.25
 		if radius > 64 then
 			local mult = radius/64
-			particle_attractor_force = particle_attractor_force * mult
+			particle_attractor_force = particle_attractor_force * mult^2
 			local sprite = EntityGetFirstComponent(entity_id, "SpriteComponent")
 			if sprite then
 				ComponentSetValue2(sprite, "has_special_scale", true)
@@ -57,7 +57,7 @@ modifile("data/scripts/projectiles/white_hole_big.lua", [[math.min(64, radius + 
 			end
 			for _,c in ipairs(EntityGetAllChildren(entity_id) or {}) do
 				for _,loosegroundcomp in ipairs(EntityGetComponent(c, "LooseGroundComponent") or {}) do
-					ComponentSetValue2(loosegroundcomp, "probability", .2 * mult)
+					ComponentSetValue2(loosegroundcomp, "probability", .2 * mult^2)
 				end
 			end
 		end
