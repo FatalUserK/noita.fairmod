@@ -1,10 +1,4 @@
--- de-patterning function for dealing with string.gsub() and other pattern-utilising Lua functions.
-local function escape(str) return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1") end
-
--- Convenient function to simplify modifying files, gsub \r\n to \n to edit multiple lines at a time.
-local function modifile(file, target, sub)
-	ModTextFileSetContent(file, ModTextFileGetContent(file):gsub("\r\n", "\n"):gsub(escape(target), sub))
-end
+dofile_once("utilities.lua")
 
 if ModSettingGet("noita.fairmod.streamer_mode") then
 	local nxml = dofile_once("mods/noita.fairmod/files/lib/nxml.lua") --- @type nxml
@@ -26,7 +20,7 @@ modifile("data/scripts/projectiles/black_hole_big.lua", [[math.min(64, radius + 
 		local particle_attractor_force = radius * 0.25
 		if radius > 64 then
 			local mult = radius/64
-			particle_attractor_force = particle_attractor_force * mult
+			particle_attractor_force = particle_attractor_force * mult^2
 			local sprite = EntityGetFirstComponent(entity_id, "SpriteComponent")
 			if sprite then
 				ComponentSetValue2(sprite, "has_special_scale", true)
@@ -35,7 +29,7 @@ modifile("data/scripts/projectiles/black_hole_big.lua", [[math.min(64, radius + 
 			end
 			for _,c in ipairs(EntityGetAllChildren(entity_id) or {}) do
 				for _,loosegroundcomp in ipairs(EntityGetComponent(c, "LooseGroundComponent") or {}) do
-					ComponentSetValue2(loosegroundcomp, "probability", .2 * mult)
+					ComponentSetValue2(loosegroundcomp, "probability", .2 * mult^2)
 				end
 			end
 		end
@@ -48,7 +42,7 @@ modifile("data/scripts/projectiles/white_hole_big.lua", [[math.min(64, radius + 
 		local particle_attractor_force = radius * -0.25
 		if radius > 64 then
 			local mult = radius/64
-			particle_attractor_force = particle_attractor_force * mult
+			particle_attractor_force = particle_attractor_force * mult^2
 			local sprite = EntityGetFirstComponent(entity_id, "SpriteComponent")
 			if sprite then
 				ComponentSetValue2(sprite, "has_special_scale", true)
@@ -57,7 +51,7 @@ modifile("data/scripts/projectiles/white_hole_big.lua", [[math.min(64, radius + 
 			end
 			for _,c in ipairs(EntityGetAllChildren(entity_id) or {}) do
 				for _,loosegroundcomp in ipairs(EntityGetComponent(c, "LooseGroundComponent") or {}) do
-					ComponentSetValue2(loosegroundcomp, "probability", .2 * mult)
+					ComponentSetValue2(loosegroundcomp, "probability", .2 * mult^2)
 				end
 			end
 		end

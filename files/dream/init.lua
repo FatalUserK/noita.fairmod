@@ -1,11 +1,4 @@
-function OnPlayerSpawned(player)
-	do return end
-	if GameHasFlagRun("fairmod_lovely_dream_player_spawn_flag") then return end
-	GameAddFlagRun("fairmod_lovely_dream_player_spawn_flag")
-
-	local x,y = EntityGetTransform(player)
-	EntityLoad("mods/noita.fairmod/files/dream/empty_kiosk.xml", x + 10, y + 11)
-end
+dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 
 ---@type nxml
 local nxml = dofile_once("mods/noita.fairmod/files/lib/nxml.lua")
@@ -29,13 +22,24 @@ end
 --disable saving
 ModMagicNumbersFileAdd("mods/noita.fairmod/files/dream/magic_numbers_override.xml")
 
+--remove sampo from gtc.
+modifile("data/scripts/items/chest_random_super.lua", [[data/entities/animals/boss_centipede/sampo.xml]], [[]])
 
+--make sampo not pick up.
+modifile("data/entities/animals/boss_centipede/sampo.xml", [[data/entities/animals/boss_centipede/sampo_pickup.lua]], [[mods/noita.fairmod/files/dream/kill_fake_sampo.lua]])
 
 local px,py = 0,0
 function OnPlayerSpawned(player)
-	EntitySetTransform(player, px, py)
+	do return end
+	if GameHasFlagRun("fairmod_lovely_dream_player_spawn_flag") then return end
+	GameAddFlagRun("fairmod_lovely_dream_player_spawn_flag")
+
+	if true then EntitySetTransform(player, px, py) end
 end
-px,py = 2779,13207
+px,py = 2779,13207 --final boss arena
+
+function OnPlayerSpawned(player)
+end
 
 
 local hm_y_levels = {
@@ -67,73 +71,66 @@ end
 
 function OnMagicNumbersAndWorldSeedInitialized()
 	SetRandomSeed(3465, -581)
-	if true then --to easier test randomised positions
-		local a,b,c,d,e,f = GameGetDateAndTimeLocal()
-		SetRandomSeed(a*d, e*-b)
-	end
 
-	local rnd = Random(1, #hm_y_levels + 1) and 7
+	local rnd = Random(1, #hm_y_levels)
 	local hm_desk_y = hm_y_levels[rnd]
-	local hm_desk_x = hm_desk_y == 13176 and 1880 or -680 --if its the last entry in the list, then its the final holy mountain and the X is offset too
+	local hm_desk_x = hm_desk_y == 13176 and 1880 or -680 --if its the last entry in the list, then its the final holy mountain and the X is different too
 	table.remove(hm_y_levels, rnd)
 
-	rnd = Random(1, #hm_y_levels + 1)
-	local hm_phone_y = hm_y_levels[rnd]
+	rnd = Random(1, #hm_y_levels)
+	local hm_phone_y = hm_y_levels[rnd] - 15 --subtract 15 for height diff
 	local hm_phone_x = hm_phone_y == 13176 and 1822 or -738
-	hm_phone_y = hm_phone_y and hm_phone_y - 15 --if it exists, subtract 15
 
 
 
 	local load_entities = {
 		{ --information_kiosk
 			path = "mods/noita.fairmod/files/dream/kiosk/empty_kiosk.xml",
+			probability = .2, --20% spawn
 			x = 237,
 			y = -74
 		},
 		{ --mask_box
 			path = "mods/noita.fairmod/files/dream/mask_box/abandoned_mask_box.xml",
+			probability = .2, --20% spawn
 			x = 771,
 			y = -88
 		},
 		{ --entrance_cart
 			path = "data/entities/props/physics/minecart.xml",
+			probability = .9, --90% spawn
 			x = 1000,
 			y = 114
 		},
 		{
 			path = "data/entities/props/physics/minecart.xml",
+			probability = .9, --90% spawn
 			x = 1088,
 			y = 113
 		},
 		{
 			path = "data/entities/props/physics/minecart.xml",
+			probability = .9, --90% spawn
 			x = 837,
 			y = -88
 		},
 		{ --loan_shark
 			path = hm_desk_y and "mods/noita.fairmod/files/dream/empty_desk/empty_desk.xml",
+			probability = .1, --60% spawn
 			x = hm_desk_x,
 			y = hm_desk_y
 		},
 		{ --payphone
 			path = hm_phone_y and "mods/noita.fairmod/files/dream/haunted_phone/haunted_phone.xml",
+			probability = .9, --40% spawn
 			x = hm_phone_x,
 			y = hm_phone_y
 		},
 		{
 			path = "mods/noita.fairmod/files/dream/ending/information_hamis.xml",
+			probability = 2, --guaranteed spawn
 			x = 3572,
 			y = 13110
-		},
-		{
-			path = "",
-			x = 0,
-			y = 0
-		},
-		{
-			path = "",
-			x = 0,
-			y = 0
 		},
 	}
 
@@ -143,8 +140,8 @@ function OnMagicNumbersAndWorldSeedInitialized()
 		if buffered_pixel_scenes then
 			local entities = {}
 			for _,entity in ipairs(load_entities) do
-				if entity.path and not entity.disabled then
-					if entity.path == "" then break end
+				if entity.path and Random() < (entity.probability or -1) then
+					--print("Adding scene: " .. entity.path)
 					entities[#entities+1] = nxml.new_element("PixelScene", {
 						just_load_an_entity = entity.path,
 						pos_x = entity.x,
@@ -156,3 +153,12 @@ function OnMagicNumbersAndWorldSeedInitialized()
 		end
 	end
 end
+
+dofile_once("mods/noita.fairmod/files/content/credits/init.lua")
+ModTextFileSetContent("data/credits.txt", ModTextFileGetContent("data/credits.txt"):sub(1, 2000) .. "\n \nCredits cut short for performance reasons lmao.\nYou're welcome, -UserK")
+--Shorten the credits to avoid lag
+
+modifile("data/translations/common.csv", [[menugameover_gamecompleted,COMPLETED THE GAME!,]], [[menugameover_gamecompleted,BEAT THE DREAM ENDING!,]])
+
+
+error() --make it seem like the mod broke.

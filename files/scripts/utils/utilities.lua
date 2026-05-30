@@ -1,6 +1,14 @@
 --- Hardcoded world width for scripts that don't have access to BiomeMapGetSize.
 WORLD_WIDTH_HARDCODED = 70 * 512
 
+-- de-patterning function for dealing with string.gsub() and other pattern-utilising Lua functions.
+function escape(str) return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1") end
+
+-- Convenient function to simplify modifying files, gsub \r\n to \n to edit multiple lines at a time.
+function modifile(file, target, sub)
+	ModTextFileSetContent(file, ModTextFileGetContent(file):gsub("\r\n", "\n"):gsub(escape(target), sub))
+end
+
 ---@vararg table
 ---@return table
 function MergeTables(...)
