@@ -317,6 +317,7 @@ local cheats = {
 	},
 	{
 		code = "qqqqq",
+		description = " --description so it can be scraped by `nullpointerexception` cheat.",
 		func = function(player)
 			GameAddFlagRun("copibuddy")
 		end,
@@ -397,6 +398,7 @@ local cheats = {
 	},
 	{
 		code = "userk",
+		description = "UserK", --description so it can be scraped by `nullpointerexception` cheat.
 		do_not_random = true,
 		not_cheat = true,
 		func = function()
@@ -452,6 +454,7 @@ local cheats = {
 	{code="/spawn",name="/spawn",description="Teleporting in 3... 2... wait, you're already there!",func=function(a)local b=tonumber(MagicNumbersGetValue("DESIGN_PLAYER_START_POS_X"))local c=tonumber(MagicNumbersGetValue("DESIGN_PLAYER_START_POS_Y"))local d=GetParallelWorldPosition(EntityGetTransform(a))*BiomeMapGetSize()*512;EntityApplyTransform(a,b+d,c)end}
 	,{
 		code = "copith",
+		description = "Setting Immersion: 100%!", --description so it can be scraped by `nullpointerexception` cheat.
 		func = function()
 			GameAddFlagRun("COPI_IMMERSIVE_MIMICS")
 			GamePrintImportant("THE CHEAT IS A MIMIC", "Setting Immersion: 100%!")
@@ -619,6 +622,7 @@ local cheats = {
 	},
 	{
 		code = "superchest",
+		description = "Alright, just this onceMay you be punished by torrents of Chaos", --description so it can be scraped by `nullpointerexception` cheat.
 		not_cheat = not HasFlagPersistent("fairmod_spawned_superchest"), --its only a cheat if it summons the superchest, for essence of chaos this is the intended method to acquire
 		func = function(player)
 
@@ -935,6 +939,7 @@ local cheats = {
 	},
 	{
 		code = "fixperformance",
+		description = "removed of all those pesky entities!", --description so it can be scraped by `nullpointerexception` cheat.
 		func = function(p, x, y)
 			SetRandomSeed(y, x-GameGetFrameNum())
 			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!")
@@ -1063,7 +1068,7 @@ local cheats = {
 	{
 		code = "starcrossedlovers",
 		name = "Star-Crossed Lovers",
-		description = "ADD A SHAKESPEARE QUOTE HERE",
+		description = "Package deal, must have eyes on one another at all times!",
 		func = function(p,x,y)
 			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x-15, y-10), "romeo")
 			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x+15, y-10), "juliet")
