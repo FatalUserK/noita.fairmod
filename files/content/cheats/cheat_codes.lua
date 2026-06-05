@@ -1,4 +1,5 @@
 --stylua: ignore start
+dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 local markers = dofile_once("mods/noita.fairmod/files/content/better_world/map_helper.lua")
 local cheats = {
 	{
@@ -992,7 +993,7 @@ local cheats = {
 	{
 		code = "refreshimg",
 		name = "REFRESHIMG",
-		description = "You are filled with joy and wonder.",
+		description = "You are filled with joy and whimsy.",
 		func = function(p,x,y) --maybe remove status effects too?
 			if not p then  return end
 			GameRegenItemActionsInPlayer(p)
@@ -1057,15 +1058,6 @@ local cheats = {
 		end
 	},
 	{
-		code = "endofeverything",
-		name = "End of Everything",
-		description = "genuinely what were you expecting",
-		func = function(p,x,y)
-			local eoe = EntityLoad("data/entities/projectiles/deck/all_spells_loader.xml", x, y)
-			if p then EntityAddChild(p, eoe) end
-		end
-	},
-	{
 		code = "starcrossedlovers",
 		name = "Star-Crossed Lovers",
 		description = "Package deal, must have eyes on one another at all times!",
@@ -1074,7 +1066,19 @@ local cheats = {
 			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x+15, y-10), "juliet")
 		end
 	}, --todo, add "romeo" and "juliet" cheatcodes that only spawn one of each, use those for cheat disks
+	{
+		code = "pause",
+		name = "PAUSE",
+		func = function(p,x,y)
+			pause(60, 2)
+		end
+	}
 }
+
+for i = 1, #cheats do
+	local cheat = cheats[i]
+	if not cheat.description then cheat.description = "" end
+end
 
 local num_cheats = #cheats
 for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations.lua")) do

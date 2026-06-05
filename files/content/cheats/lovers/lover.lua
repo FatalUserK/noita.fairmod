@@ -3,7 +3,6 @@ local x,y = EntityGetTransform(entity_id)
 
 local function fuckingkillmyself()
     EntityIngestMaterial(entity_id, CellFactory_GetType("poison"), 500000)
-    --GameCreateParticle("poison", x, y-6, 1, 0, 0, false)
 end
 
 local name = EntityGetName(entity_id)

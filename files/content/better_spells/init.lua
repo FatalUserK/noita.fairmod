@@ -1,4 +1,4 @@
-dofile_once("utilities.lua")
+dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 
 if ModSettingGet("noita.fairmod.streamer_mode") then
 	local nxml = dofile_once("mods/noita.fairmod/files/lib/nxml.lua") --- @type nxml
@@ -14,6 +14,7 @@ ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.fairmod/files/c
 ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.fairmod/files/content/better_spells/pouncy_orb/pouncy_orb.lua")
 ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.fairmod/files/content/better_spells/bad_bombs/bad_bombs.lua")
 ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.fairmod/files/content/better_spells/joel/joel.lua")
+ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.fairmod/files/content/better_spells/timestop/timestop.lua")
 
 
 modifile("data/scripts/projectiles/black_hole_big.lua", [[math.min(64, radius + 1)]], [[radius + 1
