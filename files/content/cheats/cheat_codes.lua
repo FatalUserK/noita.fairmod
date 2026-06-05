@@ -996,7 +996,7 @@ local cheats = {
 	{
 		code = "refreshimg",
 		name = "REFRESHIMG",
-		description = "You are filled with joy and whimsy.",
+		description = "You flourish before you die.",
 		func = function(p,x,y) --maybe remove status effects too?
 			if not p then  return end
 			GameRegenItemActionsInPlayer(p)
@@ -1026,7 +1026,7 @@ local cheats = {
 	{
 		code = "refreshing",
 		name = "REFRESHING",
-		description = "You are filled with FUCKING HATE AND MALICE.",
+		description = "You die before you flourish.",
 		func = function(p,x,y) --todo, make it deplete all charges on spells
 			if not p then  return end
 			local current_frame = GameGetFrameNum()
@@ -1071,11 +1071,20 @@ local cheats = {
 	}, --todo, add "romeo" and "juliet" cheatcodes that only spawn one of each, use those for cheat disks
 	{
 		code = "pause",
-		name = "PAUSE",
+		name = "Pause",
+		description = "some meat bringing you all that joy?",
 		func = function(p,x,y)
-			pause(60, 2)
+			pause(-1, 2)
 		end
-	}
+	},
+	{
+		code = "chosen1",
+		name = "Chosen One",
+		description = "",
+		func = function(p,x,y)
+			perk_pickup( nil, p, perk_list[Random(1, #perk_list)].id, true, false, true )
+		end
+	},
 }
 
 for i = 1, #cheats do

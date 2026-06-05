@@ -19,7 +19,7 @@ for k, v in pairs(bait_list) do
 				--print("Bait casted!")
 
 				c.fire_rate_wait = c.fire_rate_wait + 10
-				player = get_players()[1]
+				local player = get_players()[1]
 				--print("reeeeeeee")
 				if player == GetUpdatedEntityID() then
 					x, y = EntityGetTransform(player)

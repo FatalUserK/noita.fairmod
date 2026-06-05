@@ -98,7 +98,7 @@ local prizes = {
 		particle_spin_mult = 0,
 		instant_prize = true,
 		nosound = true,
-		weight = 10000,
+		weight = 1,
 		func = function(player, ticket)
 			local x,y = EntityGetTransform(player)
 			GameScreenshake(25)
