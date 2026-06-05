@@ -1081,8 +1081,12 @@ local cheats = {
 for i = 1, #cheats do
 	local cheat = cheats[i]
 	if not cheat.description then cheat.description = "" end
-	if not cheat.decoration and ModDoesFileExist("mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png") then
-		cheat.decoration = "mods/noita.fairmod/files/content/cheats/3pieces/" .. cheat.code .. ".png"
+	if not cheat.decoration then
+		if ModDoesFileExist("mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png") then
+			cheat.decoration = "mods/noita.fairmod/files/content/cheats/3pieces/" .. cheat.code .. ".png"
+		else
+			cheat.description = ""
+		end
 	end
 end
 
@@ -1157,8 +1161,6 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 
 	description =  corrupt_text(description, amounts[Random(1, #amounts)])
 
-	print(name)
-	print(description)
 	local decorations = {}
 	local decorations_keyed = {}
 
@@ -1171,10 +1173,16 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 		end
 	end
 	for _,value in ipairs(targets) do
+		if value.name then GamePrintImportant(value.name, value.description, value.decoration) end
 		value.func(p, x, y)
 	end
 	GamePrintImportant = godprint
-	GamePrintImportant(name, description, decorations[Random(1, #decorations)] or "")
+	local decoration = decorations[Random(1, #decorations)] or ""
+	GamePrintImportant(name, description, decoration)
+
+	print(name)
+	print(description)
+	print(decoration)
 end
 
 print("num cheats: " .. #cheats)
