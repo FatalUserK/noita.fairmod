@@ -672,6 +672,7 @@ local cheats = {
 	},
 	{
 		code = "blacklight",
+		devmode = true,
 		func = function(player)
 			local x,y = EntityGetTransform(player)
 			EntityLoad( "mods/noita.fairmod/files/content/backrooms/props/ceiling_light_blacklight.xml", x, y - 20)
@@ -757,7 +758,8 @@ local cheats = {
 		end
 	},
 	{
-		code = "gullible", --i still personally think itd be funny if we referenced code gullible in a few places but it didnt do anything
+		code = "gullible",
+		--name = "YOU ARE AN IDIOT", disabled cuz i made a 3piece for this before i knew there wasnt actually a name for it, add it back if someone's thinks its neat
 		func = function(player)
 			ModSettingSet("noita.fairmod.popups", (ModSettingGet("noita.fairmod.popups") or "") .. "idiot,")
 		end,
@@ -941,9 +943,10 @@ local cheats = {
 	{
 		code = "fixperformance",
 		description = "removed of all those pesky entities!", --description so it can be scraped by `nullpointerexception` cheat.
+		decoration = "mods/noita.fairmod/empty.png",
 		func = function(p, x, y)
 			SetRandomSeed(y, x-GameGetFrameNum())
-			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!")
+			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!", "mods/noita.fairmod/empty.png")
 			local tags = {
 				"player_unit",
 				"world_state",
@@ -1078,6 +1081,9 @@ local cheats = {
 for i = 1, #cheats do
 	local cheat = cheats[i]
 	if not cheat.description then cheat.description = "" end
+	if not cheat.decoration and ModDoesFileExist("mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png") then
+		cheat.decoration = "mods/noita.fairmod/files/content/cheats/3pieces/" .. cheat.code .. ".png"
+	end
 end
 
 local num_cheats = #cheats
@@ -1153,15 +1159,22 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 
 	print(name)
 	print(description)
-	GamePrintImportant(name, description)
-	local godprint = GamePrintImportant
-	GamePrintImportant = function() end
+	local decorations = {}
+	local decorations_keyed = {}
 
+	local godprint = GamePrintImportant
+	GamePrintImportant = function(n,d, decor)
+		decor = decor or ""
+		if not decorations_keyed[decor] then
+			decorations[#decorations+1] = decor
+			decorations_keyed[decor] = true
+		end
+	end
 	for _,value in ipairs(targets) do
 		value.func(p, x, y)
 	end
-
 	GamePrintImportant = godprint
+	GamePrintImportant(name, description, decorations[Random(1, #decorations)] or "")
 end
 
 print("num cheats: " .. #cheats)

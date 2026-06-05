@@ -94,13 +94,14 @@ local prizes = {
 		name = "This Card will self destruct in 5 seconds.",
 		description = "Destroying root...",
 		decoration = "mods/noita.fairmod/files/content/gamblecore/misc/3piece_evil.png",
-		instant_prize = true,
-		nosound = true,
 		particle_sprite = "mods/noita.fairmod/files/content/gamblecore/misc/skull.png",
 		particle_spin_mult = 0,
-		weight = 1,
+		instant_prize = true,
+		nosound = true,
+		weight = 10000,
 		func = function(player, ticket)
 			local x,y = EntityGetTransform(player)
+			GameScreenshake(25)
 			GamePlaySound("data/audio/Desktop/event_cues.bank", "event_cues/greed_curse/create", x, y)
 			EntityAddComponent2(ticket, "LuaComponent", {
 				_tags = "enabled_in_world,enabled_in_hand,enabled_in_inventory",
