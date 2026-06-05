@@ -797,10 +797,10 @@ return {
 				local hole_maker = EntityCreateNew( "hole" )
 				EntitySetTransform(hole_maker, x, y)
 				EntityAddComponent2(hole_maker, "CellEaterComponent", {
-					radius=tostring(r)
+					radius=r
 				})
 				EntityAddComponent2(hole_maker, "LifetimeComponent", {
-					lifetime="1"
+					lifetime=1
 				})
 			end
 		
@@ -992,7 +992,7 @@ return {
 						is_emitting=true,
 					});
 					EntityAddComponent2(liquid, "LifetimeComponent", {
-						lifetime="120",
+						lifetime=120,
 					});	
 				end
 				GamePlaySound( "mods/noita.fairmod/fairmod.bank", "copibuddy/snap", 0, 0 )
