@@ -23,23 +23,32 @@ local timestop = {
 		if lifetime >= -1 and (EntityHasTag(caster, "player_unit") or EntityHasTag(caster, "polymorphed_player")) then
 			pause(lifetime)
 		elseif lifetime == -1 and not EntityHasTag(caster, "time_immunity") then
-			local mind_components = {
+			local disable_components = {
 				AIAttackComponent = true,
 				AIComponent = true,
 				AdvancedFishAIComponent = true,
 				AnimalAIComponent = true,
 				ControllerGoombaAIComponent = true,
+				ControlsComponent = true,
 				CrawlerAnimalComponent = true,
 				FishAIComponent = true,
 				ItemPickUpperComponent = true,
+				PathFindingComponent = true,
 				PhysicsAIComponent = true,
 				WormAIComponent = true,
 			}
+			local override_components = {}
 			for _,component in ipairs(EntityGetAllComponents(caster)) do
-				if mind_components[ComponentGetTypeName(component)] then
+				local typename = ComponentGetTypeName(component)
+				if disable_components[typename] then
 					EntityRemoveComponent(caster, component)
+				elseif override_components[typename] then
+					for key, value in pairs(override_components[typename]) do
+						ComponentSetValue2(component, key, value)
+					end
 				end
 			end
+			GameDropAllItems(caster)
 		end
 
 		StartReload(current_reload_time)
