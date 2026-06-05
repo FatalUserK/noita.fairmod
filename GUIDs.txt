@@ -176,6 +176,7 @@
 {2416dd45-494b-4267-8766-8476430be04e} event:/minecraft/steve2
 {f14574a6-7679-4f93-917e-5da2f2f10c9d} event:/minecraft/stone
 {1d8915b7-d6e5-4f9f-967b-31734c7f4a2b} event:/minecraft/wood
+{014c8d5a-0b24-4fe6-95d3-a9cba996fd33} event:/misc/dink
 {044e65fe-1efb-42b4-a1df-7737b1263904} event:/necoarc/noises
 {c7d655d8-ec85-4d25-bc91-cf2cca64fbb7} event:/nuke/fart1
 {b384a56c-faac-461e-9710-59b3d955ea01} event:/nuke/fart2

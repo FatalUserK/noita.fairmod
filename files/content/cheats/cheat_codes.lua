@@ -1,4 +1,5 @@
 --stylua: ignore start
+dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 local markers = dofile_once("mods/noita.fairmod/files/content/better_world/map_helper.lua")
 local cheats = {
 	{
@@ -317,6 +318,7 @@ local cheats = {
 	},
 	{
 		code = "qqqqq",
+		description = " --description so it can be scraped by `nullpointerexception` cheat.",
 		func = function(player)
 			GameAddFlagRun("copibuddy")
 		end,
@@ -397,6 +399,7 @@ local cheats = {
 	},
 	{
 		code = "userk",
+		description = "UserK", --description so it can be scraped by `nullpointerexception` cheat.
 		do_not_random = true,
 		not_cheat = true,
 		func = function()
@@ -452,6 +455,7 @@ local cheats = {
 	{code="/spawn",name="/spawn",description="Teleporting in 3... 2... wait, you're already there!",func=function(a)local b=tonumber(MagicNumbersGetValue("DESIGN_PLAYER_START_POS_X"))local c=tonumber(MagicNumbersGetValue("DESIGN_PLAYER_START_POS_Y"))local d=GetParallelWorldPosition(EntityGetTransform(a))*BiomeMapGetSize()*512;EntityApplyTransform(a,b+d,c)end}
 	,{
 		code = "copith",
+		description = "Setting Immersion: 100%!", --description so it can be scraped by `nullpointerexception` cheat.
 		func = function()
 			GameAddFlagRun("COPI_IMMERSIVE_MIMICS")
 			GamePrintImportant("THE CHEAT IS A MIMIC", "Setting Immersion: 100%!")
@@ -619,6 +623,7 @@ local cheats = {
 	},
 	{
 		code = "superchest",
+		description = "Alright, just this onceMay you be punished by torrents of Chaos", --description so it can be scraped by `nullpointerexception` cheat.
 		not_cheat = not HasFlagPersistent("fairmod_spawned_superchest"), --its only a cheat if it summons the superchest, for essence of chaos this is the intended method to acquire
 		func = function(player)
 
@@ -667,6 +672,7 @@ local cheats = {
 	},
 	{
 		code = "blacklight",
+		devmode = true,
 		func = function(player)
 			local x,y = EntityGetTransform(player)
 			EntityLoad( "mods/noita.fairmod/files/content/backrooms/props/ceiling_light_blacklight.xml", x, y - 20)
@@ -752,7 +758,8 @@ local cheats = {
 		end
 	},
 	{
-		code = "gullible", --i still personally think itd be funny if we referenced code gullible in a few places but it didnt do anything
+		code = "gullible",
+		--name = "YOU ARE AN IDIOT", disabled cuz i made a 3piece for this before i knew there wasnt actually a name for it, add it back if someone's thinks its neat
 		func = function(player)
 			ModSettingSet("noita.fairmod.popups", (ModSettingGet("noita.fairmod.popups") or "") .. "idiot,")
 		end,
@@ -935,9 +942,11 @@ local cheats = {
 	},
 	{
 		code = "fixperformance",
+		description = "removed of all those pesky entities!", --description so it can be scraped by `nullpointerexception` cheat.
+		decoration = "mods/noita.fairmod/empty.png",
 		func = function(p, x, y)
 			SetRandomSeed(y, x-GameGetFrameNum())
-			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!")
+			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!", "mods/noita.fairmod/empty.png")
 			local tags = {
 				"player_unit",
 				"world_state",
@@ -987,7 +996,7 @@ local cheats = {
 	{
 		code = "refreshimg",
 		name = "REFRESHIMG",
-		description = "You are filled with joy and wonder.",
+		description = "You flourish before you die.",
 		func = function(p,x,y) --maybe remove status effects too?
 			if not p then  return end
 			GameRegenItemActionsInPlayer(p)
@@ -1017,7 +1026,7 @@ local cheats = {
 	{
 		code = "refreshing",
 		name = "REFRESHING",
-		description = "You are filled with FUCKING HATE AND MALICE.",
+		description = "You die before you flourish.",
 		func = function(p,x,y) --todo, make it deplete all charges on spells
 			if not p then  return end
 			local current_frame = GameGetFrameNum()
@@ -1052,24 +1061,43 @@ local cheats = {
 		end
 	},
 	{
-		code = "endofeverything",
-		name = "End of Everything",
-		description = "genuinely what were you expecting",
-		func = function(p,x,y)
-			local eoe = EntityLoad("data/entities/projectiles/deck/all_spells_loader.xml", x, y)
-			if p then EntityAddChild(p, eoe) end
-		end
-	},
-	{
 		code = "starcrossedlovers",
 		name = "Star-Crossed Lovers",
-		description = "ADD A SHAKESPEARE QUOTE HERE",
+		description = "Package deal, must have eyes on one another at all times!",
 		func = function(p,x,y)
 			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x-15, y-10), "romeo")
 			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x+15, y-10), "juliet")
 		end
 	}, --todo, add "romeo" and "juliet" cheatcodes that only spawn one of each, use those for cheat disks
+	{
+		code = "pause",
+		name = "Pause",
+		description = "some meat bringing you all that joy?",
+		func = function(p,x,y)
+			pause(-1, 2)
+		end
+	},
+	{
+		code = "chosen1",
+		name = "Chosen One",
+		description = "",
+		func = function(p,x,y)
+			perk_pickup( nil, p, perk_list[Random(1, #perk_list)].id, true, false, true )
+		end
+	},
 }
+
+for i = 1, #cheats do
+	local cheat = cheats[i]
+	if not cheat.description then cheat.description = "" end
+	if not cheat.decoration then
+		if ModDoesFileExist("mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png") then
+			cheat.decoration = "mods/noita.fairmod/files/content/cheats/3pieces/" .. cheat.code .. ".png"
+		else
+			cheat.description = ""
+		end
+	end
+end
 
 local num_cheats = #cheats
 for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations.lua")) do
@@ -1142,17 +1170,28 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 
 	description =  corrupt_text(description, amounts[Random(1, #amounts)])
 
-	print(name)
-	print(description)
-	GamePrintImportant(name, description)
-	local godprint = GamePrintImportant
-	GamePrintImportant = function() end
+	local decorations = {}
+	local decorations_keyed = {}
 
+	local godprint = GamePrintImportant
+	GamePrintImportant = function(n,d, decor)
+		decor = decor or ""
+		if not decorations_keyed[decor] then
+			decorations[#decorations+1] = decor
+			decorations_keyed[decor] = true
+		end
+	end
 	for _,value in ipairs(targets) do
+		if value.name then GamePrintImportant(value.name, value.description, value.decoration) end
 		value.func(p, x, y)
 	end
-
 	GamePrintImportant = godprint
+	local decoration = decorations[Random(1, #decorations)] or ""
+	GamePrintImportant(name, description, decoration)
+
+	print(name)
+	print(description)
+	print(decoration)
 end
 
 print("num cheats: " .. #cheats)

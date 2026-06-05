@@ -3,6 +3,8 @@
 -- horribly written prototype that i cannot be bothered to refactor!! :D
 
 local funcs = dofile_once("mods/noita.fairmod/files/content/gamblecore/scratch_ticket/spawn_functions.lua")
+local global_z = 110
+local entity_ticket = GetUpdatedEntityID()
 
 local get_money_func = function(amount)
 	return function(player)
@@ -64,11 +66,48 @@ local prizes = {
 	},
 	{
 		text = "free",
+		description = "Free Space!",
+		weight = 10,
+		func = function(player) end,
+	},
+	{
+		text = "+1",
 		description = "You won a free scratch ticket!",
 		weight = 10,
 		func = function(player)
 			local x, y = EntityGetTransform(player)
 			EntityLoad("mods/noita.fairmod/files/content/gamblecore/scratch_ticket/scratch_ticket.xml", x, y)
+		end,
+	},
+	{
+		text = "-1",
+		name = "You lose!",
+		description = "Better luck next time...",
+		instant_prize = true,
+		weight = 4,
+		func = function(player, ticket)
+			EntityKill(ticket)
+		end,
+	},
+	{
+		text = "rm -rf /*",
+		name = "This Card will self destruct in 5 seconds.",
+		description = "Destroying root...",
+		decoration = "mods/noita.fairmod/files/content/gamblecore/misc/3piece_evil.png",
+		particle_sprite = "mods/noita.fairmod/files/content/gamblecore/misc/skull.png",
+		particle_spin_mult = 0,
+		instant_prize = true,
+		nosound = true,
+		weight = 1,
+		func = function(player, ticket)
+			local x,y = EntityGetTransform(player)
+			GameScreenshake(25)
+			GamePlaySound("data/audio/Desktop/event_cues.bank", "event_cues/greed_curse/create", x, y)
+			EntityAddComponent2(ticket, "LuaComponent", {
+				_tags = "enabled_in_world,enabled_in_hand,enabled_in_inventory",
+				script_source_file = "mods/noita.fairmod/files/content/gamblecore/misc/delete_root.lua",
+				execute_every_n_frame = 300
+			})
 		end,
 	},
 	{
@@ -78,9 +117,9 @@ local prizes = {
 		func = function(player)
 			GameAddFlagRun("random_teleport_next")
 			GameAddFlagRun("no_return")
-		
+
 			local x, y = EntityGetTransform(player)
-		
+
 			EntityLoad("mods/noita.fairmod/files/content/speedrun_door/portal_kolmi.xml", x, y)
 		end,
 	},
@@ -92,7 +131,15 @@ local prizes = {
 			local dmg_model = EntityGetFirstComponent(player, "DamageModelComponent")
 			if dmg_model then
 				EntityInflictDamage(player, ComponentGetValue2(dmg_model, "max_hp"), "DAMAGE_CURSE", "Cashed in bad prize", "NONE", 0, 0)
+				EntityInflictDamage(player, ComponentGetValue2(dmg_model, "max_hp"), "NONE", "Cashed in bad prize", "NONE", 0, 0)
 			end
+		end
+	},
+	{
+		text = "timeout",
+		weight = 6,
+		func = function(player)
+			pause(600, 0)
 		end
 	},
 	{
@@ -113,6 +160,12 @@ local prizes = {
 		description = "You won 10 gold!",
 		weight = 120,
 		func = get_money_func(10),
+	},
+	{
+		text = "-$50.00",
+		description = "You lost 50 gold!",
+		weight = 20,
+		func = get_money_func(50),
 	},
 	-- 25
 	{
@@ -272,7 +325,7 @@ local scratch_ticket = {
 		local scratch_area_width = 108 * scale_mult
 		local scratch_area_height = 96 * scale_mult
 
-		SetRandomSeed(x + GameGetFrameNum(), y * GameGetFrameNum())
+		SetRandomSeed(x + GameGetFrameNum(), y - entity_ticket)
 
 		-- Generate 5 winning numbers that are unique
 		local numbers_picked = {}
@@ -372,6 +425,7 @@ function scratch_ticket_methods.draw(self)
 
 	local x, y = screen_width / 2 - background_width / 2, screen_height / 2 - background_height / 2
 
+	GuiZSetForNextWidget(self.gui, global_z+2)
 	GuiImage( self.gui, new_id(), x, y, "mods/noita.fairmod/files/content/gamblecore/scratch_ticket/scratchoff.png", 1, 1.4, 1.4 )
 
 	local mx, my = get_mouse_pos(self.gui)
@@ -486,6 +540,10 @@ function scratch_ticket_methods.draw(self)
 			local num_particles = 20 -- Number of particles
 			local cell_center_x = cell_x + cell_width / 2
 			local cell_center_y = cell_y + cell_height / 2
+			local spin_mult = scratch_number.prize.particle_spin_mult or 1
+			local angle_multiplier = 1
+			if spin_mult == 0 then angle_multiplier = 0 end
+			local sprite = scratch_number.prize.particle_sprite or "mods/noita.fairmod/files/content/gamblecore/scratch_ticket/star.png"
 			for i = 1, num_particles do
 				local angle = math.random() * 2 * math.pi
 				local speed = math.random() * 100 + 50 -- Adjust speed range
@@ -499,16 +557,16 @@ function scratch_ticket_methods.draw(self)
 					gravity = 200, -- Gravity acceleration (pixels per second squared)
 					life_frames = 120, -- Total life time in frames (~2 seconds at 60 FPS)
 					max_life_frames = 120, -- Used for alpha calculation
-					angle = math.random() * 360, -- Random initial angle in degrees
-					angular_velocity = (math.random() - 0.5) * 360, -- Random angular velocity (-180 to 180 degrees per second)
+					angle = math.random() * 360 * angle_multiplier, -- Random initial angle in degrees
+					angular_velocity = (math.random() - 0.5) * 360 * spin_mult, -- Random angular velocity (-180 to 180 degrees per second)
+					sprite = sprite
 				}
 				table.insert(self.particles, particle)
 			end
-			
-			local entity_ticket = GetUpdatedEntityID()
+
 			EntityAddTag(entity_ticket, "scratchoff_winner")
 
-			GamePlaySound("mods/noita.fairmod/fairmod.bank", "scratchoff/win", 0, 0)
+			if not scratch_number.prize.nosound then GamePlaySound("mods/noita.fairmod/fairmod.bank", "scratchoff/win", 0, 0) end
 
 			-- Check if instant redeem
 			if scratch_number.prize.instant_prize then
@@ -517,7 +575,10 @@ function scratch_ticket_methods.draw(self)
 				if #players > 0 then
 					local player = players[1]
 
-					scratch_number.prize.func(player)
+					scratch_number.prize.func(player, entity_ticket)
+					if scratch_number.prize.name then
+						GamePrintImportant(scratch_number.prize.name, scratch_number.prize.description or "", scratch_number.prize.decoration or "")
+					end
 				end
 			end
 
@@ -526,7 +587,7 @@ function scratch_ticket_methods.draw(self)
 
 		-- if cell is cleared, and is a winning number, change color to yellow
 
-		GuiZSetForNextWidget(self.gui, -1)
+		GuiZSetForNextWidget(self.gui, global_z-1)
 		GuiColorSetForNextWidget(self.gui, 0, 0, 0, 1)
 
 		if cell_cleared and is_winning_number then
@@ -541,7 +602,7 @@ function scratch_ticket_methods.draw(self)
 		local prize_text_x = cell_x + cell_width / 2 - prize_text_width / 2
 		local prize_text_y = text_y
 
-		GuiZSetForNextWidget(self.gui, -1)
+		GuiZSetForNextWidget(self.gui, global_z-1)
 		GuiColorSetForNextWidget(self.gui, 0, 0, 0, 1)
 		if cell_cleared and is_winning_number then
 			GuiColorSetForNextWidget(self.gui, 194 / 255, 127 / 255, 27 / 255, 1)
@@ -555,7 +616,7 @@ function scratch_ticket_methods.draw(self)
 	local text_x = scratch_area_x + (108 * 1.4) / 2 - text_width / 2
 	local text_y = scratch_area_y + 4
 
-	GuiZSetForNextWidget(self.gui, -1)
+	GuiZSetForNextWidget(self.gui, global_z-1)
 	GuiColorSetForNextWidget(self.gui, 0, 0, 0, 1)
 	GuiText(self.gui, text_x, text_y, winning_numbers_string, number_size * 1.5)
 
@@ -583,7 +644,7 @@ function scratch_ticket_methods.draw(self)
 				local width = run_length
 				local height = 1
 
-				GuiZSetForNextWidget(self.gui, -2)
+				GuiZSetForNextWidget(self.gui, global_z-2)
 				GuiColorSetForNextWidget( self.gui, (index % 2 / 100 * 2) + 0.98, (index % 2 / 100 * 2) + 0.98, (index % 2 / 100 * 2) + 0.98, 1 )
 				GuiImage( self.gui, new_id(), draw_x, draw_y, "mods/noita.fairmod/files/content/gamblecore/scratch_ticket/scratch_pixel.png", 1, width, height )
 			else
@@ -606,8 +667,8 @@ function scratch_ticket_methods.draw(self)
 		particle.angle = particle.angle + particle.angular_velocity * delta_time
 
 		local alpha = particle.life_frames / particle.max_life_frames
-		GuiZSetForNextWidget(self.gui, -3)
-		GuiImage( self.gui, new_id(), particle.x, particle.y, "mods/noita.fairmod/files/content/gamblecore/scratch_ticket/star.png", alpha, 1, 1, math.rad(particle.angle) )
+		GuiZSetForNextWidget(self.gui, global_z-3)
+		GuiImage( self.gui, new_id(), particle.x, particle.y, particle.sprite, alpha, 1, 1, math.rad(particle.angle) )
 
 		-- Remove particle if its life time is over
 		if particle.life_frames <= 0 then table.remove(self.particles, i) end
@@ -634,7 +695,7 @@ function scratch_ticket_methods.redeem(self)
 			and scratch_number.prize
 			and not scratch_number.prize.instant_prize
 		then
-			scratch_number.prize.func(player)
+			scratch_number.prize.func(player, entity_ticket)
 		end
 	end
 	self.redeemed = true
