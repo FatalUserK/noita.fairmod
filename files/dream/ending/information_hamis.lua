@@ -44,7 +44,7 @@ function interacting(player, entity_id, interaction)
 				text = "Ask for a tip",
 				func = function(dialog)
 					dialog.show({
-						text = "{@delay 2}Hm?{@pause 30} Sure,{@pause 5} why not,{@pause 20} this one's on the house!{@pause 60}\nThe Fairmod is Eternal,{@pause 15} you can never leave.",
+						text = "{@delay 2}Hm?{@pause 30} Sure,{@pause 15} what the hell,{@pause 20} this one's on the house!{@pause 60}\nThe Fairmod is Eternal,{@pause 15} you can never leave.",
 						func = function() AddFlagPersistent("fairmod_lovely_dream_hamis_tip") end,
 						options = {
 							{
@@ -58,8 +58,13 @@ function interacting(player, entity_id, interaction)
 		on_closed = function()
 			GameRemoveFlagRun("fairmod_dialog_interacting")
 			AddFlagPersistent("fairmod_won_lovely_dream")
+			GameTriggerMusicFadeOutAndDequeueAll(1)
 			set_controls_enabled(true)
+			GameAddFlagRun("ending_game_completed")
+			GameOnCompleted()
+			GameScreenshake(200)
 
+			GamePlaySound("data/audio/Desktop/event_cues.bank", "event_cues/midas/create", 3547, 13065)
 			EntityLoad("mods/noita.fairmod/files/dream/ending/ending.xml", 3547, 13065)
 		end,
 	})

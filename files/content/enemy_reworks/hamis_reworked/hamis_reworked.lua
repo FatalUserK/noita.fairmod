@@ -11,6 +11,9 @@ local hamisits = {
 }
 
 local hamis_xml = nxml.parse(ModTextFileGetContent(hamis_file))
+local tags = hamis_xml.attr.tags
+if #(tags or "") == 0 then tags = "time_immunity" else tags = tags .. ",time_immunity" end
+hamis_xml.attr.tags = tags
 
 hamis_xml:add_child(nxml.new_element("LuaComponent", {
 	script_damage_about_to_be_received = "mods/noita.fairmod/files/content/enemy_reworks/hamis_reworked/hamis_death.lua",

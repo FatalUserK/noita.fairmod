@@ -23,6 +23,7 @@
 --- @field sprite_unidentified string?
 --- @field deck_index integer?
 --- @field related_projectiles {[1]:string, [2]:number?}? used for add trigger
+--- @field no_tmt boolean? for if a spell should not be included in TMTrainer
 
 --- @alias state table<string, any>
 

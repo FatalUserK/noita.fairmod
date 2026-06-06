@@ -31,6 +31,7 @@ perk_list[#perk_list + 1] = {
 
 		-- Didn't find a RESPAWN game effect. Time to die
 		EntityInflictDamage(entity_who_picked, 99999999, "DAMAGE_CURSE", "Minus Life", "BLOOD_EXPLOSION", 0, 0)
+		EntityInflictDamage(entity_who_picked, 99999999, "NONE", "Minus Life", "BLOOD_EXPLOSION", 0, 0)
 
 		local damage_model = EntityGetFirstComponent(entity_who_picked, "DamageModelComponent")
 		if not damage_model or ComponentGetValue2(damage_model, "hp") > 0 then
