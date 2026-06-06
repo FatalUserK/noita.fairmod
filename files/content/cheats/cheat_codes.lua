@@ -976,13 +976,21 @@ local cheats = {
 		end
 	},
 	{
+		code = "ihatelarpa",
+		name = "I Hate Larpa",
+		description = "Too bad!",
+		func = function()
+			GameAddFlagRun("payphone_larpa_evil") --TODO
+		end
+	},
+	{
 		code = "neveragain",
 		name = "Never Again :)",
 		description = "Life is simpler in the cube.",
 		func = function(p, x, y)
-			GameScreenshake(70)
+			GameScreenshake(10)
 			GamePlaySound("data/audio/Desktop/events.bank", "event_cues/chest/create", x, y)
-			LoadPixelScene("mods/noita.fairmod/files/content/cheats/misc/safety_box.png", "", x-23, y-23, "", true, nil, nil, nil, true)
+			LoadPixelScene("mods/noita.fairmod/files/content/cheats/misc/safety_box.png", "", x-23, y-23, "", true, false, nil, nil, true)
 		end
 	},
 	{
@@ -1071,7 +1079,7 @@ local cheats = {
 	}, --todo, add "romeo" and "juliet" cheatcodes that only spawn one of each, use those for cheat disks
 	{
 		code = "pause",
-		name = "Pause",
+		name = "Pause,",
 		description = "some meat bringing you all that joy?",
 		func = function(p,x,y)
 			pause(-1, 2)
@@ -1094,7 +1102,7 @@ for i = 1, #cheats do
 		if ModDoesFileExist("mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png") then
 			cheat.decoration = "mods/noita.fairmod/files/content/cheats/3pieces/" .. cheat.code .. ".png"
 		else
-			cheat.description = ""
+			cheat.decoration = ""
 		end
 	end
 end
@@ -1109,6 +1117,8 @@ for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations
 		code = id,
 		name = value.name or id,
 		description = value.desc,
+		decoration = value.decor or "",
+		is_teleport = true,
 		func = function(player)
 			if value.pw_local then x = x + GetParallelWorldPosition(EntityGetTransform(player)) * BiomeMapGetSize() * 512 end
 			EntityApplyTransform(player, x, y)
