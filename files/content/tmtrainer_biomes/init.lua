@@ -381,8 +381,8 @@ local scripts = {
 }
 
 local presets = {
-	"mods/noita.fairmod/files/content/tmtrainer_biomes/preset_random.lua",
-	"mods/noita.fairmod/files/content/tmtrainer_biomes/preset_reward.lua",
+	"mods/noita.fairmod/files/content/tmtrainer_biomes/presets/random.lua",
+	"mods/noita.fairmod/files/content/tmtrainer_biomes/presets/reward.lua",
 }
 
 local tilesets = {
@@ -963,15 +963,28 @@ init.OnMagicNumbersAndWorldSeedInitialized = function()
 		end
 		for i = 0, BIOMES_TO_GENERATE-1 do
 			local scriptpath = "mods/noita.fairmod/generated/biome_"..i..".lua"
+			local FILE1,FILE2,FILE3,FILE4,FILE5 =
+				scripts[Random(1, #scripts)],
+				scripts[Random(1, #scripts)],
+				scripts[Random(1, #scripts)],
+				scripts[Random(1, #scripts)],
+				scripts[Random(1, #scripts)]
+			ModTextFileSetContent("mods/noita.fairmod/generated/empty.lua", "--")
+			FILE1,FILE2,FILE3,FILE4,FILE5 =
+				"mods/noita.fairmod/generated/empty.lua",
+				"mods/noita.fairmod/generated/empty.lua",
+				"mods/noita.fairmod/generated/empty.lua",
+				"mods/noita.fairmod/generated/empty.lua",
+				"mods/noita.fairmod/generated/empty.lua"
 			ModTextFileSetContent(scriptpath,
 				ModTextFileGetContent("mods/noita.fairmod/files/content/tmtrainer_biomes/template_script.lua")
 					:gsub("BIOMESEED1", Random())
 					:gsub("BIOMESEED2", Random())
-					:gsub("FILE1", scripts[Random(1, #scripts)])
-					:gsub("FILE2", scripts[Random(1, #scripts)])
-					:gsub("FILE3", scripts[Random(1, #scripts)])
-					:gsub("FILE4", scripts[Random(1, #scripts)])
-					:gsub("FILE5", scripts[Random(1, #scripts)])
+					:gsub("FILE1", FILE1)
+					:gsub("FILE2", FILE2)
+					:gsub("FILE3", FILE3)
+					:gsub("FILE4", FILE4)
+					:gsub("FILE5", FILE5)
 					:gsub("PRESET", presets[2])
 			)
 			local biomexml = tostring(GenerateRandomBiome(i, scriptpath))

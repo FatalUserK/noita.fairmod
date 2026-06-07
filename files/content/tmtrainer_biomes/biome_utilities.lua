@@ -27,11 +27,11 @@ local rewards = {
 	},
 	{
 		"mods/noita.fairmod/files/content/milk_biome/entities/items/pickup/endless_milk_potion.xml",
-		weight = 3
+		weight = 5
 	},
 	{
 		"mods/noita.fairmod/files/content/minecraft/minecraft.xml",
-		weight = 3
+		weight = 2
 	},
 
 	{
@@ -217,11 +217,11 @@ local rewards = {
 local wands = { --separate table to avoid dilution
 	{
 		"mods/noita.fairmod/files/content/fishing/files/rod/default_rod.xml",
-		weight = 4
+		weight = 3
 	},
 	{
 		"mods/noita.fairmod/files/content/rat_wand/rat_wand.xml",
-		weight = 3
+		weight = 2
 	},
 
 	{
@@ -354,11 +354,11 @@ local wands = { --separate table to avoid dilution
 	},
 	{
 		"data/entities/items/wand_level_06_better.xml",
-		weight = 1
+		weight = 2
 	},
 	{
 		"data/entities/items/wand_unshuffle_06.xml",
-		weight = 1
+		weight = 2
 	},
 	{
 		"data/entities/items/wand_level_10.xml",

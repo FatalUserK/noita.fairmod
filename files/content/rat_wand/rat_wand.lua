@@ -65,7 +65,7 @@ ComponentObjectSetValue2(ability_comp, "gunaction_config", "speed_multiplier", g
 ComponentSetValue2(ability_comp, "mana_max", mana_max)
 ComponentSetValue2(ability_comp, "mana", mana_max)
 
-AddGunActionPermanent(entity_id, "FAIRMOD_RAT_BITE")
+AddGunActionPermanent(entity_id, "FAIRMOD_RAT_BITE") --something something house md
 
 local action_count = 0
 local gun_action = get_random_from(gun.actions)
