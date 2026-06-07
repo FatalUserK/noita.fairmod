@@ -322,7 +322,6 @@ local cheats = {
 	{
 		code = "qqqqq",
 		progress_id = "copibuddy",
-		description = " --description so it can be scraped by `nullpointerexception` cheat.",
 		func = function(player)
 			GameAddFlagRun("copibuddy")
 		end,
@@ -404,7 +403,6 @@ local cheats = {
 	},
 	{
 		code = "userk",
-		description = "UserK", --description so it can be scraped by `nullpointerexception` cheat.
 		do_not_random = true,
 		not_cheat = true,
 		func = function()
@@ -464,7 +462,6 @@ local cheats = {
 	{code="/spawn",name="/spawn",description="Teleporting in 3... 2... wait, you're already there!",func=function(a)local b=tonumber(MagicNumbersGetValue("DESIGN_PLAYER_START_POS_X"))local c=tonumber(MagicNumbersGetValue("DESIGN_PLAYER_START_POS_Y"))local d=GetParallelWorldPosition(EntityGetTransform(a))*BiomeMapGetSize()*512;EntityApplyTransform(a,b+d,c)end}
 	,{
 		code = "copith",
-		description = "Setting Immersion: 100%!", --description so it can be scraped by `nullpointerexception` cheat.
 		func = function()
 			GameAddFlagRun("COPI_IMMERSIVE_MIMICS")
 			GamePrintImportant("THE CHEAT IS A MIMIC", "Setting Immersion: 100%!")
@@ -635,7 +632,6 @@ local cheats = {
 	},
 	{
 		code = "superchest",
-		description = "Alright, just this onceMay you be punished by torrents of Chaos", --description so it can be scraped by `nullpointerexception` cheat.
 		not_cheat = not HasFlagPersistent("fairmod_spawned_superchest"), --its only a cheat if it summons the superchest, for essence of chaos this is the intended method to acquire
 		func = function(player)
 
@@ -958,8 +954,7 @@ local cheats = {
 	},
 	{
 		code = "fixperformance",
-		description = "removed of all those pesky entities!", --description so it can be scraped by `nullpointerexception` cheat.
-		decoration = "mods/noita.fairmod/empty.png",
+		decoration = "mods/empty.png",
 		func = function(p, x, y)
 			SetRandomSeed(y, x-GameGetFrameNum())
 			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!", "mods/noita.fairmod/empty.png")
@@ -1005,7 +1000,7 @@ local cheats = {
 		description = "Life is simpler in the cube.",
 		func = function(p, x, y)
 			GameScreenshake(10)
-			GamePlaySound("data/audio/Desktop/events.bank", "event_cues/chest/create", x, y)
+			GamePlaySound("data/audio/Desktop/explosion.bank", "explosions/box", x, y)
 			LoadPixelScene("mods/noita.fairmod/files/content/cheats/misc/safety_box.png", "", x-23, y-23, "", true, false, nil, nil, true)
 		end
 	},
@@ -1121,6 +1116,7 @@ local cheats = {
 		code = "ohdeer",
 		name = "Oh, deer.",
 		description = "this pun would probably work better if you weren't manually typing it on your keyboard",
+		do_not_random = true,
 		func = function(p,x,y)
 			LoadGameEffectEntityTo(p, "mods/noita.fairmod/files/content/cheats/misc/perma_deer.xml")
 			--[[EntityAddComponent2(p, "GameEffectComponent", {
@@ -1131,21 +1127,29 @@ local cheats = {
 			})--no worky]]
 		end
 	},
-}
+	{
+		code = "amightycocktail",
+		name = "A Mighty Cocktail",
+		description = "The Strongest Potion.",
+		func = function(p,x,y)
+			local potion = EntityLoad("data/entities/items/pickup/potion_empty.xml", x, y)
+			local mat_inv = EntityGetFirstComponent(potion, "MaterialInventoryComponent")
+			if not mat_inv then return end
+			ComponentSetValue2(mat_inv, "do_reactions", 0)
 
-for i = 1, #cheats do
-	local cheat = cheats[i]
-	if not cheat.description then cheat.description = "" end
-	if not cheat.decoration then
-		if ModDoesFileExist("mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png") then
-			cheat.decoration = "mods/noita.fairmod/files/content/cheats/3pieces/" .. cheat.code .. ".png"
-		else
-			cheat.decoration = ""
+			local mat_count = 0
+			while true do
+				local name = CellFactory_GetName(mat_count)
+				if name == "unknown" then break
+				else
+					mat_count = mat_count + 1
+					AddMaterialInventoryMaterial(potion, name, 10)
+				end
+			end
+			GamePickUpInventoryItem(p, potion)
 		end
-	end
-	if cheat.twitch or cheat.dev_mode then cheat.not_progress = true end --twitch cheats shouldnt count towards progress imo
-	cheat.progress_id = cheat.progress_id or tostring(cheat.code)
-end
+	},
+}
 
 local num_cheats = #cheats
 for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations.lua")) do
@@ -1165,6 +1169,32 @@ for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations
 			EntityApplyTransform(player, x, y)
 		end
 	}
+end
+
+
+local remove_list = {}
+for i = 1, #cheats do
+	local cheat = cheats[i]
+	if not cheat.description then cheat.description = "" end
+	if not cheat.decoration then
+		if ModDoesFileExist("mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png") then
+			cheat.decoration = "mods/noita.fairmod/files/content/cheats/3pieces/" .. cheat.code .. ".png"
+		else
+			cheat.decoration = ""
+		end
+	end
+	if cheat.dev_mode then cheat.not_progress = true end --twitch cheats shouldnt count towards progress imo
+	cheat.progress_id = cheat.progress_id or cheat.code
+
+	if cheat.condition ~= nil then
+		if (type(cheat.condition) == "function" and not cheat.condition()) or not cheat.condition then
+			remove_list[#remove_list+1] = i
+		end
+	end
+end
+
+for i = 0, #remove_list-1 do
+	table.remove(cheats, remove_list[#remove_list-i])
 end
 
 
@@ -1192,9 +1222,8 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 	local targets = {}
 
 	local list_of_cheats = {}
-	local twitch_enabled = StreamingGetIsConnected()
 	for _,cheat in ipairs(cheats) do
-		if (not cheat.twitch or twitch_enabled) and not cheat.do_not_random then
+		if not (cheat.twitch or cheat.do_not_random) then
 			list_of_cheats[#list_of_cheats+1] = cheat
 		end
 	end
@@ -1203,14 +1232,6 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 		targets[#targets+1] = target
 	end
 
-	local name = corrupt_text("ERROR - Null Pointer Exception encountered...", .1)
-
-	local description = ""
-	for i = 1, 10 do
-		print("Calling cheat:" .. tostring(targets[i].code))
-		local target_desc = tostring(targets[i].description)
-		description = description .. target_desc:sub(Random(1,#target_desc), Random(1,#target_desc))
-	end
 
 	local amounts = {
 		.01,
@@ -1220,13 +1241,15 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 		.8,
 	}
 
-	description =  corrupt_text(description, amounts[Random(1, #amounts)])
 
+	local description = ""
 	local decorations = {}
 	local decorations_keyed = {}
 
 	local godprint = GamePrintImportant
-	GamePrintImportant = function(n,d, decor)
+	GamePrintImportant = function(n,desc,decor)
+		description = description .. desc:sub(Random(0,#desc), Random(0,#desc))
+
 		decor = decor or ""
 		if not decorations_keyed[decor] then
 			decorations[#decorations+1] = decor
@@ -1234,11 +1257,18 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 		end
 	end
 	for _,value in ipairs(targets) do
+		print("Calling cheat:" .. tostring(value.code))
 		if value.name then GamePrintImportant(value.name, value.description, value.decoration) end
 		value.func(p, x, y)
 	end
 	GamePrintImportant = godprint
+
+
+	local name = corrupt_text("ERROR - Null Pointer Exception encountered...", .1)
+	description =  corrupt_text(description, amounts[Random(1, #amounts)])
 	local decoration = decorations[Random(1, #decorations)] or ""
+
+
 	GamePrintImportant(name, description, decoration)
 
 	print(name)
