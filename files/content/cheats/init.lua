@@ -6,8 +6,10 @@ local src = b64.decode(dofile_once("mods/noita.fairmod/files/content/theeyes/sol
 local cheat_codes = dofile_once("mods/noita.fairmod/files/content/cheats/cheat_codes.lua")
 
 for _,cheat in ipairs(cheat_codes) do
-	local setting_progress_id = "fairmod.cheat_executed." .. cheat.progress_id
-	ModSettingSet(setting_progress_id, ModSettingGet(setting_progress_id) or 0)
+	if not cheat.not_progress then
+		local setting_progress_id = "fairmod.cheat_executed." .. cheat.progress_id
+		ModSettingSet(setting_progress_id, ModSettingGet(setting_progress_id) or 0)
+	end
 end
 
 local current_input_text = ""

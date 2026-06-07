@@ -286,6 +286,7 @@ local cheats = {
 	},
 	{
 		code = "haveanygamesonyourphone",
+		progress_id = "kbidhbny",
 		name = "kbidhbny",
 		description = "nokia get",
 		func = function(player)
@@ -295,6 +296,7 @@ local cheats = {
 	},
 	{
 		code = "3310",
+		progress_id = "kbidhbny",
 		name = "kbidhbny",
 		description = "nokia get",
 		func = function(player)
@@ -312,12 +314,14 @@ local cheats = {
 	},
 	{
 		code = "copibuddy",
+		progress_id = "copibuddy",
 		func = function(player)
 			GameAddFlagRun("copibuddy")
 		end,
 	},
 	{
 		code = "qqqqq",
+		progress_id = "copibuddy",
 		description = " --description so it can be scraped by `nullpointerexception` cheat.",
 		func = function(player)
 			GameAddFlagRun("copibuddy")
@@ -551,6 +555,7 @@ local cheats = {
 	{
 		code = "wasdwasd",
 		not_cheat = true,
+		not_progress = true,
 		name = "oops!",
 		description = "be more careful!",
 		func = function(player)
@@ -560,6 +565,7 @@ local cheats = {
 	{
 		code = "wdsawdsa",
 		not_cheat = true,
+		not_progress = true,
 		name = "oops!",
 		description = "be more careful!",
 		func = function(player)
@@ -569,6 +575,7 @@ local cheats = {
 	{
 		code = "credits",
 		not_cheat = true,
+		not_progress = true,
 		func = function(player)
 			if HasFlagPersistent("fairmod_unlocked_credits") then
 				--yeah i didnt finish this
@@ -695,6 +702,7 @@ local cheats = {
 	{
 		code = "printuserdiagnostic",
 		not_cheat = true,
+		not_progress = true,
 		func = function()
 			GamePrint(tostring(ModSettingGet("fairmod.user_seed")))
 		end
@@ -983,14 +991,14 @@ local cheats = {
 			end
 		end
 	},
-	{
+	--[[{
 		code = "ihatelarpa",
 		name = "I Hate Larpa",
 		description = "Too bad!",
 		func = function()
 			GameAddFlagRun("payphone_larpa_evil") --TODO
 		end
-	},
+	},--ill add this later]]
 	{
 		code = "neveragain",
 		name = "Never Again :)",
@@ -1135,7 +1143,7 @@ for i = 1, #cheats do
 			cheat.decoration = ""
 		end
 	end
-	if cheat.twitch then cheat.not_progress = true end --twitch cheats shouldnt count towards progress imo
+	if cheat.twitch or cheat.dev_mode then cheat.not_progress = true end --twitch cheats shouldnt count towards progress imo
 	cheat.progress_id = cheat.progress_id or tostring(cheat.code)
 end
 
