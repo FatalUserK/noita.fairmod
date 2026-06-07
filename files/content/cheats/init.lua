@@ -3,6 +3,13 @@ local aes = dofile_once("mods/noita.fairmod/files/lib/aes/aes.lua")
 local b64 = dofile_once("mods/noita.fairmod/files/lib/b64/b64.lua")
 local src = b64.decode(dofile_once("mods/noita.fairmod/files/content/theeyes/solution.lua"))
 
+local cheat_codes = dofile_once("mods/noita.fairmod/files/content/cheats/cheat_codes.lua")
+
+for _,cheat in ipairs(cheat_codes) do
+	local setting_progress_id = "fairmod.cheat_executed." .. cheat.progress_id
+	ModSettingSet(setting_progress_id, ModSettingGet(setting_progress_id) or 0)
+end
+
 local current_input_text = ""
 local command_locked_in = false
 
@@ -15,7 +22,6 @@ module.update = function()
 
 	local player = players[1]
 
-	local cheat_codes = dofile_once("mods/noita.fairmod/files/content/cheats/cheat_codes.lua")
 	local commands = dofile_once("mods/noita.fairmod/files/content/cheats/commands.lua")
 	local keys = dofile_once("mods/noita.fairmod/files/content/cheats/misc/keyboard.lua")
 
@@ -169,6 +175,10 @@ module.update = function()
 							end
 							if not v.not_cheat then GameAddFlagRun("Epic_leet_hacker") print("cheat used, you dirty cheater!") end
 							local x,y = EntityGetTransform(player)
+							if not v.not_progress then
+								local setting_progress_id = "fairmod.cheat_executed." .. v.progress_id
+								ModSettingSet(setting_progress_id, ModSettingGet(setting_progress_id) + 1)
+							end
 							v.func(player, x, y)
 							current_input_text = ""
 						end

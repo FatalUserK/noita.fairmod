@@ -1,3 +1,5 @@
+dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
+
 local game_translation_file = "data/translations/common.csv"
 local append_list = {
 	"mods/noita.fairmod/files/translations/content/milk_biome.csv",
@@ -8,6 +10,25 @@ local append_list = {
 	"mods/noita.fairmod/files/translations/content/reformatted.csv",
 	"mods/noita.fairmod/files/translations/content/no_comma_more_shuffle.csv",
 }
+
+local general_post_processing = {
+	{
+		repl = "NUM_CHEATCODES",
+		func = function()
+			local num_cheats = 1
+			for _,cheat in ipairs(dofile_once("mods/noita.fairmod/files/content/cheats/cheat_codes.lua")) do
+				if not cheat.not_progress then
+					num_cheats = num_cheats + 1
+				end
+			end
+			return num_cheats
+		end
+	}
+}
+
+for _,target in ipairs(general_post_processing) do
+	modifile("mods/noita.fairmod/files/translations/content/general.csv", target.repl, target.func())
+end
 
 local translation = ModTextFileGetContent(game_translation_file)
 for i = 1, #append_list do

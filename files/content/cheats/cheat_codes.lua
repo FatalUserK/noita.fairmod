@@ -382,6 +382,7 @@ local cheats = {
 		code = function()
 			return StatsGetValue("world_seed") or "12345"
 		end,
+		progress_id = "world_reincarnation",
 		name = "World Reincarnation",
 		description = "The world has been regenerated with a new seed.",
 		func = function(player)
@@ -410,6 +411,7 @@ local cheats = {
 	},
 	{
 		code = "/kill",
+		progress_id = "killplayer",
 		name = "Ouch!",
 		description = "Player fell out of the world.",
 		do_not_random = true,
@@ -420,6 +422,7 @@ local cheats = {
 	},
 	{
 		code = "boobs",
+		progress_id = "killplayer",
 		do_not_random = true,
 		func = function(player)
 			EntityInflictDamage( player, 9999999999999999999999999, "DAMAGE_PHYSICS_BODY_DAMAGED", "yuor a looser", "DISINTEGRATED", 0, 0 )
@@ -428,6 +431,7 @@ local cheats = {
 	},
 	{
 		code = "ariral.boobs",
+		progress_id = "killplayer",
 		do_not_random = true,
 		func = function(player)
 			EntityInflictDamage( player, 9999999999999999999999999, "DAMAGE_PHYSICS_BODY_DAMAGED", "yuor a looser", "DISINTEGRATED", 0, 0 )
@@ -436,6 +440,7 @@ local cheats = {
 	},
 	{
 		code = "sex",
+		progress_id = "killplayer",
 		do_not_random = true,
 		func = function(player)
 			EntityInflictDamage( player, 9999999999999999999999999, "DAMAGE_PHYSICS_BODY_DAMAGED", "yuor a looser", "DISINTEGRATED", 0, 0 )
@@ -837,6 +842,7 @@ local cheats = {
         description = "A mysterious seal has been enforced",
 		do_not_random = true,
         not_cheat = true,
+		not_progress = true,
         func = function(player)
             GameAddFlagRun("fairmod.no_cheats")
         end,
@@ -847,6 +853,7 @@ local cheats = {
         description = "The mysterious seal has been vanquished",
 		do_not_random = true,
         not_cheat = true,
+		not_progress = true,
         func = function(player)
 			if GameHasFlagRun("fairmod.no_cheats") then
 				GameAddFlagRun("infinite_karmic_debt")
@@ -859,6 +866,7 @@ local cheats = {
 		not_cheat = true,
 		do_not_random = true,
 		do_not_sudo = true,
+		not_progress = true,
 		func = function() --counter to track gullible idiots
 			ModSettingSet("fairmod.photocopier_attempts", (ModSettingGet("fairmod.photocopier_attempts") or 0) + 1)
 		end
@@ -1093,6 +1101,28 @@ local cheats = {
 			perk_pickup( nil, p, perk_list[Random(1, #perk_list)].id, true, false, true )
 		end
 	},
+	{
+		code = "ohdeeer",
+		name = "Oh- wait deeer?",
+		description = "huh.",
+		func = function(p,x,y)
+			LoadGameEffectEntityTo(p, "data/entities/misc/effect_polymorph.xml")
+		end
+	},
+	{
+		code = "ohdeer",
+		name = "Oh, deer.",
+		description = "this pun would probably work better if you weren't manually typing it on your keyboard",
+		func = function(p,x,y)
+			LoadGameEffectEntityTo(p, "mods/noita.fairmod/files/content/cheats/misc/perma_deer.xml")
+			--[[EntityAddComponent2(p, "GameEffectComponent", {
+				effect = "POLYMORPH",
+				frames = -1,
+				disable_movement = false,
+				polymorph_target = "data/entities/animals/deer.xml",
+			})--no worky]]
+		end
+	},
 }
 
 for i = 1, #cheats do
@@ -1105,6 +1135,8 @@ for i = 1, #cheats do
 			cheat.decoration = ""
 		end
 	end
+	if cheat.twitch then cheat.not_progress = true end --twitch cheats shouldnt count towards progress imo
+	cheat.progress_id = cheat.progress_id or tostring(cheat.code)
 end
 
 local num_cheats = #cheats
@@ -1115,6 +1147,7 @@ for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations
 
 	cheats[num_cheats + i] = {
 		code = id,
+		progress_id = id,
 		name = value.name or id,
 		description = value.desc,
 		decoration = value.decor or "",
@@ -1129,6 +1162,7 @@ end
 
 table.insert(cheats, {
 	code = "nullpointerexception",
+	progress_id = "nullpointerexception"
 })
 
 local r = 0 --external recursion factor to avoid infinite recursion
