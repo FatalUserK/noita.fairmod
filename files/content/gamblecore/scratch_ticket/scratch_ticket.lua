@@ -165,7 +165,7 @@ local prizes = {
 		text = "-$50.00",
 		description = "You lost 50 gold!",
 		weight = 20,
-		func = get_money_func(50),
+		func = get_money_func(-50),
 	},
 	-- 25
 	{
@@ -236,7 +236,7 @@ local function GetRandomPrize()
 		if rnd <= current_weight then return v, idx end
 	end
 
-	return nil, nil
+	return prizes[#prizes], #prizes --return final option
 end
 
 local function color_abgr_merge(r, g, b, a)
