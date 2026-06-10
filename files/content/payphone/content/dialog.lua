@@ -302,7 +302,7 @@ return {
 		text = [[We have detected unusual activity on your bank account.
 	Please provide your account number to verify your
 	identity.]],
-		func = function(dialog)
+		func = function(dialog, dialog_system)
 			dialog_system.dialog_box_height = 100
 		end,
 		options = {
@@ -441,7 +441,7 @@ return {
 		typing_sound = "gibberish",
 		text = [[Hello! Would you like to participate in a short survey about
 	your recent cave-dwelling experiences?]],
-		func = function(dialog)
+		func = function(dialog, dialog_system)
 			dialog_system.dialog_box_height = 100
 		end,
 		options = {

@@ -286,7 +286,6 @@ local cheats = {
 	},
 	{
 		code = "haveanygamesonyourphone",
-		progress_id = "kbidhbny",
 		name = "kbidhbny",
 		description = "nokia get",
 		func = function(player)
@@ -296,7 +295,7 @@ local cheats = {
 	},
 	{
 		code = "3310",
-		progress_id = "kbidhbny",
+		progress_id = "haveanygamesonyourphone",
 		name = "kbidhbny",
 		description = "nokia get",
 		func = function(player)
@@ -314,7 +313,6 @@ local cheats = {
 	},
 	{
 		code = "copibuddy",
-		progress_id = "copibuddy",
 		func = function(player)
 			GameAddFlagRun("copibuddy")
 		end,
@@ -986,14 +984,16 @@ local cheats = {
 			end
 		end
 	},
-	--[[{
+	{
 		code = "ihatelarpa",
 		name = "I Hate Larpa",
 		description = "Too bad!",
+		do_not_random = true, --added this as do_not_random because casting a box2d projectile froze my game for 3 hours and 50 minutes before eventually crashing.
 		func = function()
-			GameAddFlagRun("payphone_larpa_evil") --TODO
+			GameRemoveFlagRun("payphone_larpa")
+			GameAddFlagRun("payphone_larpa_evil")
 		end
-	},--ill add this later]]
+	},
 	{
 		code = "neveragain",
 		name = "Never Again :)",
@@ -1093,7 +1093,7 @@ local cheats = {
 		name = "Pause,",
 		description = "some meat bringing you all that joy?",
 		func = function(p,x,y)
-			pause(-1, 2)
+			pause(600, 2)
 		end
 	},
 	{
@@ -1118,13 +1118,15 @@ local cheats = {
 		description = "this pun would probably work better if you weren't manually typing it on your keyboard",
 		do_not_random = true,
 		func = function(p,x,y)
-			LoadGameEffectEntityTo(p, "mods/noita.fairmod/files/content/cheats/misc/perma_deer.xml")
-			--[[EntityAddComponent2(p, "GameEffectComponent", {
+			if not p then return end
+			local d = EntityCreateNew("deer_morph")
+			EntityAddComponent2(d, "GameEffectComponent", {
 				effect = "POLYMORPH",
 				frames = -1,
 				disable_movement = false,
 				polymorph_target = "data/entities/animals/deer.xml",
-			})--no worky]]
+			})
+			EntityAddChild(p, d)
 		end
 	},
 	{
@@ -1143,7 +1145,7 @@ local cheats = {
 				if name == "unknown" then break
 				else
 					mat_count = mat_count + 1
-					AddMaterialInventoryMaterial(potion, name, 10)
+					AddMaterialInventoryMaterial(potion, name, 2)
 				end
 			end
 			GamePickUpInventoryItem(p, potion)
@@ -1208,8 +1210,8 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 	SetRandomSeed(GameGetFrameNum() - x, y + p - r)
 	r = r + 1
 
+	local random_symbols = {'', '"', '<', '>', '@', '#', ';', '0', '£', '!', ',', '.', ':', '?', '~', '\'', '%', '*', '&', '$', '(', ')', 'ERROR', '//', '/', '\\', 'null', 'Void', '+', '_', '-', '|', '∅', '∞'}
 	local function corrupt_text(str, prob)
-		local random_symbols = {'', '"', '<', '>', '@', '#', ';', '0', '£', '!', ',', '.', ':', '?', '~', '\'', '%', '*', '&', '$', '(', ')', 'ERROR', '//', '/', '\\', 'null', 'Void', '+', '_', '-', '|', '∅', '∞'}
 		local output = ""
 		for i = 1, #str do
 			if Random() < prob then output = output .. random_symbols[Random(1, #random_symbols)]
@@ -1247,7 +1249,8 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 	local decorations_keyed = {}
 
 	local godprint = GamePrintImportant
-	GamePrintImportant = function(n,desc,decor)
+	GamePrintImportant = function(name,desc,decor)
+		random_symbols[#random_symbols+1] = name:sub(Random(0, #name), Random(0, #name))
 		description = description .. desc:sub(Random(0,#desc), Random(0,#desc))
 
 		decor = decor or ""
