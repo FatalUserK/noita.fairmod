@@ -5,7 +5,7 @@ local prfx = mod_id .. "."
 
 local function PatchGamesInitlua()
 	local file = "data/scripts/init.lua"
-	local patch = "mods/noita.fairmod/files/content/biome_mods/biome_modifiers_patch.lua"
+	local patch = "mods/noita.fairmod/files/content/patch_game_init.lua"
 	local file_appends = ModLuaFileGetAppends(file)
 
 	for _, append in ipairs(file_appends) do
