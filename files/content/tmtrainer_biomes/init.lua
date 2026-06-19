@@ -1,3 +1,4 @@
+dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 local nxml = dofile_once("mods/noita.fairmod/files/lib/nxml.lua") ---@type nxml
 
 local backgrounds = {
@@ -853,7 +854,7 @@ local override_whitelist = {
 	[0xff866172] = .005, --wizards' den
 	[0xff67524E] = .005, --powerplant
 	[0xff32CDE1] = .005, --underground desert
-	[0xffA88000] = .005, --frozen vault
+	[0xffA88000] = .025, --frozen vault
 	[0xffBDA577] = .005, --forgotten cavern
 	[0xff11E37B] = .005, --bottom of lava pit
 
@@ -875,23 +876,24 @@ local override_whitelist = {
 	[0xff11E333] = 1, --hills2
 	[0xff0000FE] = .005, --bottom of floating terrain
 }
-
-local a,b,c,d,e,f,g = GameGetDateAndTimeLocal() --doing this fn to experiment with diff permutations more easily
+local a,b,c,d,e,f,g = 0,0,0,0,0,0,false
+--a,b,c,d,e,f,g = GameGetDateAndTimeLocal() --doing this fn to experiment with diff permutations more easily
 local BIOMES_TO_GENERATE = 40
 local seed_offset = d*e*f+e+f
 local force_override_all = true
 
 
 local biomes = 0
-local function GenerateRandomBiome(name, script)
+local function GenerateRandomBiome(name, script, biome_data)
 	--SetRandomSeed(491, 412)
 
 	local bg = backgrounds[Random(1, #backgrounds)]
 
 	local colour_gradings = {
-		1 - Random()^3,
-		1 - Random()^3,
-		1 - Random()^3,
+		1 - Random()^3, --r
+		1 - Random()^3, --g
+		1 - Random()^3, --b
+		1 - Random()^3, --greyscale
 	}
 	if Random(1, 8) == 8 then
 		if Random(1, 5) == 5 then
@@ -905,29 +907,45 @@ local function GenerateRandomBiome(name, script)
 			end
 		end
 	end
+	if Random(1,7) ~= 7 then colour_gradings[4] = 1 end --only 1/7 chance to change greyscale stuff
+
+	local audio_music_energy_coeff = 1
+	if Random() < .15 then
+		audio_music_energy_coeff = (1-Random()^2) * 2
+		if Random(1,4) == 4 then
+			audio_music_energy_coeff = audio_music_energy_coeff * Random(-4, 4)
+		end
+	end
 
 	local tileset = tilesets[Random(1, #tilesets)]
-	local biome = nxml.new_element("Biome", nil, {
-		nxml.new_element("Topology", {
-			name = name,
-			type = "BIOME_WANG_TILE",
-			wang_template_file = tileset,
-			lua_script = script, --scripts[Random(1, #scripts)],
 
-			color_grading_r = colour_gradings[1],
-			color_grading_g = colour_gradings[2],
-			color_grading_b = colour_gradings[3],
-			background_image = bg.image,
-			background_edge_left = bg.edge_left,
-			background_edge_right = bg.edge_right,
-			background_edge_top = bg.edge_top,
-			background_edge_bottom = bg.edge_bottom,
-			background_edge_priority = tostring(Random(-5, 14)),
-			audio_music_2 = ambience_and_music[Random(1, #ambience_and_music)],
-			audio_ambience = ambience_and_music[Random(1, #ambience_and_music)],
-			audio_ambience_surface = ambience_and_music[Random(1, #ambience_and_music)],
-			audio_music_enter = music_sound_events[Random(1, #music_sound_events)],
-		})
+
+	local topology = nxml.new_element("Topology", {
+		name = name,
+		type = "BIOME_WANG_TILE",
+		wang_template_file = tileset,
+		lua_script = script, --scripts[Random(1, #scripts)],
+		has_rain = Random(1,12) == 12,
+
+		color_grading_r = colour_gradings[1],
+		color_grading_g = colour_gradings[2],
+		color_grading_b = colour_gradings[3],
+		color_grading_grayscale = colour_gradings[4],
+
+		background_image = bg.image,
+		background_edge_left = bg.edge_left,
+		background_edge_right = bg.edge_right,
+		background_edge_top = bg.edge_top,
+		background_edge_bottom = bg.edge_bottom,
+		background_edge_priority = tostring(Random(-5, 14)),
+
+		audio_music_2 = ambience_and_music[Random(1, #ambience_and_music)],
+		audio_ambience = ambience_and_music[Random(1, #ambience_and_music)],
+		audio_ambience_surface = ambience_and_music[Random(1, #ambience_and_music)],
+		audio_biome_id_for_music = ambience_and_music[Random(1, #ambience_and_music)],
+		audio_music_enter = music_sound_events[Random(1, #music_sound_events)],
+		audio_music_trigger_without_danger = Random(1,9) == 1,
+		audio_music_energy_coeff = audio_music_energy_coeff,
 	})
 
 	local materials = nxml.new_element("Materials", {name = "test_biome"})
@@ -935,97 +953,221 @@ local function GenerateRandomBiome(name, script)
 	for i = 1, Random(0,6) do
 		materials:add_child(nxml.new_element("MaterialComponent", {
 			material_name = RandomFromTable(ground_material_options).material,
-			material_index = Random(-9, 10),
+			material_index = Random(-9, 10), --no idea what this does
 			material_min = Random(),
 			material_max = Random() + 1,
-			rare_polka_is_boxed = Random(0, 1),
+			rare_polka_is_boxed = Random(0, 1), --idr what this does
 		}))
 	end
 
-	biome:add_child(materials)
+	if Random() < .05 then
+		local modifiers = {
+			{ --disrupted sight
+				name = "$biomemodifierdesc_fog_of_war_clear_at_player",
+				decor = "data/ui_gfx/decorations_biome_modifier/fog_of_war_clear_at_player.png",
+				func = function(self)
+					local fow_options = {"HEAVY_CLEAR_AT_PLAYER","HEAVY_CLEAR_WITH_MAGIC","HEAVY_NO_CLEAR"}
+					topology.attr.fog_of_war_type = fow_options[Random(1,#fow_options)]
+				end,
+			},
+			{ --foggy
+				name = "",
+				decor = "",
+				func = function(self)
+					return "dust_amount",(1-(Random()^3))
+				end,
+			},
+			{
+				name = "$biomemodifierdesc_conductive",
+				decor = "data/ui_gfx/decorations_biome_modifier/conductive.png",
+				func = function(self)
+					return "everything_is_conductive",true
+				end,
+			},
+			{ --
+				name = "",
+				decor = "",
+				func = function(self)
+					local value = Random()
+					if Random() <= .3 then value = value * Randomf(-1, 10) end
+					return "projectile_drag_coeff",-1
+				end,
+			},
+			{ --anomalous gravity
+				name = "$biomemodifierdesc_low_gravity",
+				decor = "data/ui_gfx/decorations_biome_modifier/low_gravity.png",
+				func = function(self)
+					local value = Randomf(-1,1)
+					if Random() <= .5 then value = value * Randomf(0, 10) end
+					if value > 1 then
+						self.name = "$biomemodifierdesc_high_gravity"
+						self.decor = "data/ui_gfx/decorations_biome_modifier/high_gravity.png"
+					end
+					return "entity_gravity_y_multiplier",value
+				end,
+			},
+			{ --memory malfunction
+				name = "$biomemodifierdesc_fog_of_war_reappears",
+				decor = "data/ui_gfx/decorations_biome_modifier/fog_of_war.png",
+				func = function(self)
+					local value
+					local rnd = Random()
+					if rnd <= .2 then value = -10
+					elseif rnd <= .3 then value = -1
+					else value = Randomf(10) end
+					return "fog_of_war_delta",value
+				end,
+			},
+			{
+				name = "$biomemodifierdesc_moist",
+				decor = "data/ui_gfx/decorations_biome_modifier/moist.png",
+				func = function(self)
+					return "fire_extinguish_chance",Random()*100
+				end,
+			},
+			{
+				name = "$biomemodifierdesc_freezing",
+				decor = "data/ui_gfx/decorations_biome_modifier/freezing.png",
+				func = function(self)
+					return "reaction_freeze_chance",Random()*100
+				end,
+			},
+			{
+				name = "$biomemodifierdesc_hot",
+				decor = "data/ui_gfx/decorations_biome_modifier/hot.png",
+				func = function(self)
+					return "reaction_unfreeze_chance",Random()*100
+				end,
+			},
+			{
+				name = "$biomemodifierdesc_moist",
+				decor = "data/ui_gfx/decorations_biome_modifier/moist.png",
+				func = function(self)
+					return "random_water_stains_chance",Random()*100
+				end,
+			},
+			{
+				func = function(self)
+					return "random_water_stains_amount",Random()*100
+				end,
+			},
+		}
 
+		local modifier_name = ""
+		local modifier_decoration = ""
+		local modifier_attributes
+		for i = 1, Random(1, #modifiers) do
+			local rng = Random(1,#modifiers)
+			local target_modifier = modifiers[rng]
+			local attribute,value = target_modifier:func()
+			local mname = GameTextGetTranslatedOrNot(target_modifier.name or "")
+			modifier_name = modifier_name .. mname:sub(Random(1, #mname), Random(1, #mname))
+			modifier_decoration = target_modifier.decor or modifier_decoration
+			if attribute then
+				modifier_attributes = modifier_attributes or {}
+				modifier_attributes[attribute] = value
+			end
+			table.remove(modifiers, rng)
+		end
+
+		if #modifier_name == 0 then modifier_name = "Something is different..." end
+		--topology.attr.mModifierUIDescription = --[[CorruptText(modifier_name, .1):gsub("\"", "_")]] "test"
+		--topology.attr.mModifierUIDecorationFile = --[[modifier_decoration]] "data/ui_gfx/decorations/3piece_fungal_shift.png"
+		--biome_data.modifier_data = modifier_attributes
+		biome_data.modifier_data = {
+			name = CorruptText(modifier_name, .03):gsub("\"", "_"),
+			decoration = modifier_decoration,
+			modifiers = modifier_attributes or {},
+		}
+	end
+
+	local biome = nxml.new_element("Biome", nil, {topology, materials})
 	return biome
 end
 
 local init = {}
 
-
-local biome_index = {}
-
+local glitch_biomes = {}
 init.OnMagicNumbersAndWorldSeedInitialized = function()
 	SetRandomSeed(2352, -1354+seed_offset)
 
-	local biome_colours = {}
+	local biome_index = {}
 	local current_colour = tonumber("FF000000", 16)
 	for xml in nxml.edit_file("data/biome/_biomes_all.xml") do
 		for biome in xml:each_of("Biome") do
 			biome_index[(biome.attr.color):lower()] = biome.attr.biome_filename
 		end
 		for i = 0, BIOMES_TO_GENERATE-1 do
+			local name = i
+			local path = "mods/noita.fairmod/generated/biome_"..i..".xml"
 			local scriptpath = "mods/noita.fairmod/generated/biome_"..i..".lua"
-			local FILE1,FILE2,FILE3,FILE4,FILE5 =
-				scripts[Random(1, #scripts)],
-				scripts[Random(1, #scripts)],
-				scripts[Random(1, #scripts)],
-				scripts[Random(1, #scripts)],
-				scripts[Random(1, #scripts)]
-			ModTextFileSetContent("mods/noita.fairmod/generated/empty.lua", "--")
-			FILE1,FILE2,FILE3,FILE4,FILE5 =
-				"mods/noita.fairmod/generated/empty.lua",
-				"mods/noita.fairmod/generated/empty.lua",
-				"mods/noita.fairmod/generated/empty.lua",
-				"mods/noita.fairmod/generated/empty.lua",
-				"mods/noita.fairmod/generated/empty.lua"
-			ModTextFileSetContent(scriptpath,
-				ModTextFileGetContent("mods/noita.fairmod/files/content/tmtrainer_biomes/template_script.lua")
-					:gsub("BIOMESEED1", Random())
-					:gsub("BIOMESEED2", Random())
-					:gsub("FILE1", FILE1)
-					:gsub("FILE2", FILE2)
-					:gsub("FILE3", FILE3)
-					:gsub("FILE4", FILE4)
-					:gsub("FILE5", FILE5)
-					:gsub("PRESET", presets[2])
-			)
-			local biomexml = tostring(GenerateRandomBiome(i, scriptpath))
-			--print(biomexml)
-			ModTextFileSetContent("mods/noita.fairmod/generated/biome_"..i..".xml", biomexml)
 
-			--print(current_colour)
 			current_colour = current_colour + 1
 			while biome_index[("%08x"):format(current_colour)] do
 				current_colour = current_colour + 1
 			end
 
-			biome_colours[#biome_colours+1] = 0xFF000000
-				+ bit.lshift(bit.band(current_colour, 0xFF), 16)
-				+ bit.lshift(bit.band(bit.rshift(current_colour, 8), 0xFF), 8)
-				+ bit.band(bit.rshift(current_colour, 16), 0xFF)
-
 			xml:add_child(nxml.new_element("Biome", {
-				biome_filename = "mods/noita.fairmod/generated/biome_"..i..".xml",
+				biome_filename = path,
 				height_index = Random(0, 14),
 				color = ("%08x"):format(current_colour)
 			}))
+
+			local new_biome = {
+				name = name,
+				path = path,
+				script = scriptpath,
+				hex = 0xFF000000
+					+ bit.lshift(bit.band(current_colour, 0xFF), 16)
+					+ bit.lshift(bit.band(bit.rshift(current_colour, 8), 0xFF), 8)
+					+ bit.band(bit.rshift(current_colour, 16), 0xFF)
+			}
+
+			ModTextFileSetContent(scriptpath,
+				ModTextFileGetContent("mods/noita.fairmod/files/content/tmtrainer_biomes/template_script.lua")
+					:gsub("BIOMESEED1", Random())
+					:gsub("BIOMESEED2", Random())
+					:gsub("FILE1", scripts[Random(1, #scripts)])
+					:gsub("FILE2", scripts[Random(1, #scripts)])
+					:gsub("FILE3", scripts[Random(1, #scripts)])
+					:gsub("FILE4", scripts[Random(1, #scripts)])
+					:gsub("FILE5", scripts[Random(1, #scripts)])
+					:gsub("PRESET", presets[2])
+			)
+			local biomexml = tostring(GenerateRandomBiome(i, scriptpath, new_biome))
+			--print(biomexml)
+			ModTextFileSetContent(path, biomexml)
+
+			glitch_biomes[#glitch_biomes+1] = new_biome
 		end
 	end
 
 	local biomemap,w,h = ModImageMakeEditable("data/biome_impl/biome_map.png", 0, 0)
 	for y = 0, h-1 do
 		for x = 0, w-1 do
-			local logging = false
-			if x == 49 and y == 36 then logging = true end
-			local hex = biome_colours[Random(1, #biome_colours)]
+			local hex = glitch_biomes[Random(1, #glitch_biomes)].hex
 			local pixel = ModImageGetPixel(biomemap, x, y) % 2 ^ 32
-			if logging then print(pixel) print(0xff11E333) end
 			local placement_chance = override_whitelist[pixel]
 			if (placement_chance and Random() < placement_chance) or force_override_all then ModImageSetPixel(biomemap, x, y, hex) end
 		end
 	end
 end
 
+--Modifier data has to be applied during `OnBiomeConfigLoaded()`, has to be set via `BiomeObjectSetValue()` since `<modifiers/>` is not parsed.
+init.OnBiomeConfigLoaded = function()
+	for _,biome in ipairs(glitch_biomes) do
+		if biome.modifier_data then
+			BiomeSetValue(biome.path, "mModifierUIDescription", biome.modifier_data.name)
+			BiomeSetValue(biome.path, "mModifierUIDecorationFile", biome.modifier_data.decoration)
+			for key, value in pairs(biome.modifier_data.modifiers) do
+				BiomeObjectSetValue(biome.path, "modifiers", key, value)
+				--print(key .. ": " .. tostring(value))
+			end
+		end
+	end
+end
+
 init.OnPlayerSpawned = function()
-	print("aaaaaaaaaaaaaaaaaaa")
 	--dofile_once("mods/noita.fairmod/files/content/tmtrainer_biomes/template_script.lua")
 end
 

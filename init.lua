@@ -481,6 +481,11 @@ function OnPlayerDied(player)
 	corpses.OnPlayerDied(player)
 end
 
+function OnBiomeConfigLoaded()
+	tmt_biomes.OnBiomeConfigLoaded()
+end
+
+
 --ive repurposed OnCountSecrets to be a cheatcodes list since i think thats more fun than having some vague list of "secrets"
 local cheats_list = dofile_once("mods/noita.fairmod/files/content/cheats/cheat_codes.lua")
 function OnCountSecrets()

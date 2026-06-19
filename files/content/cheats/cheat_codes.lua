@@ -1151,6 +1151,18 @@ local cheats = {
 			GamePickUpInventoryItem(p, potion)
 		end
 	},
+	{
+		code = "acoustic",
+		name = "Acoustic",
+		description = "Veyr musically talented :)",
+		func = function(p,x,y)
+			SetRandomSeed(x, y)
+			for i = 1, 30 do
+				x,y = x+Randomf(-5,5),y+Randomf(-5,5)
+				EntityLoad("data/entities/items/pickup/musicstone.xml", x , y)
+			end
+		end
+	},
 }
 
 local num_cheats = #cheats

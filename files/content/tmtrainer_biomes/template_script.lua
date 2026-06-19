@@ -51,11 +51,11 @@ dofile_once("data/scripts/biome_scripts.lua")
 dofile_once("data/scripts/biome_modifiers.lua")
 dofile( "data/scripts/items/generate_shop_item.lua" )
 
-dofile_once("FILE1")
-dofile_once("FILE2")
-dofile_once("FILE3")
-dofile_once("FILE4")
-dofile_once("FILE5")
+--dofile_once("FILE1")
+--dofile_once("FILE2")
+--dofile_once("FILE3")
+--dofile_once("FILE4")
+--dofile_once("FILE5")
 
 --function init() end
 

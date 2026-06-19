@@ -50,7 +50,7 @@ if variablestorages ~= nil then
 			local result = Random(1, 6)
 			local special = Random(1, 100)
 
-			local textprint = "$item_die_"
+			local textprint = "$item_die_" .. result
 			local anim = "default"
 
 			if special < 100 then

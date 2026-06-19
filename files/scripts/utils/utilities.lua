@@ -338,3 +338,15 @@ function pause(lifetime, delay) --delay cuz fucking race condition bullshit stop
 		m_volume=st_mult,
 	})
 end
+
+local random_symbols = {'', '"', '<', '>', '@', '#', ';', '0', '£', '!', ',', '.', ':', '?', '~', '\'', '%', '*', '&', '$', '(', ')', 'ERROR', '//', '/', '\\', 'null', 'Void', '+', '_', '-', '|', '∅', '∞'}
+function CorruptText(str, prob, array)
+	array = array or random_symbols
+	local output = ""
+	for i = 1, #str do
+		if Random() < prob then output = output .. array[Random(1, #array)]
+		else output = output .. str:sub(i, i) end
+	end
+
+	return output
+end

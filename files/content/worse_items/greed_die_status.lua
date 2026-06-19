@@ -59,12 +59,10 @@ if variablestorages ~= nil then
 			local result = Random(1, 6)
 			local special = Random(1, 100)
 
-			local textprint = "$item_die_"
+			local textprint = "$item_die_" .. tostring(result)
 			local anim = "default"
 
 			if special < 100 then
-				textprint = textprint .. tostring(result)
-
 				if #players > 0 then GamePrint(textprint) end
 
 				anim = "rolled_" .. tostring(result)
@@ -106,15 +104,15 @@ if variablestorages ~= nil then
 					bullet_circle("goldnugget_200", 8, 600, nil, true)
 				end
 			else
-				textprint = "$item_greed_die_"
+				textprint = "$item_greed_die"
 
 				if result <= 3 then
-					textprint = textprint .. "bad"
+					textprint = textprint .. "_bad"
 					anim = "rolled_bad"
 					bullet_circle("deck/disc_bullet_bigger", 16, 500)
 					EntityKill(entity_id)
 				else
-					textprint = textprint .. "good"
+					textprint = textprint .. "_good"
 					anim = "rolled_good"
 					shoot_projectile(entity_id, "data/entities/items/pickup/chest_random_super.xml", pos_x - 16, pos_y - 16, 0, 0)
 					shoot_projectile(entity_id, "data/entities/items/pickup/chest_random_super.xml", pos_x + 16, pos_y - 16, 0, 0)
