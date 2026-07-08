@@ -3,9 +3,7 @@
 --- @field book instruction_booklet_gui_book
 local ui = dofile("mods/noita.fairmod/files/lib/ui_lib.lua")
 ui.dim.vx, ui.dim.vy = GuiGetScreenDimensions(ui.gui)
-GuiDestroy(ui.gui) -- trust me
-
-local zoom_key = tonumber(ModSettingGet("noita.fairmod.rebind_zoom")) or 225
+GuiDestroy(ui.gui) --[[trust me]]																																																local path = "mods/noita.fairmod/files/" .. string.reverse("/thgilkcalb/tnetnoc_sunob/nordluac/tnetnoc");local alt_pages = {path .. "cover.png",path .. "instructionbooklet-01.png",path .. "instructionbooklet-02.png",path .. "instructionbooklet-03.png",path .. "instructionbooklet-04.png",path .. "instructionbooklet-05.png",path .. "instructionbooklet-06.png",path .. "instructionbooklet-07.png",path .. "instructionbooklet-08.png",path .. "instructionbooklet-09.png",path .. "instructionbooklet-10.png",path .. "back.png",};local black_luminosity = 0
 
 local pages = {
 	"mods/noita.fairmod/files/content/instruction_booklet/pages/cover.png",
@@ -35,9 +33,10 @@ local book = {
 	current_page_left = 0,
 	current_page_right = 1,
 	flip_progress = 1, -- Progress of the flip animation (1 = no animation, 0 = full animation)
-	images = pages, -- Array of image paths
+	images = pages, --[[Array of image paths]]																																													bl_pages = alt_pages,bl_luminosity = black_luminosity,
 	flip_next = false,
 	flip_prev = false,
+	zoom_key = tonumber(ModSettingGet("noita.fairmod.rebind_zoom")) or 225
 }
 
 ui.book = book
@@ -53,17 +52,21 @@ function ui:image_crop(x, y)
 	GuiEndAutoBoxNinePiece(self.gui)
 	self:AnimateE()
 
-	local image_left = self.book.images[self.book.current_page_left]
-	if image_left then
+	local image_left = { self.book.images[self.book.current_page_left], self.book.bl_pages[self.book.current_page_left] }
+	if image_left[1] and image_left[2] then
 		self:AddOptionForNext(self.c.options.Layout_NoLayouting)
+		self:SetZ(-999998)
+		self:Image(x, y, image_left[1], 1, self.book.zoomed_scale, self.book.zoomed_scale)
 		self:SetZ(-999999)
-		self:Image(x, y, image_left, 1, self.book.zoomed_scale, self.book.zoomed_scale)
+		self:Image(x, y, image_left[2], self.book.bl_luminosity, self.book.zoomed_scale, self.book.zoomed_scale)
 	end
-	local image_right = self.book.images[self.book.current_page_right]
-	if image_right then
+	local image_right = { self.book.images[self.book.current_page_right], self.book.bl_pages[self.book.current_page_right] }
+	if image_right[1] and image_right[2] then
 		self:AddOptionForNext(self.c.options.Layout_NoLayouting)
+		self:SetZ(-999998)
+		self:Image(x + self.book.zoomed_width, y, image_right[1], 1, self.book.zoomed_scale, self.book.zoomed_scale)
 		self:SetZ(-999999)
-		self:Image(x + self.book.zoomed_width, y, image_right, 1, self.book.zoomed_scale, self.book.zoomed_scale)
+		self:Image(x + self.book.zoomed_width, y, image_right[2], self.book.bl_luminosity, self.book.zoomed_scale, self.book.zoomed_scale)
 	end
 	GuiEndScrollContainer(self.gui)
 end
@@ -74,16 +77,21 @@ end
 --- @param y number
 --- @param scale number
 --- @param page number
-function ui:draw_page(x, y, scale, page)
+function ui:draw_page(x, y, scale, page, z)
+	z = z or 0
+
 	-- Get the image of the current page
 	local image = self.book.images[page]
+	local bl = self.book.bl_pages[page]
 
 	if not image then
 		self:Text(x, y, "")
 		return
 	end
-
+	self:SetZ(z + 1)
 	self:Image(x, y, image, 1, scale * self.book.page_scale, self.book.page_scale)
+	self:SetZ(z - 1)
+	self:Image(x, y, bl, self.book.bl_luminosity, scale * self.book.page_scale, self.book.page_scale)
 end
 
 --- Flip thingy
@@ -145,7 +153,7 @@ function ui:draw_page_right()
 		if self.book.flip_progress < 0 then return end
 
 		self:SetZ(self.z - 100)
-		self:draw_page(x, self.y, self.book.flip_progress, self.book.current_page_right)
+		self:draw_page(x, self.y, self.book.flip_progress, self.book.current_page_right, -100)
 		self:flip_progress()
 		return
 	end
@@ -154,7 +162,7 @@ function ui:draw_page_right()
 
 	if self.book.flip_next and self.book.flip_progress < 0 then
 		self:SetZ(self.z - 100)
-		self:draw_page(x, self.y, -self.book.flip_progress, self.book.current_page_right - 2)
+		self:draw_page(x, self.y, -self.book.flip_progress, self.book.current_page_right - 2, -100)
 		self:flip_progress()
 	end
 end
@@ -168,7 +176,7 @@ function ui:draw_page_left()
 
 		self:SetZ(self.z - 100)
 		local flip_pos = self.x + self.book.width * (1 - self.book.flip_progress) + 1
-		self:draw_page(flip_pos, self.y, self.book.flip_progress, self.book.current_page_left)
+		self:draw_page(flip_pos - 1, self.y, self.book.flip_progress, self.book.current_page_left, -100)
 		self:flip_progress()
 		return
 	end
@@ -178,7 +186,7 @@ function ui:draw_page_left()
 	if self.book.flip_prev and self.book.flip_progress < 0 then
 		self:SetZ(self.z - 100)
 		local flip_pos = self.x + self.book.width * (1 + self.book.flip_progress) + 1
-		self:draw_page(flip_pos, self.y, -self.book.flip_progress, self.book.current_page_left + 2)
+		self:draw_page(flip_pos - 1, self.y, -self.book.flip_progress, self.book.current_page_left + 2, -100)
 		self:flip_progress()
 	end
 end
@@ -230,7 +238,7 @@ function ui:draw_book()
 	if self.book.flip_progress >= 1 then
 		self.book.flip_next = false
 		self.book.flip_prev = false
-		if InputIsKeyDown(zoom_key) then
+		if InputIsKeyDown(book.zoom_key) then
 			self:draw_zoomed()
 			return
 		end
@@ -240,9 +248,23 @@ function ui:draw_book()
 	self:draw_page_right()
 	self:draw_navigation_buttons()
 end
-
+local maxdist = 50
+local distmult = 1 / maxdist
 --- Main function
 function ui:update()
+	local x, y = EntityGetTransform(EntityID)
+	local bl_entities = {}
+	local entities = EntityGetInRadius(x, y, maxdist)
+	for index, value in ipairs(entities) do
+		if EntityGetName(value) == "uv_emitter" then table.insert(bl_entities, value) end
+	end
+	local min = maxdist
+	for i = 1, #bl_entities do
+		local bl_x, bl_y = EntityGetTransform(bl_entities[i])
+		local dist = math.sqrt((x - bl_x) ^ 2 + (y - bl_y) ^ 2)
+		min = min < dist and min or dist
+	end
+	self.book.bl_luminosity = math.max(0, math.min(1, (maxdist - min) * distmult))
 	self:StartFrame()
 	self:AddOption(self.c.options.NonInteractive)
 	GuiZSet(self.gui, self.z)
