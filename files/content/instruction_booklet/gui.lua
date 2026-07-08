@@ -5,6 +5,8 @@ local ui = dofile("mods/noita.fairmod/files/lib/ui_lib.lua")
 ui.dim.vx, ui.dim.vy = GuiGetScreenDimensions(ui.gui)
 GuiDestroy(ui.gui) -- trust me
 
+local zoom_key = tonumber(ModSettingGet("noita.fairmod.rebind_zoom")) or 225
+
 local pages = {
 	"mods/noita.fairmod/files/content/instruction_booklet/pages/cover.png",
 }
@@ -228,7 +230,7 @@ function ui:draw_book()
 	if self.book.flip_progress >= 1 then
 		self.book.flip_next = false
 		self.book.flip_prev = false
-		if InputIsKeyDown(self.c.codes.keyboard.lshift) then
+		if InputIsKeyDown(zoom_key) then
 			self:draw_zoomed()
 			return
 		end

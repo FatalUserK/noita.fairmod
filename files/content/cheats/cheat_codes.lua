@@ -25,10 +25,10 @@ local cheats = {
 		name = "GOD HAMIS ARTIST-MARTIAL IMMORTALITY GAMER MODE",
 		description = "Enabled GHAMING MODE",
 		func = function(player)
-			if HasFlagPersistent("fairmod_copimail_letter") == false then
-				GamePrintImportant("This power is too great for you, young hämis.","Come back when you have recieved the dark lord's mail.")
+			if HasFlagPersistent("fairmod_noitillionare_winner") == false then
+				GamePrintImportant("This power is too great for you, young hämis.","Come back when you've completed your journey.")
 				GamePrint("This power is too great for you, young hämis.")
-				GamePrint("Come back when you have recieved the dark lord's mail.")
+				GamePrint("Come back when you've completed your journey.")
 				LoadGameEffectEntityTo( player, "mods/noita.fairmod/files/content/cheats/misc/polymorph_hamis.xml" )
 			else
 				if EntityHasTag(player, "no_hamis_bullet") then return end
