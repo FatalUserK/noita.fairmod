@@ -227,6 +227,15 @@ local function build_settings()
 					is_waiting_for_input = false,
 					scope = MOD_SETTING_SCOPE_RUNTIME,
 				},
+				{
+					id = "rebind_zoom",
+					ui_name = "Zoom Button",
+					ui_description = "The keybind used to take a shit.",
+					value_default = "225",
+					ui_fn = ui_get_input,
+					is_waiting_for_input = false,
+					scope = MOD_SETTING_SCOPE_RUNTIME,
+				},
 			},
 		},
 		{
