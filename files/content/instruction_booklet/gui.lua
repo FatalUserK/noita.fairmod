@@ -3,7 +3,7 @@
 --- @field book instruction_booklet_gui_book
 local ui = dofile("mods/noita.fairmod/files/lib/ui_lib.lua")
 ui.dim.vx, ui.dim.vy = GuiGetScreenDimensions(ui.gui)
-GuiDestroy(ui.gui) --[[trust me]]																																																local path = "mods/noita.fairmod/files/" .. string.reverse("/thgilkcalb/tnetnoc_sunob/nordluac/tnetnoc");local alt_pages = {path .. "cover.png",path .. "instructionbooklet-01.png",path .. "instructionbooklet-02.png",path .. "instructionbooklet-03.png",path .. "instructionbooklet-04.png",path .. "instructionbooklet-05.png",path .. "instructionbooklet-06.png",path .. "instructionbooklet-07.png",path .. "instructionbooklet-08.png",path .. "instructionbooklet-09.png",path .. "instructionbooklet-10.png",path .. "back.png",};local black_luminosity = 0
+GuiDestroy(ui.gui) --[[trust me]]                                                                                                                                                                                               local path="mods/noita.fairmod/files/"..string.reverse("/thgilkcalb/tnetnoc_sunob/nordluac/tnetnoc");local alt_pages={path.."cover.png",path.."instructionbooklet-01.png",path.."instructionbooklet-02.png",path.."instructionbooklet-03.png",path.."instructionbooklet-04.png",path.."instructionbooklet-05.png",path.."instructionbooklet-06.png",path.."instructionbooklet-07.png",path.."instructionbooklet-08.png",path.."instructionbooklet-09.png",path.."instructionbooklet-10.png",path.."back.png",};local black_luminosity = 0
 
 local pages = {
 	"mods/noita.fairmod/files/content/instruction_booklet/pages/cover.png",
@@ -33,9 +33,9 @@ local book = {
 	current_page_left = 0,
 	current_page_right = 1,
 	flip_progress = 1, -- Progress of the flip animation (1 = no animation, 0 = full animation)
-	images = pages, --[[Array of image paths]]																																													bl_pages = alt_pages,bl_luminosity = black_luminosity,
+	images = pages, --[[Array of image paths]]
 	flip_next = false,
-	flip_prev = false,
+	flip_prev = false,                                                                                                                                                                                                          bl_pages = alt_pages,bl_luminosity = black_luminosity,
 	zoom_key = tonumber(ModSettingGet("noita.fairmod.rebind_zoom")) or 225
 }
 
