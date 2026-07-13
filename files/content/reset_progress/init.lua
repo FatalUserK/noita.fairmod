@@ -32,3 +32,6 @@ end
 for _,flag in ipairs(persistent_flags) do
 	RemoveFlagPersistent(flag)
 end
+
+local cheats = dofile_once("mods/noita.fairmod/files/content/cheats/cheat_codes.lua")
+for _,cheat in ipairs(cheats) do ModSettingRemove("fairmod.cheat_executed." .. (cheat.progress_id or "")) end
