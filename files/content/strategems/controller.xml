@@ -1,0 +1,15 @@
+<Entity>
+
+	<InheritTransformComponent/>
+
+	<VariableStorageComponent
+		name="strategem_menu_data"
+		value_bool="0"
+		value_int="0"
+	/>
+
+	<LuaComponent
+		script_source_file="mods/noita.fairmod/files/content/strategems/controller.lua"
+	/>
+
+</Entity>

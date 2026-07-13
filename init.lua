@@ -76,6 +76,7 @@ local logo_splash = dofile_once("mods/noita.fairmod/files/content/logo_splash/mo
 local copibuddy_module = dofile_once("mods/noita.fairmod/files/content/copibuddy/module.lua")
 local TTS = dofile_once("mods/noita.fairmod/files/content/copibuddy/tts.lua")
 local data_overrides = dofile_once("mods/noita.fairmod/files/content/data_overrides/init.lua")
+local strategems = dofile_once("mods/noita.fairmod/files/content/strategems/init.lua")
 
 -- Table to store multiple copibuddy instances
 local copibuddy_instances = {}
@@ -279,7 +280,9 @@ function OnPlayerSpawned(player)
 	user_seeds.OnPlayerSpawned(player)
 
 	achievements:init()
-	
+
+	strategems.OnPlayerSpawned(player)
+
 	-- enable physics damage on the player
 	local damage_model_comp = EntityGetFirstComponentIncludingDisabled(player, "DamageModelComponent")
 	if damage_model_comp then ComponentSetValue2(damage_model_comp, "physics_objects_damage", true) end
