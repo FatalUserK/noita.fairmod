@@ -1,36 +1,14 @@
+dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 local dialog_system = dofile_once("mods/noita.fairmod/files/lib/DialogSystem/dialog_system.lua")
 dialog_system.dialog_box_height = 80
 
-
-local controls_comp_fields = {
-	"mButtonDownLeft",
-	"mButtonDownRight",
-	"mButtonDownUp",
-	"mButtonDownFly",
-	"mButtonDownDown",
-	"mButtonDownFire",
-	"mButtonDownFire2",
-	"mButtonDownThrow",
-	"mButtonDownInteract",
-}
-
-local function set_controls_enabled(val)
-	local player = EntityGetWithTag("player_unit")[1]
-	if not player then return end
-	local controls_component = EntityGetFirstComponent(player, "ControlsComponent")
-	if not controls_component then return end
-	ComponentSetValue2(controls_component, "enabled", val)
-	for _, field in ipairs(controls_comp_fields) do
-		ComponentSetValue2(controls_component, field, val)
-	end
-end
 
 function interacting(player, entity_id, interaction)
 	if EntityHasTag(player, "viewing") or GameHasFlagRun("fairmod_dialog_interacting") or GameHasFlagRun("holding_interactible") then return end
 	if GameHasFlagRun("fairmod_interacted_with_anything_this_frame") then return end
 	GameAddFlagRun("fairmod_interacted_with_anything_this_frame")
 	GameAddFlagRun("fairmod_dialog_interacting")
-	set_controls_enabled(false)
+	SetControlsEnabled(false)
 
 	dialog = dialog_system.open_dialog({
 		name = "Information Hämis",
@@ -59,7 +37,7 @@ function interacting(player, entity_id, interaction)
 			GameRemoveFlagRun("fairmod_dialog_interacting")
 			AddFlagPersistent("fairmod_won_lovely_dream")
 			GameTriggerMusicFadeOutAndDequeueAll(1)
-			set_controls_enabled(true)
+			SetControlsEnabled(true)
 			GameAddFlagRun("ending_game_completed")
 			GameOnCompleted()
 			GameScreenshake(200)

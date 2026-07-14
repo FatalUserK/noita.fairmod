@@ -197,6 +197,9 @@ function OnMagicNumbersAndWorldSeedInitialized()
 end
 
 function OnPlayerSpawned(player)
+	GlobalsSetValue("fairmod_controls_counter", "0")
+	SetControlsEnabled(true)
+
 	surface_bad:spawn()
 	funny_settings.OnPlayerSpawned(player)
 

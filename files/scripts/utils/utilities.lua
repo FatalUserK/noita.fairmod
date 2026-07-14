@@ -297,3 +297,30 @@ function pause(lifetime, delay) --delay cuz fucking race condition bullshit stop
 		m_volume=st_mult,
 	})
 end
+
+local controls_comp_fields = {
+	"mButtonDownLeft",
+	"mButtonDownRight",
+	"mButtonDownUp",
+	"mButtonDownFly",
+	"mButtonDownDown",
+	"mButtonDownFire",
+	"mButtonDownFire2",
+	"mButtonDownThrow",
+	"mButtonDownInteract",
+}
+function SetControlsEnabled(value)
+	local player = EntityGetWithTag("player_unit")[1]
+	if not player then return end
+	local controls_component = EntityGetFirstComponent(player, "ControlsComponent")
+	if not controls_component then return end
+
+	local state = tonumber(GlobalsGetValue("fairmod_controls_counter", "1"))
+	if value then state = state + 1 else state = state - 1 end
+
+	ComponentSetValue2(controls_component, "enabled", value)
+	for _, field in ipairs(controls_comp_fields) do
+		ComponentSetValue2(controls_component, field, state > 0)
+	end
+	GlobalsSetValue("fairmod_controls_counter", tostring(state))
+end

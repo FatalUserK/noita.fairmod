@@ -1,4 +1,5 @@
 --stylua: ignore start
+dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 local dialog_system = dofile_once("mods/noita.fairmod/files/lib/DialogSystem/dialog_system.lua")
 dialog_system.distance_to_close = 9999
 dialog_system.dialog_box_height = 100
@@ -104,7 +105,7 @@ function right_answer()
 									if GameHasFlagRun("Epic_leet_hacker") == false then
 										AddFlagPersistent("fairmod_noitillionare_winner_legitimate") --Since the player needs to go through noitillionare regardless you can consider this a "won without cheating" flag
 									end
-									set_controls_enabled(true)
+									SetControlsEnabled(true)
 									run_real_ending(x, y)
 									dialog.close()
 									EntityKill(building_id)
@@ -155,20 +156,9 @@ function generate_quiz_table()
 	return dialogue_table
 end
 
-function set_controls_enabled(enabled) --Disable's player's controls
-	local player = EntityGetWithTag("player_unit")[1]
-	if player then
-		local controls_component = EntityGetFirstComponentIncludingDisabled(player, "ControlsComponent")
-		ComponentSetValue2(controls_component, "enabled", enabled)
-		for prop, val in pairs(ComponentGetMembers(controls_component) or {}) do
-			if prop:sub(1, 11) == "mButtonDown" then ComponentSetValue2(controls_component, prop, false) end
-		end
-	end
-end
-
 function interacting(player_id, building_id, interactable_name)
 	if #sampo_check > 0 and GameHasFlagRun("kolmi_killed") then
-		set_controls_enabled(false)
+		SetControlsEnabled(false)
 		local quiz_table = generate_quiz_table()
 		GameTriggerMusicFadeOutAndDequeueAll(1)
 		--Kill the sampo, it's your ticket to enter the game show
