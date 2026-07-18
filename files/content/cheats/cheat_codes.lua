@@ -286,6 +286,7 @@ local cheats = {
 	},
 	{
 		code = "haveanygamesonyourphone",
+		aliases = {"3310"},
 		name = "kbidhbny",
 		description = "nokia get",
 		func = function(player)
@@ -293,16 +294,6 @@ local cheats = {
 			EntityLoad("mods/noita.fairmod/files/content/payphone/entities/nokia/nokia.xml", x, y)
 		end,
 	},
-	{
-		code = "3310",
-		progress_id = "haveanygamesonyourphone",
-		name = "kbidhbny",
-		description = "nokia get",
-		func = function(player)
-			local x, y = EntityGetTransform(player)
-			EntityLoad("mods/noita.fairmod/files/content/payphone/entities/nokia/nokia.xml", x, y)
-		end,
-	},	
 	{
 		code = "whatsadotexey",
 		name = "installing ram",
@@ -313,13 +304,7 @@ local cheats = {
 	},
 	{
 		code = "copibuddy",
-		func = function(player)
-			GameAddFlagRun("copibuddy")
-		end,
-	},
-	{
-		code = "qqqqq",
-		progress_id = "copibuddy",
+		aliases = {"qqqqq"},
 		func = function(player)
 			GameAddFlagRun("copibuddy")
 		end,
@@ -422,24 +407,10 @@ local cheats = {
 	},
 	{
 		code = "boobs",
-		progress_id = "killplayer",
-		do_not_random = true,
-		func = function(player)
-			EntityInflictDamage( player, 9999999999999999999999999, "DAMAGE_PHYSICS_BODY_DAMAGED", "yuor a looser", "DISINTEGRATED", 0, 0 )
-			EntityKill(player)
-		end,
-	},
-	{
-		code = "ariral.boobs",
-		progress_id = "killplayer",
-		do_not_random = true,
-		func = function(player)
-			EntityInflictDamage( player, 9999999999999999999999999, "DAMAGE_PHYSICS_BODY_DAMAGED", "yuor a looser", "DISINTEGRATED", 0, 0 )
-			EntityKill(player)
-		end,
-	},
-	{
-		code = "sex",
+		aliases = {
+			"ariral.boobs",
+			"sex",
+		},
 		progress_id = "killplayer",
 		do_not_random = true,
 		func = function(player)
@@ -526,14 +497,12 @@ local cheats = {
 	},
 	{
 		code = "killhammies",
-		devmode = true,
 		name = "killhammies",
-		description = "FOR TESTING!!!!!!",
-		func = function(player)
-			local x, y = EntityGetTransform(player)
+		description = "look at what you've done.",
+		func = function(player, x, y)
 			for _,v in ipairs(GetEnemiesInRadius(x, y, 256) or {}) do
 				if EntityGetName(v) == "$animal_longleg" then
-					EntityInflictDamage(v, 4000, "DAMAGE_PHYSICS_BODY_DAMAGED", "", "NONE", 0, 0)
+					EntityInflictDamage(v, 4000, "NONE", "", "NONE", 0, 0, player)
 				end
 			end
 		end,
@@ -549,16 +518,11 @@ local cheats = {
 	},
 	{
 		code = "wasdwasd",
-		not_cheat = true,
-		not_progress = true,
-		name = "oops!",
-		description = "be more careful!",
-		func = function(player)
-			GameDropAllItems(player)
-		end,
-	},
-	{
-		code = "wdsawdsa",
+		aliases = {
+			"wdsawdsa",
+			"upleftdownrightupleftdownright",
+			"uprightdownleftuprightdownleft",
+		},
 		not_cheat = true,
 		not_progress = true,
 		name = "oops!",
@@ -1112,7 +1076,7 @@ local cheats = {
 			LoadGameEffectEntityTo(p, "data/entities/misc/effect_polymorph.xml")
 		end
 	},
-	{
+	{ --todo: add bind to explode like deercoy
 		code = "ohdeer",
 		name = "Oh, deer.",
 		description = "this pun would probably work better if you weren't manually typing it on your keyboard",
@@ -1151,7 +1115,43 @@ local cheats = {
 			GamePickUpInventoryItem(p, potion)
 		end
 	},
+	{ --wip
+		code = "importantigravity",
+		name = "\"import antigravity\"",
+		description = "No [medicalhelp] Required!",
+		func = function(p,x,y)
+			local existing_antigravity = EntityGetWithName("fairmod_antigravity")
+			if existing_antigravity == 0 then
+				local eid = EntityLoad("antigravity.xml", x, y)
+				if p then EntityAddChild(p, eid) end
+			else
+				EntityKill(existing_antigravity)
+			end
+		end
+	},
+	{
+		code = "medicalhelp",
+		name = "LOSEWALLET",
+		description = "WEEWOOWEEWOOWEEWOOWEEWOOWEEWOOWEEWOOWEEWOOWEEWOO",
+		func = function(p,x,y)
+			if not p then return end
+			local amount = Randomf(-1, 2)
+			local type = "DAMAGE_HEALING"
+			if amount < 0 then type = "NONE" end
+			EntityInflictDamage(p, -amount, type, "malpractice", "BLOOD_EXPLOSION", 0, 0)
+
+			local owed = 1000
+			local wallet = EntityGetFirstComponent(p, "WalletComponent")
+			if wallet then
+				local money = ComponentGetValue2(wallet, "money") - owed
+				owed = -math.min(money, 0)
+				ComponentSetValue2(wallet, "money", money + owed)
+			end
+			GlobalsSetValue("loan_shark_debt", tostring(tonumber(GlobalsGetValue("loan_shark_debt", "0")) + owed))
+		end
+	}
 }
+
 
 local num_cheats = #cheats
 for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations.lua")) do
@@ -1172,33 +1172,6 @@ for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations
 		end
 	}
 end
-
-
-local remove_list = {}
-for i = 1, #cheats do
-	local cheat = cheats[i]
-	if not cheat.description then cheat.description = "" end
-	if not cheat.decoration then
-		if ModDoesFileExist("mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png") then
-			cheat.decoration = "mods/noita.fairmod/files/content/cheats/3pieces/" .. cheat.code .. ".png"
-		else
-			cheat.decoration = ""
-		end
-	end
-	if cheat.dev_mode then cheat.not_progress = true end --twitch cheats shouldnt count towards progress imo
-	cheat.progress_id = cheat.progress_id or cheat.code
-
-	if cheat.condition ~= nil then
-		if (type(cheat.condition) == "function" and not cheat.condition()) or not cheat.condition then
-			remove_list[#remove_list+1] = i
-		end
-	end
-end
-
-for i = 0, #remove_list-1 do
-	table.remove(cheats, remove_list[#remove_list-i])
-end
-
 
 table.insert(cheats, {
 	code = "nullpointerexception",
@@ -1225,7 +1198,7 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 
 	local list_of_cheats = {}
 	for _,cheat in ipairs(cheats) do
-		if not (cheat.twitch or cheat.do_not_random) then
+		if condition_met and not (cheat.twitch or cheat.devmode or cheat.do_not_random or cheat.is_alias) then
 			list_of_cheats[#list_of_cheats+1] = cheat
 		end
 	end
@@ -1277,6 +1250,53 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 	print(name)
 	print(description)
 	print(decoration)
+end
+
+
+
+local remove_list = {}
+for i = 1, #cheats do
+	local cheat = cheats[i]
+	if not cheat.description then cheat.description = "" end
+	if not cheat.decoration then
+		local code_decor_filepath = "mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png"
+		if ModDoesFileExist(code_decor_filepath) then
+			cheat.decoration = code_decor_filepath
+		else
+			cheat.decoration = ""
+		end
+	end
+
+	cheat.progress_id = cheat.progress_id or cheat.code
+
+	if cheat.twitch then
+		cheat.not_progress = true --twitch cheats shouldnt count towards progress imo
+		cheat.condition = StreamingGetIsConnected
+	end
+
+	if cheat.devmode then
+		cheat.not_progress = true
+		cheat.condition = function() return GameHasFlagRun("fairmod_developer_mode") end
+	end
+
+	if cheat.condition == nil then cheat.condition = true end
+
+	if cheat.aliases then --do last so correct info is applied correctly
+		for _,alias in ipairs(cheat.aliases) do
+			local new_cheat = {}
+			for key, value in pairs(cheat) do
+				new_cheat[key] = value
+			end
+			new_cheat.code = alias
+			new_cheat.progress_id = cheat.progress_id or cheat.code
+			new_cheat.is_alias = true
+			cheats[#cheats+1] = new_cheat
+		end
+	end
+end
+
+for i = 0, #remove_list-1 do
+	table.remove(cheats, remove_list[#remove_list-i])
 end
 
 print("num cheats: " .. #cheats)
