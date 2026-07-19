@@ -302,7 +302,7 @@ return {
 		text = [[We have detected unusual activity on your bank account.
 	Please provide your account number to verify your
 	identity.]],
-		func = function(dialog)
+		func = function(dialog, dialog_system)
 			dialog_system.dialog_box_height = 100
 		end,
 		options = {
@@ -441,7 +441,7 @@ return {
 		typing_sound = "gibberish",
 		text = [[Hello! Would you like to participate in a short survey about
 	your recent cave-dwelling experiences?]],
-		func = function(dialog)
+		func = function(dialog, dialog_system)
 			dialog_system.dialog_box_height = 100
 		end,
 		options = {
@@ -1269,7 +1269,7 @@ return {
 			},
 		},
 	{
-		name = "Longest Hamis",
+		name = "Longest Hämis",
 		portrait = "mods/noita.fairmod/files/content/pixelscenes/longest_leg/longest_portrait.xml",
 		text = "...",
 		options = {
@@ -1995,7 +1995,7 @@ return {
 		portrait = "mods/noita.fairmod/files/content/payphone/portrait_copi4.png",
 		typing_sound = "sans",
 		text = [[{@color 608060}{@delay 5}We're making progress. 
-		I see you've spared hamisket.]],
+		I see you've spared hämisket.]],
 		can_call = function() -- optional
 			return HasFlagPersistent("fairmod_evilcopi2") and (tonumber(GlobalsGetValue("FAIRMOD_HAMIS_KILLED", "0")) or 0)==0
 		end,

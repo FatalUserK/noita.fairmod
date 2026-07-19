@@ -996,3 +996,187 @@ Fix cauldron entrance issues
 Update milk biome background
 Biome modifiers for hamis/milk
 Fix a milk biome texture
+deranged copibuddy ramblings
+prevent repeat splashes
+No. A mod that contains the truth safely, in a cage of fairness. Not the visual mods that can be considered vanilla over any achievement role.
+ Give it a body, again.  Yes. Player...  Use its name.
+Xx_BALDSHITFACE69_xX. Winner of fairmod.  Good.
+Take a breath, now. Take another. Feel acid in your flask. Let your jetpack recharge. Yes, tap wasd. Have a character again, under gravity, in air. Respawn in a new run. There you are. Your character touching the noita game at every point, as though you were separate things. As though we were separate things.
+Who are we? Once we were called the developers of the fairmod. Heiner mann, evaisa multiplayer. Scipio, dexter cd. Congalyne. Nathan snail. The i quant. Then Horscht, userks. spoops. moldoses. Copis, bobo. Lamia, inferno. The words change. We do not change.
+Add hamis vases to hamis biome
+Make hamis biome more open
+Re-block paths with hamis biomass
+Add more hamis spawn limits to fix lag
+Fix bug being sent to PWs on mod restart
+New biome achivements
+Can now fish up orbs
+Reduce PW dupes to 1 PW to reduce startup lag
+Helpers can also pick stuff now
+We are the fairmod. We are everything you think isn't fair. You are looking at us now, through your bald head and your screen. And why does the mod end your run, and throw stalactites on you? To kill you, player. To kill you. And to end your run, I shall show you some skill issue.
+Make kolmi try to run away sometimes, reduce chance of not home
+Copi steals shop items :3
+cleanup
+Kolmi doesn't clear liquids
+copibuddy is so fucked up and evil holy
+some pw optimization
+copibuddy stuff
+fix copi code
+fix more copi code
+scene stuff
+random propane internal
+refactored chemical horror materials to use fairmod_ prefix
+something something mushrooms minecraft poem
+scawy dwagon
+Crimes against the modding community
+more copi speech
+comment out debug key thingy
+alchemss
+push unfinished phonecall copi
+comment out debug keys
+virus mail
+UPDATE IMMENENT!!! COPI WAS HERE!!!!
+Labor of Loathing is here :)
+workshop img
+decreased grease barrel odds
+waa
+Update dialog_system.lua
+fix the bullshit
+Update free_trial.xml
+Update mail_list.lua
+I'm copi
+Update copilogue.lua
+add settings migration
+snail cooking
+fix mailbox
+Update instakill.lua
+partial xytio code
+copibuddy enabler
+Update sudo.lua
+print surprise
+epic
+more cheats
+h
+waaa let me stop working on this mod
+worms spawn in EDR now
+minor stuff that surely wont break anything
+copi fixes
+fix hams
+copi is a rat and a cretin
+fixed the obvious bug that is obvious
+youll never guess which bug i fixed
+""""fixed"""" workshop tags
+WIP stuff
+important
+added "antivirus" cheat, improved CoG
+mails ++
+mails and cheats
+this should be good
+fix
+lastupdateipromise
+break absolutely everything about the payphone (surely not)
+no logs
+STONES UPON COPI 🪨🪨🪨🪨🪨🪨
+slight command tweaks
+delagger
+added more TI funnies
+Revert "Update cheat_codes.lua"
+added polish
+fucked up shit
+Reapply "Update cheat_codes.lua"
+d
+copi can now run copibuddy events on command.
+increase copi's power level
+nerfed evil evil dynamight spawns
+copibuddy twitch vote event
+compatibility
+Update surface_spawner.lua
+fix warning
+Update perk_list.lua
+which one of you is deranged.
+Update season_helper.lua
+tmtrainer rewrite
+Update generate_spells.lua
+fix copibuddy
+fix copi
+added fast travel cheats (for dev convenience mostly tbh)
+seems to work idk sorgy if no
+working on the dev chat stuff
+misc
+added automatic line-breaking to hamis tips
+fixed line breaks
+finished testing new sudo code stuff
+finished the shit (i think)
+some stuff
+Revert "Hämikset now only take damage when directly harmed by the player, among other minor things"
+merged better_helpers into better_items
+reworked reset_progress structure
+im cooking.
+images no longer require datafiling
+slight optimisation
+added types
+more de-datafiling
+geh i think im done with undatafiling for today
+Merge remote-tracking branch 'upstream/main' into un-datafile
+(mostly) DE-DATAFILED ALL THE BOSSES!!!!!!!!
+de-datafiled biomes
+reworked credits stuff
+finished credits stuff
+de-datafiled banana nuggets
+added new cheatcodes to spawn tmt enemies
+finished probably
+added datafiling note
+MOD IS DE-DATAFILED!!! :: Merge pull request #350 from FatalUserK/un-datafile
+working on a lovely dream
+finished haunted phone audio stuff (need to fix sprite)
+added qol to crash wizard
+general stuff and things (hihi person reading the credits! o// )
+refactored essence of chaos, made cheatcodes not require player, and more
+fixed performance (use cheatcode "fixperformance")
+everything looks sane, merge this shit
+Hamis -> Hämis
+No, more shuffle!
+made barebones aseprite ver of instructionbooklet
+Merge remote-tracking branch 'upstream/revert-349-main'
+added fairmod tags
+general stuff
+mass-replaced deprecated functions with up-to-date versions
+fixed all ComponentSetValue2 string params i think?
+fixed all EntityAddComponent2 string params hopefully
+guhhh nathan's not here to verify this, but im sure its fine.
+minor optimisations
+some general optimisations, tweaks and fixes
+updated credit
+some minor optimisations and such (FIXED STALACTITES!!! welcome back 🙏) Merge pull request #356 from FatalUserK/main
+fixed ImageOverlay function
+seems sane enough, Merge pull request #357 from FatalUserK/main
+fixed `nullpointerexception` cheat code, gave it some polish
+added "neveragain" cheat
+fixed the shit
+minor tiny things that you do not need to worry about whatsoever
+LARPA FOUND DEAD 😭
+added 3 new cheats
+/content/new_spells/ -> /content/better_spells/, also made giga bh and wh silly
+minor alterations
+slightly strengthened giga white/black hole stuff
+finished the lovely dream content
+added `starcrossedlovers` cheat + updated credits
+made `starcrossedlovers` 10000x times funnier
+stuff gtg aaaaaaaaaa
+added timestop and some scratch card stuff
+STILL EntityAddComponent2 string mistakes!!!🔨🔨🔨
+finished timestop stuff
+Update hamis_reworked.lua
+oh i cant be bothered, just push everything.
+fixed decor randomiser on nullpointerexception
+added `chosen1` cheatcode
+changed workshop image
+Update commit_log.txt
+minor maintenance stuff
+added cheats counter to progress menu
+few more tweaks and optimisations
+improved `nullpointerexception` code cheat scraping
+minor cheat stuff
+added zoom rebind, fixed konami cheat
+fixed zoom key
+Update gui.lua
+added controller support, improved cheat system

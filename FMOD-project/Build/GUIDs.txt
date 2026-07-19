@@ -80,6 +80,8 @@
 {cded1620-46ec-4120-8074-7175b26d347c} event:/copibuddy/taunt_7
 {4dbc5929-8a97-4936-a606-51dae611ec6b} event:/copibuddy/taunt_8
 {49badd04-9a16-4a64-ada8-6eda93cb4c9a} event:/copibuddy/taunt_9
+{7d51b7da-2dc3-4972-bdea-41e0d0817839} event:/copibuddy/twitch_vote_1
+{b7816e14-cfd7-48a6-8b15-0d6fed65a1d8} event:/copibuddy/twitch_vote_2
 {31eb99f6-f376-4c94-ad8e-80d7bdfcdd0b} event:/copibuddytts/AA0
 {741883da-42ec-4135-9080-a6fc9e81db82} event:/copibuddytts/AA1
 {e14e6dad-3118-4847-9ae2-e76f7cb713e0} event:/copibuddytts/AE1
@@ -174,6 +176,7 @@
 {2416dd45-494b-4267-8766-8476430be04e} event:/minecraft/steve2
 {f14574a6-7679-4f93-917e-5da2f2f10c9d} event:/minecraft/stone
 {1d8915b7-d6e5-4f9f-967b-31734c7f4a2b} event:/minecraft/wood
+{014c8d5a-0b24-4fe6-95d3-a9cba996fd33} event:/misc/dink
 {044e65fe-1efb-42b4-a1df-7737b1263904} event:/necoarc/noises
 {c7d655d8-ec85-4d25-bc91-cf2cca64fbb7} event:/nuke/fart1
 {b384a56c-faac-461e-9710-59b3d955ea01} event:/nuke/fart2
@@ -225,6 +228,7 @@
 {7477f39d-6219-4c5f-95d3-c4ffbd0b54f3} event:/radio/ill_see_you_when_i_see_you
 {e64eef68-ba89-46ed-b415-1d6b80ebdf02} event:/radio/loop
 {c6f36ab2-5420-4120-a923-5583e5310514} event:/radio/static
+{bd30cc9d-f69e-48bb-a618-b903c627abf4} event:/radio/warm_waters_frozen_in_memory
 {d4594423-dd50-4a85-99b4-8f7d2c42163b} event:/rats/birthday
 {330469a2-11f4-4d91-a694-e5d9e1796099} event:/rats/birthday_streamer
 {0efc5ea7-02a2-4e44-9772-0fea4c998af1} event:/rats/rats

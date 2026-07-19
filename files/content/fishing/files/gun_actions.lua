@@ -19,7 +19,7 @@ for k, v in pairs(bait_list) do
 				--print("Bait casted!")
 
 				c.fire_rate_wait = c.fire_rate_wait + 10
-				player = get_players()[1]
+				local player = get_players()[1]
 				--print("reeeeeeee")
 				if player == GetUpdatedEntityID() then
 					x, y = EntityGetTransform(player)
@@ -38,7 +38,7 @@ for k, v in pairs(bait_list) do
 
 							--hand[1].uses_remaining = hand[1].uses_remaining + 1
 						else
-							bobber = EntityGetClosestWithTag(x, y, "bobber")
+							local bobber = EntityGetClosestWithTag(x, y, "bobber")
 
 							if EntityHasFlag(bobber, "is_catch_allowed") == false and not EntityHasFlag(bobber, "failed_catch") then
 								--hand[1].uses_remaining = hand[1].uses_remaining + 1
@@ -49,7 +49,7 @@ for k, v in pairs(bait_list) do
 
 								--print("returning bobber")
 
-								bobber_x, bobber_y = EntityGetTransform(bobber)
+								local bobber_x, bobber_y = EntityGetTransform(bobber)
 
 								EntitySetVariable(bobber, "frame_num_start", "int", GameGetFrameNum())
 

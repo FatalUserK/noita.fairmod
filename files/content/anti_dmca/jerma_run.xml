@@ -5,7 +5,7 @@
 
 	<VelocityComponent
 		_tags="enabled_in_world"
-	></VelocityComponent>
+	/>
 
 	<SpriteComponent
 		_tags="eyes"
@@ -15,7 +15,7 @@
 		has_special_scale="1"
 		special_scale_x="0.05"
 		special_scale_y="0.05"
-	></SpriteComponent>
+	/>
 
 	<LifetimeComponent
 		lifetime="300"
@@ -24,5 +24,5 @@
 	<LuaComponent
 		script_source_file="mods/noita.fairmod/files/content/anti_dmca/jerma_run.lua"
 		execute_every_n_frame="1"
-	></LuaComponent>
+	/>
 </Entity>

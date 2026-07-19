@@ -382,7 +382,7 @@ function interacting(entity_who_interacted, entity_interacted, interactable_name
 			return distance > 35
 		end
 		
-		if call.func ~= nil then call.func(state.dialog) end
+		if call.func ~= nil then call.func(state.dialog, state.dialog_system) end
 	elseif ModSettingGet("fairmod.listened_to_numbers") and minute == 0 or minute == 30 then
 		state.in_call = true
 		local sound_event = state.is_nokia and "payphone/nokia_pickup" or "payphone/pickup"

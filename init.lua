@@ -3,16 +3,25 @@
 -- if you need to do a breaking change on persistent data, put it here
 dofile_once("mods/noita.fairmod/files/scripts/migrate_save.lua")
 
+-- load libs and other global stuff here
+dofile_once("mods/noita.fairmod/files/lib/DialogSystem/init.lua")("mods/noita.fairmod/files/lib/DialogSystem")
+ModRegisterAudioEventMappings("mods/noita.fairmod/GUIDs.txt")
+local user_seeds = dofile_once("mods/noita.fairmod/files/content/user_seed/init.lua")
+
+if ModSettingGet("fairmod.alt_mode") and ModDoesFileExist("mods/noita.fairmod/files/" .. ModSettingGet("fairmod.alt_mode") .. "/init.lua") then
+	dofile_once("mods/noita.fairmod/files/" .. ModSettingGet("fairmod.alt_mode") .. "/init.lua")
+	return
+end
+
 local SetContent = ModTextFileSetContent
 dofile_once("mods/noita.fairmod/files/content/seasonals/season_helper.lua")
 
 dofile_once("mods/noita.fairmod/files/content/data_migration/init.lua")
-local user_seeds = dofile_once("mods/noita.fairmod/files/content/user_seed/init.lua")
 
+dofile_once("mods/noita.fairmod/files/content/better_world/init.lua") --needs to be applied before scenes_in_pws
 dofile_once("mods/noita.fairmod/files/content/scenes_in_pws/init.lua")
 dofile_once("mods/noita.fairmod/files/content/reset_progress/init.lua")
 dofile_once("mods/noita.fairmod/files/translations/append.lua")
-dofile_once("mods/noita.fairmod/files/lib/DialogSystem/init.lua")("mods/noita.fairmod/files/lib/DialogSystem")
 dofile_once("mods/noita.fairmod/files/content/hamis_biome/init.lua")
 dofile_once("mods/noita.fairmod/files/content/music_machine/init.lua")
 
@@ -27,7 +36,6 @@ local clipboard = dofile_once("mods/noita.fairmod/files/content/clipboard/init.l
 local gamblecore = dofile_once("mods/noita.fairmod/files/content/gamblecore/init.lua")
 local funky_portals = dofile_once("mods/noita.fairmod/files/content/funky_portals/init.lua")
 -- local trading_cards = dofile_once("mods/noita.fairmod/files/content/trading_card_game/init.lua")
-local evil_nuggets = dofile_once("mods/noita.fairmod/files/content/evil_nuggets/init.lua")
 local better_ui = dofile_once("mods/noita.fairmod/files/content/better_ui/better_ui.lua") --- @type better_ui
 local loanshark = dofile_once("mods/noita.fairmod/files/content/loan_shark/init.lua")
 local achievements = dofile_once("mods/noita.fairmod/files/content/achievements/init.lua") --- @type achievement_ui
@@ -58,7 +66,6 @@ local show_user_id = dofile_once("mods/noita.fairmod/files/content/show_user_id/
 local snail_radar = dofile_once("mods/noita.fairmod/files/content/snail_radar/snail_warning.lua")
 local mailbox = dofile_once("mods/noita.fairmod/files/content/mailbox/init.lua")
 local popups = dofile_once("mods/noita.fairmod/files/content/popups/init.lua")
-local better_world = dofile_once("mods/noita.fairmod/files/content/better_world/init.lua") --planned for NG+
 local random_alchemy = dofile_once("mods/noita.fairmod/files/content/random_alchemy/init.lua") --- @type fairmod_random_alchemy
 local pixel_scenes = dofile_once("mods/noita.fairmod/files/content/pixelscenes/init.lua") --- @type pixel_scenes
 local minecraft = dofile_once("mods/noita.fairmod/files/content/minecraft/init.lua")
@@ -68,6 +75,7 @@ local swapper = dofile_once("mods/noita.fairmod/files/content/swapper/init.lua")
 local logo_splash = dofile_once("mods/noita.fairmod/files/content/logo_splash/module.lua")
 local copibuddy_module = dofile_once("mods/noita.fairmod/files/content/copibuddy/module.lua")
 local TTS = dofile_once("mods/noita.fairmod/files/content/copibuddy/tts.lua")
+local data_overrides = dofile_once("mods/noita.fairmod/files/content/data_overrides/init.lua")
 
 -- Table to store multiple copibuddy instances
 local copibuddy_instances = {}
@@ -107,7 +115,7 @@ dofile_once("mods/noita.fairmod/files/content/more_aggressive_potions/init.lua")
 dofile_once("mods/noita.fairmod/files/content/statue_revenge/init.lua")
 dofile_once("mods/noita.fairmod/files/content/new_materium/init.lua")
 dofile_once("mods/noita.fairmod/files/content/teleporter_item/init.lua")
-dofile_once("mods/noita.fairmod/files/content/new_spells/init.lua")
+dofile_once("mods/noita.fairmod/files/content/better_spells/init.lua")
 dofile_once("mods/noita.fairmod/files/content/credits/init.lua")
 dofile_once("mods/noita.fairmod/files/content/necopumpkin/init.lua")
 dofile_once("mods/noita.fairmod/files/content/stronger_bosses/init.lua")
@@ -120,9 +128,11 @@ dofile_once("mods/noita.fairmod/files/content/cheese_finish/init.lua")
 dofile_once("mods/noita.fairmod/files/content/more_orbs/init.lua")
 dofile_once("mods/noita.fairmod/files/content/boss_arena_improvements/init.lua")
 dofile_once("mods/noita.fairmod/files/content/no_easy_ti/init.lua")
-dofile_once("mods/noita.fairmod/files/content/better_helpers/init.lua")
 dofile_once("mods/noita.fairmod/files/content/better_perks/init.lua")
 dofile_once("mods/noita.fairmod/files/content/streamer_stuff/init.lua")
+dofile_once("mods/noita.fairmod/files/content/better_bosses/init.lua")
+dofile_once("mods/noita.fairmod/files/content/no_comma_more_shuffle/init.lua")
+dofile_once("mods/noita.fairmod/files/content/evil_nuggets/init.lua")
 
 ModMaterialsFileAdd("mods/noita.fairmod/files/content/backrooms/materials.xml")
 ModMaterialsFileAdd("mods/noita.fairmod/files/content/better_world/materials.xml")
@@ -247,8 +257,6 @@ function OnPlayerSpawned(player)
 
 	clipboard.OnPlayerSpawned(player)
 
-	evil_nuggets.OnPlayerSpawned(player)
-
 	legos.OnPlayerSpawned(player)
 
 	healthymimic.OnPlayerSpawned(player)
@@ -293,11 +301,10 @@ function OnPlayerSpawned(player)
 		RemoveFlagPersistent("copibuddy_next_run")
 	end
 
-	if GameHasFlagRun("is_copibuddied") then
+	if(GameHasFlagRun("is_copibuddied") and #copibuddy_instances == 0)then
 		local new_instance = copibuddy_module.create()
 		table.insert(copibuddy_instances, new_instance)
 	end
-	
 
 	-- debugging
 	-- EntityLoad("mods/noita.fairmod/files/content/funky_portals/return_portal.xml", target_x, target_y - 30)
@@ -307,7 +314,6 @@ function OnPlayerSpawned(player)
 	--LoadGameEffectEntityTo(player, "mods/noita.fairmod/data/entities/misc/effect_invisibility.xml")
 end
 
-ModRegisterAudioEventMappings("mods/noita.fairmod/GUIDs.txt")
 
 local pause_button_pressed = false
 
@@ -352,12 +358,12 @@ function OnWorldPreUpdate()
 		copibuddy_instances = {}
 	end
 	
-	if GameHasFlagRun("copibuddy") then
+	if GameHasFlagRun("copibuddy") and #copibuddy_instances == 0 then
+		GameRemoveFlagRun("copibuddy")
 		print("Spawning copibuddy due to flag")
 		local new_instance = copibuddy_module.create()
 		table.insert(copibuddy_instances, new_instance)
 		GameAddFlagRun("is_copibuddied")
-		GameRemoveFlagRun("copibuddy")
 	end
 	
 	-- Update all copibuddy instances
@@ -387,13 +393,12 @@ function OnWorldPreUpdate()
 		RemoveFlagPersistent("copibuddy_next_run")]]
 	end
 
-	if(GameHasFlagRun("copibuddy_will_haunt") and GameGetFrameNum() > 200 and GameGetFrameNum() % 60 == 0 and Random(0, 100) < 5)then
+	if(not GameHasFlagRun("is_copibuddied") and (GameHasFlagRun("copibuddy_will_haunt") and GameGetFrameNum() > 200 and GameGetFrameNum() % 60 == 0 and Random(0, 100) < 5))then
 		-- Only spawn one copibuddy naturally
 		if #copibuddy_instances == 0 then
 			local new_instance = copibuddy_module.create()
 			table.insert(copibuddy_instances, new_instance)
 		end
-		GameAddFlagRun("copibuddy")
 		GameRemoveFlagRun("copibuddy_will_haunt")
 	end
 
@@ -471,6 +476,29 @@ function OnPlayerDied(player)
 	end
 	hescoming.OnPlayerDied(player)
 	corpses.OnPlayerDied(player)
+end
+
+--ive repurposed OnCountSecrets to be a cheatcodes list since i think thats more fun than having some vague list of "secrets"
+local cheats_list = dofile_once("mods/noita.fairmod/files/content/cheats/cheat_codes.lua")
+function OnCountSecrets()
+	local shared_cheat_id = {}
+	local total_cheats = 0
+	local known_cheats = 0
+	for _,cheat in ipairs(cheats_list) do
+		if not cheat.not_progress then
+			if shared_cheat_id[cheat.progress_id] == nil then
+				total_cheats = total_cheats + 1
+				shared_cheat_id[cheat.progress_id] = false
+			end
+
+			if not shared_cheat_id[cheat.progress_id] and ModSettingGet("fairmod.cheat_executed." .. cheat.progress_id) > 0 then
+				known_cheats = known_cheats + 1
+				shared_cheat_id[cheat.progress_id] = true
+			end
+		end
+	end
+
+	return total_cheats,known_cheats
 end
 
 -- Copi was here

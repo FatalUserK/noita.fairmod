@@ -5,12 +5,12 @@ mask_list = {
 		weight = 1.0,
 	},
 	{
-		name = "Hamis Mask",
+		name = "Hämis Mask",
 		filepath = "mods/noita.fairmod/files/content/mask_box/mask_gfx/longleg.xml",
 		weight = 1.0,
 	},
 	{
-		name = "Golden Hamis Mask",
+		name = "Golden Hämis Mask",
 		filepath = "mods/noita.fairmod/files/content/mask_box/mask_gfx/longleg_gold.xml",
 		weight = 0.1,
 	},
@@ -47,4 +47,5 @@ function ChooseRandomMask(x, y)
 			return mask_list[k].filepath
 		end
 	end
+	return mask_list[#mask_list].filepath --reminder that Randomf can be OOB
 end

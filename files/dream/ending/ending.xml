@@ -1,0 +1,36 @@
+<Entity>
+	<ParticleEmitterComponent
+		image_animation_file="mods/noita.fairmod/files/dream/ending/particle_emitter/bg.png"
+		image_animation_colors_file="mods/noita.fairmod/files/dream/ending/particle_emitter/bg_gfx.png"
+		image_animation_loop="0"
+		emitted_material_name="spark_red"
+		gravity.y="0.0"
+		image_animation_speed="5"
+		emit_real_particles="0"
+		create_real_particles="0"
+		emit_cosmetic_particles="1"
+		collide_with_grid="0"
+		lifetime_min="2"
+		lifetime_max="4"
+		fade_based_on_lifetime="1"
+	/>
+
+	<LuaComponent
+		script_source_file="mods/noita.fairmod/files/dream/ending/animator.lua"
+	/>
+
+	<AudioLoopComponent
+		file="data/audio/Desktop/projectiles.bank"
+		event_name="player_projectiles/destruction/loop"
+		auto_play="0"
+		m_volume="5"
+	/>
+
+	<LuaComponent
+		script_source_file="mods/noita.fairmod/files/dream/ending/switch_animation.lua"
+		execute_every_n_frame="80"
+		remove_after_executed="1"
+	/>
+
+	<LifetimeComponent/>
+</Entity>

@@ -310,8 +310,8 @@ achievements = {
 		end,
 	},
 	{
-		name = "Hamis Believer",
-		description = "You have been converted and accepted Lord Hamis",
+		name = "Hämis Believer",
+		description = "You have been converted and accepted Lord Hämis",
 		icon = "mods/noita.fairmod/files/content/achievements/icons/hamis_believer.png",
 		flag = "hamis_believer",
 		unlock = function()
@@ -319,8 +319,8 @@ achievements = {
 		end,
 	},
 	{
-		name = "Hamis Heretic",
-		description = "Lord Hamis is disappointed",
+		name = "Hämis Heretic",
+		description = "Lord Hämis is disappointed",
 		icon = "mods/noita.fairmod/files/content/achievements/icons/hamis_heretic.png",
 		flag = "hamis_heretic",
 		unlock = function()
@@ -366,7 +366,7 @@ achievements = {
 	{
 		name = "PEDRO",
 		description = "PEDRO PEDRO PEDRO",
-		icon = "mods/noita.fairmod/files/content/new_spells/racoon/icon.png",
+		icon = "mods/noita.fairmod/files/content/better_spells/racoon/icon.png",
 		flag = "pedro_found",
 		unlock = function()
 			return HasFlagPersistent("action_fairmod_pedro")
@@ -1203,7 +1203,7 @@ local biome_achievements = {
 	},
 	fairmod_hamis_biome = {
 		name = "Hämis Our Beloved",
-		description = "Hamis is cool.",
+		description = "Hämis is cool.",
 	},
 	fairmod_milk_biome = {
 		name = "Got Milk?",

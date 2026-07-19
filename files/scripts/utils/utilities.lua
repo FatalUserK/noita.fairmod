@@ -1,6 +1,14 @@
 --- Hardcoded world width for scripts that don't have access to BiomeMapGetSize.
 WORLD_WIDTH_HARDCODED = 70 * 512
 
+-- de-patterning function for dealing with string.gsub() and other pattern-utilising Lua functions.
+function escape(str) return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1") end
+
+-- Convenient function to simplify modifying files, gsub \r\n to \n to edit multiple lines at a time.
+function modifile(file, target, sub)
+	ModTextFileSetContent(file, ModTextFileGetContent(file):gsub("\r\n", "\n"):gsub(escape(target), sub))
+end
+
 ---@vararg table
 ---@return table
 function MergeTables(...)
@@ -109,4 +117,183 @@ function EntityDropItem(entity, item_entity)
 		ComponentSetValue2(inventory_comp, "mActualActiveItem", 0)
 		ComponentSetValue2(inventory_comp, "mForceRefresh", true)
 	end
+end
+
+---Replaces the image at `destination` with `image`
+---@param destination string
+---@param image string
+function ImageReplace(destination, image)
+	if not ModDoesFileExist(image) then print("image was not valid for image replacement:") print(image) return end
+
+	local dest_data = {}
+	local img_data = {}
+	img_data.id,img_data.w,img_data.h = ModImageMakeEditable(image, 0, 0)
+	dest_data.id,dest_data.w,dest_data.h = ModImageMakeEditable(destination, img_data.w, img_data.h)
+
+	local w = math.max(img_data.w, dest_data.w)
+	local h = math.max(img_data.h, dest_data.h)
+
+	for y = 0, h - 1 do
+		for x = 0, w - 1 do
+			ModImageSetPixel(dest_data.id, x, y, ModImageGetPixel(img_data.id, x, y))
+		end
+	end
+end
+
+---Split abgr
+---@param abgr_int integer
+---@return number red, number green, number blue, number alpha
+function abgr_split(abgr_int)
+    local r = bit.band(abgr_int, 0xFF)
+    local g = bit.band(bit.rshift(abgr_int, 8), 0xFF)
+    local b = bit.band(bit.rshift(abgr_int, 16), 0xFF)
+    local a = bit.band(bit.rshift(abgr_int, 24), 0xFF)
+
+    return r, g, b, a
+end
+
+---Merge rgb
+---@param r number
+---@param g number
+---@param b number
+---@param a number
+---@return integer color
+function abgr_merge(r, g, b, a)
+    return bit.bor(bit.band(r, 0xFF), bit.lshift(bit.band(g, 0xFF), 8), bit.lshift(bit.band(b, 0xFF), 16), bit.lshift(bit.band(a, 0xFF), 24))
+end
+
+math.clamp = function(val, lower, upper)
+	return math.min(math.max(lower, val), upper)
+end
+
+---Overlays a target `image` over a target `destination`, accounting for alpha and the such
+---@param destination string
+---@param image string
+---@param offset_x int? `0` - x offset for the overlay's location on the destination image
+---@param offset_y int? `0` - y offset for the overlay's location on the destination image
+---@param alpha_multiplier number? `1` - multiplier for the alpha value of the overlay image
+function ImageOverlay(destination, image, offset_x, offset_y, alpha_multiplier)
+	if not ModDoesFileExist(destination) then print("destination was not valid for image overlay") return end
+	if not ModDoesFileExist(image) then print("image was not valid for image overlay") return end
+
+	offset_x = offset_x or 0
+	offset_y = offset_y or 0
+	local logging
+	if offset_x ~= 0 then logging = true end
+	alpha_multiplier = alpha_multiplier or 1
+
+	local dest_data = {}
+	local img_data = {}
+	img_data.id,img_data.w,img_data.h = ModImageMakeEditable(image, 0, 0)
+	dest_data.id,dest_data.w,dest_data.h = ModImageMakeEditable(destination, 0, 0)
+
+	local w = img_data.w
+	local h = img_data.h
+
+	for y = 0, h - 1 do
+		for x = 0, w - 1 do
+			local dest_pixel = {abgr_split(ModImageGetPixel(dest_data.id, x + offset_x, y + offset_y))}
+			local img_pixel = {abgr_split(ModImageGetPixel(img_data.id, x, y))}
+			if img_pixel[4] == 0 then goto continue end
+
+			for i = 1, 3 do
+				local difference = (img_pixel[i] - dest_pixel[i]) * (img_pixel[4]/255) * alpha_multiplier
+				dest_pixel[i] = math.clamp(dest_pixel[i] + difference, 0, 255)
+			end
+
+			ModImageSetPixel(dest_data.id, x + offset_x, y + offset_y, abgr_merge(unpack(dest_pixel)))
+			::continue::
+		end
+	end
+end
+
+---Sets the alpha channel of all pixels (except empty ones) to the designated value
+---@param image string
+---@param value int [0-255]
+---@param set_empty bool? if true, will also set empty pixels
+function ImageSetOpacity(image, value, set_empty)
+	local img,w,h = ModImageMakeEditable(image, 0, 0)
+	local a = value
+	for y = 0, h-1 do
+		for x = 0, w-1 do
+			local r,g,b,a2 = abgr_split(ModImageGetPixel(img, x, y))
+			if a2 ~= 0 or set_empty then
+				ModImageSetPixel(img, x, y, abgr_merge(r,g,b,a))
+			end
+		end
+	end
+end
+
+
+---@class (exact) Weighted
+---@field weight number
+
+---@generic T : Weighted
+---@param t T[]
+---@return T
+---Function for picking a random table entry on `weight` as weight
+function RandomFromTable(t)
+	local total_weight = 0
+	for _, entry in ipairs(t) do
+		total_weight = total_weight + entry.weight
+	end
+
+	local rnd = Randomf(0, total_weight)
+	for _, entry in ipairs(t) do
+		if rnd <= entry.weight then
+			return entry
+		else rnd = rnd - entry.weight end
+	end
+	return t[#t] --Randomf has OOB issue
+end
+
+---@generic T : Weighted
+---@param t T[]
+---@param context any
+---@return T|nil
+---Compiles entries from `t` into a new table based on optional `condition` value in the entry and passes it through `RandomFromTable`. `context` is passed into the function as a parameter.
+function RandomFromTableConditional(t, context)
+	local temp = {}
+	for _, entry in ipairs(t) do
+		if entry.condition and not entry:condition(context) then goto continue end
+		temp[#temp+1] = entry
+		::continue::
+	end
+
+	if #temp == 0 then return end
+	return RandomFromTable(temp)
+end
+
+function pause(lifetime, delay) --delay cuz fucking race condition bullshit stopping the greyscale/audio fx from working
+	lifetime = lifetime or 60
+	delay = delay or 0
+
+	local gr_mult = math.max(math.min(1-(1-(lifetime * 1/600))^4, 1), 0)
+	local st_mult = math.max(math.min(1-(1-(lifetime * 1/600))^4, 1), 0)
+	if lifetime == -1 then gr_mult = 1 st_mult = 1 end
+
+	--spawning an ent like this so we can have fun greyscale + static noise shenanigans
+	local stop_ent = EntityCreateNew("stop")
+	EntityAddChild(GetPlayers()[1] or GameGetWorldStateEntity(), stop_ent)
+	EntityAddComponent2(stop_ent, "InheritTransformComponent")
+
+	EntityAddComponent2(stop_ent, "VariableStorageComponent", {
+		name = "timestop",
+		value_int = lifetime,
+		value_string = GameGetFrameNum() + delay
+	})
+
+	EntityAddComponent2(stop_ent, "LuaComponent", {
+		script_source_file = "mods/noita.fairmod/files/scripts/stop_time.lua"
+	})
+
+
+	GameSetPostFxParameter("grayscale", 0, 0, 0, gr_mult)
+
+	EntityAddComponent2(stop_ent, "AudioLoopComponent", {
+		file="mods/noita.fairmod/fairmod.bank",
+		event_name="radio/static",
+		auto_play=true,
+		m_volume=st_mult,
+	})
 end

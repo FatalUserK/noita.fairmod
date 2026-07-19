@@ -1,6 +1,6 @@
 dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 
-Devs = {
+local devs = {
 	["INVALID_USER"]=false,
 	["copihuman"]=true,
 	["evaisadev"]=true,
@@ -9,8 +9,16 @@ Devs = {
 	["conga_lyne"]=true,
 	["heinermann"]=true,
 	["theonetheonlyspoopyboi"]=true,
-	-- Add yourselves
 }
+
+local copi = "copihuman" --is variable for testing, is not intended to be modified (though maybe some funny stuff could happen with the masks? idk)
+
+PowerUsers = {}
+if #PowerUsers == 0 then
+	for key, value in pairs(devs) do
+		PowerUsers[key] = value
+	end
+end --do this so actual devs can be differentiated from empowered chatters
 --print("HOLY SHIT DOES THIS WORK") yes; it does, now shut up.
 
 -- monkey patch message recieved callback
@@ -30,10 +38,14 @@ function _streaming_on_irc( is_userstate, sender_username, message, raw )
 			print(tostring(dev) .. " = " .. tostring(power))
 		end
 	end--]]
-	if Devs[sender_username:lower() or "INVALID_USER"] then
-		if message:sub(1, 5):lower():match("sudo ") then
-			message = message:sub(6, -1)
-			report = false
+
+
+	--general power-user stuff
+	local sender_lower = sender_username:lower()
+	if PowerUsers[sender_lower or "INVALID_USER"] or GameHasFlagRun("fairmod.empower_all_chatters") then
+		if message:sub(1, 5):lower():match("sudo ") and not GameHasFlagRun("fairmod.no_sudo") then
+			message = message:sub(6, -1):lower()
+			local valid_cheat_found
 			local cheat_codes = dofile_once("mods/noita.fairmod/files/content/cheats/cheat_codes.lua")
 			for i=1, #cheat_codes do
 				local cheat = cheat_codes[i]
@@ -41,10 +53,22 @@ function _streaming_on_irc( is_userstate, sender_username, message, raw )
 				if type(code) == "function" then code = code() end
 				--print(code)
 				if message == code then
+					if cheat.do_not_sudo then break end
+					valid_cheat_found = true
 					if cheat.name then GamePrintImportant("Cheat activated: " .. cheat.name, cheat.description, cheat.decoration or "") end
-					cheat.func(EntityGetWithTag("player_unit")[1])
+					local player = EntityGetWithTag("player_unit")[1]
+					local pos_x,pos_y
+					if not player then
+						local x, y, w, h = GameGetCameraBounds() --made it so cheatcodes take position so we can execute some after death, just for sillies (may also be useful in the future)
+						pos_x,pos_y = x + (w*.5),y + (h*.5)
+					else
+						pos_x,pos_y = EntityGetTransform(player)
+					end
+					cheat.func(player, pos_x, pos_y)
 				end
 			end
+
+			report = not valid_cheat_found --if cheat is not valid, report, if valid then dont
 		elseif message:sub(1, 6):lower():match("print ") then
 			message = message:sub(7, -1)
 			GamePrintImportant(message, "From:" ..sender_username, "mods/noita.fairmod/files/content/sudo/3piece_meta.png")
@@ -56,43 +80,59 @@ function _streaming_on_irc( is_userstate, sender_username, message, raw )
 
 			GlobalsSetValue("noita.fairmod.sudo_mail", GlobalsGetValue("noita.fairmod.sudo_mail", "")..sender_username.."\n"..message .."\n")
 			report = false
-		elseif message:sub(1, 6):lower():match("speak ") then
-			message = message:sub(7, -1)
-			if GameHasFlagRun("is_copibuddied") and sender_username:lower()=="copihuman" then
-				GlobalsSetValue("copibuddy_speak_text", message)
-				report = false
-			end
-		elseif message:sub(1, 4):lower():match("run ") then
-			-- if we are copi
-			message = message:sub(5, -1)
-			if GameHasFlagRun("is_copibuddied") and sender_username:lower()=="copihuman" then
-				GlobalsSetValue("copi_force_event", message)
-				report = false
+		elseif message == "1" or message == "2" or message == "3" then
+			local vote_active = GlobalsGetValue("copibuddy_vote_active", "0")
+			if vote_active == "1" then
+				local vote_num = tonumber(message)
+				if vote_num then
+					local current_votes = GlobalsGetValue("copibuddy_vote_counts", "0,0,0")
+					local votes = {}
+					for count in current_votes:gmatch("[^,]+") do
+						table.insert(votes, tonumber(count) or 0)
+					end
+
+					votes[vote_num] = votes[vote_num] + 1
+					GlobalsSetValue("copibuddy_vote_counts", votes[1] .. "," .. votes[2] .. "," .. votes[3])
+
+					print("Vote received from " .. sender_username .. " for option " .. vote_num)
+					print("Current vote counts: 1=" .. votes[1] .. ", 2=" .. votes[2] .. ", 3=" .. votes[3])
+					report = false
+				end
 			end
 		elseif message:sub(1, 8):lower():match("empower ") then
-			Devs[sender_username:lower()] = false
-			Devs[message:sub(9, -1):lower()] = true
+			local target = message:sub(9, -1):lower()
+			PowerUsers[sender_lower] = false
+			PowerUsers[target] = true
             GamePlaySound("data/audio/Desktop/explosion.bank", "explosions/holy", GameGetCameraPos())
             GameScreenshake(120)
-			GamePrintImportant(GameTextGet("$log_fairmod_dev_empower", sender_username), "$log_fairmod_dev_empower_desc")
-			--[[actually im considering making it a point-based system, but that would be annoying to code here so ill leave it fn -k]]
-			--[[also if i did, id rework it so that if 4 devs sacrifice their power, everyone gains power -k]]
-		elseif message:sub(1, 8):lower():match("silence ") then
+			GamePrintImportant(GameTextGet("$log_fairmod_dev_empower", sender_username), GameTextGet("$log_fairmod_dev_empower_desc", target))
+		elseif message:sub(1, 8):lower():match("silence ") and false then --disabled until a fun way to implement this is decided
 			local target = tostring(message:sub(9, -1)):lower()
-			if target ~= "copihuman" then
-				Devs[sender_username:lower()] = false
-				Devs[target] = false
-				GamePlaySound("data/audio/Desktop/explosion.bank", "explosions/holy", GameGetCameraPos())
-				GameScreenshake(120)
-				GamePrintImportant(GameTextGet("$log_fairmod_dev_sacrifice", target), "$log_fairmod_dev_sacrifice_desc")
-			else
-				Devs[sender_username:lower()] = false
-				-- lol >:3
-				GamePrintImportant("$log_fairmod_dev_sacrifice_fail", "$log_fairmod_dev_sacrifice_desc_fail")
+			PowerUsers[sender_lower] = false
+			PowerUsers[target] = false
+			GamePlaySound("data/audio/Desktop/explosion.bank", "explosions/holy", GameGetCameraPos())
+			GameScreenshake(120)
+			GamePrintImportant(GameTextGet("$log_fairmod_dev_sacrifice", target), "$log_fairmod_dev_sacrifice_desc")
+		end
+	end
+
+	--true dev stuff (so unique stuff like copi's copibuddy control cannot be revoked)
+	if devs[sender_lower or "INVALID_USER"] then
+        GameAddFlagRun("fairmod.developer_present." .. sender_lower)
+		if sender_lower == copi and GameHasFlagRun("is_copibuddied") then
+			if message:sub(1, 6):lower():match("speak ") then
+				message = message:sub(7, -1)
+				GlobalsSetValue("copibuddy_speak_text", message)
+				report = false
+			elseif message:sub(1, 4):lower():match("run ") and not GameHasFlagRun("fairmod.no_sudo") then
+				-- if we are copi
+				message = message:sub(5, -1)
+				GlobalsSetValue("copi_force_event", message)
+				report = false
 			end
 		end
 	end
 	if old_streaming_on_irc and report then -- Made it so when a command is handled by fairmod it is not passed to the hook at all, the ... was a bit obvious.
-		old_streaming_on_irc(is_userstate, sender_username, report and message or "...", raw)
+		old_streaming_on_irc(is_userstate, sender_username, message or "...", raw)
 	end
 end

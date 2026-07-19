@@ -33,8 +33,27 @@ for materials in nxml.edit_file("data/materials.xml") do
 			elseif input1 == "magic_liquid_mana_regeneration" then
 				attr.output_cell1 = "lava"
 			end
+		elseif input1 == "mimic_liquid" and input2 == "[any_liquid]" then
+			attr.input_cell2 = "[*]"
+			attr.output_cell1 = "[*]"
+			attr.output_cell2 = "[*]"
 		end
 	end
 end
+
+for _, path in ipairs({"data/entities/misc/effect_invisibility.xml", "data/entities/misc/effect_invisibility_short.xml"}) do
+	for xml in nxml.edit_file(path) do
+		xml:add_child(nxml.new_element("LuaComponent", {
+			script_source_file="mods/noita.fairmod/files/content/better_invisibility/invisibility_on.lua",
+			execute_every_n_frame="1"
+		}))
+		xml:add_child(nxml.new_element("LuaComponent", {
+			script_source_file="mods/noita.fairmod/files/content/better_invisibility/invisibility_off.lua",
+			execute_on_removed="1",
+			execute_every_n_frame="-1",
+		}))
+	end
+end
+
 
 ModLuaFileAppend("data/scripts/status_effects/status_list.lua", "mods/noita.fairmod/files/content/worse_materials/append_status_list.lua")

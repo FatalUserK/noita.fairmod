@@ -41,13 +41,13 @@ if TimeLocal.year % 4 == 0 then --damn leap years are more complex than i though
     if TimeLocal.year % 100 == 0 then 
         if TimeLocal.year % 400 == 0 then 
             is_leap_year = true
-        else 
+        else
             is_leap_year = false 
         end
-    else 
+    else
         is_leap_year = true 
     end
-else 
+else
     is_leap_year = false
 end
 ---nabbed code
@@ -85,7 +85,7 @@ day_of_year = day_of_year + TimeLocal.day
 
     local val8 = dd + (mmx*2) +  math.floor(((mmx+1)*3)/5)   + yy + math.floor(yy/4)  - math.floor(yy/100)  + math.floor(yy/400) + 2
     local val9 = math.floor(val8/7)
-    local day_of_week = val8-(val9*7) 
+    local day_of_week = val8-(val9*7)
 
     if (day_of_week == 0) then
       day_of_week = 7
@@ -146,6 +146,11 @@ end
 ---nabbed code for shrove tuesday (which should be exactly 47 days before easter)]]
 
 
+local fairmod_release_absolute = AbsoluteFromGregorianDate(GregorianDate.create(10, 31, 2024))
+local current_absolute = AbsoluteFromGregorianDate(GregorianDate.create(TimeUTC.month, TimeUTC.day, TimeUTC.year))
+if not ModSettingGet("fairmod.first_played") then ModSettingSet("fairmod.first_played", current_absolute) end
+ModSettingSet("fairmod.last_played", current_absolute)
+
 local copiday = TimeLocal.day == 11 and TimeLocal.month == 11
 
 
@@ -157,24 +162,33 @@ local copiday = TimeLocal.day == 11 and TimeLocal.month == 11
 return {
     TimeLocal = TimeLocal,
     TimeUTC = TimeUTC,
+    Timezone = TimeLocal.hour - TimeUTC.hour,
 
     ----local: (stuff based on localtime)
-    day_of_year = day_of_year, -- day of year 1-366
-    day_of_week = day_of_week, --day of week 1-7
-    weekday = weekday, --probs pointless but eh, who cares
+    ---@type int day of the year within the range [1, 366]
+    day_of_year = day_of_year,
+    day_of_week = day_of_week,
+    weekday = weekday, --day of the week string
+
 
     --bools:
+
+    ---@type bool is it currently a leap year?
     is_leap_year = is_leap_year,
+    ---@type bool|nil --`true` if Void, `false` if Air, `nil` if Random
     void_day = void_day,
+    ---@type bool is it currently Halloween?
     halloween = halloween,
+    ---@type bool is it currently Christmas?
     christmas = christmas,
+    ---@type false|number false if not Hanukkah, otherwise returns what day of Hanukkah it is
     hanukkah = hanukkah,
-    valentines = valentines,
+    valentines = valentines, --is it valentine's day?
 
     spring = false,
     summer = false,
     autumn = false,
-    winter = false, --since when were all the seasons the exact same length :sob:
+    winter = false,
 
     copiday = copiday,
 }

@@ -5,7 +5,7 @@ local prfx = mod_id .. "."
 
 local function PatchGamesInitlua()
 	local file = "data/scripts/init.lua"
-	local patch = "mods/noita.fairmod/files/content/biome_mods/biome_modifiers_patch.lua"
+	local patch = "mods/noita.fairmod/files/content/patch_game_init.lua"
 	local file_appends = ModLuaFileGetAppends(file)
 
 	for _, append in ipairs(file_appends) do
@@ -227,6 +227,15 @@ local function build_settings()
 					is_waiting_for_input = false,
 					scope = MOD_SETTING_SCOPE_RUNTIME,
 				},
+				{
+					id = "rebind_zoom",
+					ui_name = "Zoom Button",
+					ui_description = "The keybind used to take a shit.",
+					value_default = "225",
+					ui_fn = ui_get_input,
+					is_waiting_for_input = false,
+					scope = MOD_SETTING_SCOPE_RUNTIME,
+				},
 			},
 		},
 		{
@@ -294,8 +303,23 @@ function ModSettingsUpdate(init_scope)
 	mod_settings = build_settings()
 	mod_settings_update(mod_id, mod_settings, init_scope)
 	if init_scope == 0 or init_scope == 1 then
-		PatchGamesInitlua()
-		PrintHamis()
+		--running code here cuz it runs before game init 'n' stuff
+
+		if init_scope == 0 then
+			--if more than 40 deaths, has not beaten the lovely dream and an extra 1% check
+			local is_dreaming = (ModSettingGet("fairmod.deaths") or 0) > 40 and not HasFlagPersistent("fairmod_won_lovely_dream") and math.random() < .01
+			if is_dreaming then
+				ModSettingSet("fairmod.alt_mode", "dream")
+				return
+			else
+				ModSettingRemove("fairmod.alt_mode")
+			end
+		end
+
+		if not ModSettingGet("fairmod.alt_mode") then
+			PatchGamesInitlua()
+			PrintHamis()
+		end
 	end
 end
 
@@ -308,5 +332,6 @@ end
 
 -- This function is called to display the settings UI for this mod. your mod's settings wont be visible in the mod settings menu if this function isn't defined correctly.
 function ModSettingsGui(gui, in_main_menu)
+	if ModSettingGet("fairmod.alt_mode") then return end
 	mod_settings_gui(mod_id, mod_settings, gui, in_main_menu)
 end

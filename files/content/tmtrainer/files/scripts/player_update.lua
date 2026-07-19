@@ -44,16 +44,16 @@ local function swapCardEntity(card, spell_id)
 
 			offsetx = textwidth * 0.5 - 0.5
 
-			EntityAddComponent(action_entity, "SpriteComponent", {
+			EntityAddComponent2(action_entity, "SpriteComponent", {
 				_tags = "shop_cost,enabled_in_world",
 				image_file = "data/fonts/font_pixel_white.xml",
-				is_text_sprite = "1",
-				offset_x = tostring(offsetx),
-				offset_y = "25",
-				update_transform = "1",
-				update_transform_rotation = "0",
+				is_text_sprite = true,
+				offset_x = offsetx,
+				offset_y = 25,
+				update_transform = true,
+				update_transform_rotation = false,
 				text = tostring(price),
-				z_index = "-1",
+				z_index = -1,
 			})
 
 			local cost_comp = EntityAddComponent2(action_entity, "ItemCostComponent", {
@@ -90,9 +90,6 @@ local function swapCardEntity(card, spell_id)
 					end
 				end
 			end
-			-- else
-			--EntitySetComponentsWithTagEnabled(action_entity, "enabled_in_world", true)
-			--EntitySetComponentsWithTagEnabled(action_entity, "enabled_in_inventory", false)
 		end
 
 		EntityKill(card)
@@ -102,6 +99,9 @@ end
 if now % 30 == 0 then
 	dofile_once("data/scripts/gun/gun_enums.lua")
 	dofile_once("data/scripts/gun/gun_actions.lua")
+	local a, b, c, d, e, f = GameGetDateAndTimeLocal()
+	local seed = math.abs(a ^ b + c ^ d + e ^ f - a + b + c ^ d + e + f)
+	SetRandomSeed(x + GameGetFrameNum(), y + seed)
 
 	typeMap = typeMap or nil
 	TMTRAINER_MAP = TMTRAINER_MAP or nil
@@ -128,13 +128,28 @@ if now % 30 == 0 then
 		if spells ~= nil then return spells[Random(1, #spells)] end
 	end
 
-	SetRandomSeed(x + GameGetFrameNum() + StatsGetValue("world_seed"), y + GameGetFrameNum() + StatsGetValue("world_seed"))
+	
 
 	local card_entities = EntityGetWithTag("card_action")
 	for k, v in ipairs(card_entities) do
-		if not EntityHasTag(v, "NOT_TMTRAINER") then
-			EntityAddTag(v, "NOT_TMTRAINER")
-			if Random(0, 100) <= 3 then
+
+		local parent = EntityGetParent(v)
+		local root = EntityGetRootEntity(v)
+		if EntityHasTag(root, "ew_client") or EntityHasTag(root, "client")  then
+			goto continue
+		end
+
+		if EntityHasTag(root, "player_unit") or EntityHasTag(root, "polymorphed_player") then
+			goto continue
+		end
+		
+		do
+
+			local rand = Random(1, 100) 
+			local check = (rand <= 20)
+
+			if not EntityHasTag(v, "NOT_TMTRAINER") and check then
+
 				local action_comp = EntityGetFirstComponentIncludingDisabled(v, "ItemActionComponent")
 				if action_comp ~= nil then
 					local id = ComponentGetValue2(action_comp, "action_id")
@@ -142,9 +157,11 @@ if now % 30 == 0 then
 					local new_spell = getTMTrainerSpellOfType(type)
 					if new_spell ~= nil then swapCardEntity(v, new_spell) end
 				end
+
 			end
-		else
-			if not EntityHasTag(v, "NOT_TMTRAINER") then EntityAddTag(v, "NOT_TMTRAINER") end
 		end
+
+		::continue::
+		if not EntityHasTag(v, "NOT_TMTRAINER") then EntityAddTag(v, "NOT_TMTRAINER") end
 	end
 end
