@@ -1,0 +1,5 @@
+<Entity>
+    <SpriteComponent
+        image_file="mods/noita.fairmod/files/content/streamer_stuff/xytio/gfx.xml"
+    />
+</Entity>
