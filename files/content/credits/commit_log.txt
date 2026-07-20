@@ -1170,3 +1170,13 @@ oh i cant be bothered, just push everything.
 fixed decor randomiser on nullpointerexception
 added `chosen1` cheatcode
 changed workshop image
+Update commit_log.txt
+minor maintenance stuff
+added cheats counter to progress menu
+few more tweaks and optimisations
+improved `nullpointerexception` code cheat scraping
+minor cheat stuff
+added zoom rebind, fixed konami cheat
+fixed zoom key
+Update gui.lua
+added controller support, improved cheat system

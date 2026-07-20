@@ -146,6 +146,11 @@ end
 ---nabbed code for shrove tuesday (which should be exactly 47 days before easter)]]
 
 
+local fairmod_release_absolute = AbsoluteFromGregorianDate(GregorianDate.create(10, 31, 2024))
+local current_absolute = AbsoluteFromGregorianDate(GregorianDate.create(TimeUTC.month, TimeUTC.day, TimeUTC.year))
+if not ModSettingGet("fairmod.first_played") then ModSettingSet("fairmod.first_played", current_absolute) end
+ModSettingSet("fairmod.last_played", current_absolute)
+
 local copiday = TimeLocal.day == 11 and TimeLocal.month == 11
 
 
