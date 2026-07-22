@@ -24,7 +24,7 @@ end
 
 for _, action in ipairs(actions) do
 	local action_type = action.type
-	if action_type ~= nil then
+	if action_type ~= nil and not action.no_tmt then
 		if not action_info_map[action_type] then action_info_map[action_type] = {} end
 		table.insert(action_info_map[action_type], action)
 	end

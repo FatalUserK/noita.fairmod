@@ -366,7 +366,7 @@ achievements = {
 	{
 		name = "PEDRO",
 		description = "PEDRO PEDRO PEDRO",
-		icon = "mods/noita.fairmod/files/content/new_spells/racoon/icon.png",
+		icon = "mods/noita.fairmod/files/content/better_spells/racoon/icon.png",
 		flag = "pedro_found",
 		unlock = function()
 			return HasFlagPersistent("action_fairmod_pedro")

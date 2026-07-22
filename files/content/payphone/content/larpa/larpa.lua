@@ -8,9 +8,22 @@ local search_radius   = 300   -- search radius
 
 function module.update(player_entity)
 
-	if(not GameHasFlagRun("payphone_larpa"))then
+	if not (GameHasFlagRun("payphone_larpa") or GameHasFlagRun("payphone_larpa_evil"))then
 		return
 	end
+    local add_larpa_component
+    if GameHasFlagRun("payphone_larpa_evil") and not GameHasFlagRun("payphone_larpa") then
+        add_larpa_component = function(entity_id, component_type_name, table_of_component_values)
+            for key, value in pairs(table_of_component_values) do
+                if type(value) ~= "string" then
+                    table_of_component_values[key] = nil
+                end
+            end
+            EntityAddComponent2(entity_id, component_type_name, table_of_component_values)
+        end
+    else
+        add_larpa_component = EntityAddComponent2
+    end
 
     local player_units = EntityGetWithTag("player_unit")
     if not player_units or #player_units == 0 then
@@ -39,35 +52,35 @@ function module.update(player_entity)
         EntityAddTag(proj, "projectile_larpa_added")
 
         -- orbit modifications
-        EntityAddComponent2(proj, "VariableStorageComponent", {
+        add_larpa_component(proj, "VariableStorageComponent", {
             _tags = "orbit_projectile_type",
             name = "orbit_projectile_type",
             value_string = "orbit_larpa"
         })
-        EntityAddComponent2(proj, "VariableStorageComponent", {
+        add_larpa_component(proj, "VariableStorageComponent", {
             _tags = "orbit_projectile_speed",
             name = "orbit_projectile_speed",
             value_float = 0
         })
-        EntityAddComponent2(proj, "LuaComponent", {
+        add_larpa_component(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/orbit_projectile.lua",
             execute_every_n_frame = 1,
             remove_after_executed = true
         })
-        EntityAddComponent2(proj, "LuaComponent", {
+        add_larpa_component(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/orbit_projectile_rotation.lua",
             execute_every_n_frame = 1
         })
 
         -- explosion modification
-        EntityAddComponent2(proj, "LuaComponent", {
+        add_larpa_component(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_death.lua",
             execute_every_n_frame = -1,
             execute_on_removed = true
         })
 
         -- bounce modification
-        EntityAddComponent2(proj, "LuaComponent", {
+        add_larpa_component(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/bounce_larpa.lua",
             execute_every_n_frame = 1,
             remove_after_executed = true
@@ -79,16 +92,16 @@ function module.update(player_entity)
         end
 
         -- trail modification
-        EntityAddComponent2(proj, "LuaComponent", {
+        add_larpa_component(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_chaos_2.lua",
             execute_every_n_frame = 5
         })
-        EntityAddComponent2(proj, "LifetimeComponent", {
+        add_larpa_component(proj, "LifetimeComponent", {
             lifetime = 200
         }) --this is the lowest lifetime added by this script, thus it is the primary one used
 
         -- chaos modification
-        EntityAddComponent2(proj, "LuaComponent", {
+        add_larpa_component(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_chaos.lua",
             execute_every_n_frame = 10
         })
@@ -97,7 +110,7 @@ function module.update(player_entity)
         --}) commented to avoid redundancy
 
         -- upwards modification
-        EntityAddComponent2(proj, "LuaComponent", {
+        add_larpa_component(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_upwards.lua",
             execute_every_n_frame = 10
         })
@@ -106,7 +119,7 @@ function module.update(player_entity)
         --}) commented to avoid redundancy
 
         -- downwards modification
-        EntityAddComponent2(proj, "LuaComponent", {
+        add_larpa_component(proj, "LuaComponent", {
             script_source_file = "data/scripts/projectiles/larpa_downwards.lua",
             execute_every_n_frame = 10
         })

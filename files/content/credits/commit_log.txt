@@ -1145,3 +1145,38 @@ fixed all EntityAddComponent2 string params hopefully
 guhhh nathan's not here to verify this, but im sure its fine.
 minor optimisations
 some general optimisations, tweaks and fixes
+updated credit
+some minor optimisations and such (FIXED STALACTITES!!! welcome back 🙏) Merge pull request #356 from FatalUserK/main
+fixed ImageOverlay function
+seems sane enough, Merge pull request #357 from FatalUserK/main
+fixed `nullpointerexception` cheat code, gave it some polish
+added "neveragain" cheat
+fixed the shit
+minor tiny things that you do not need to worry about whatsoever
+LARPA FOUND DEAD 😭
+added 3 new cheats
+/content/new_spells/ -> /content/better_spells/, also made giga bh and wh silly
+minor alterations
+slightly strengthened giga white/black hole stuff
+finished the lovely dream content
+added `starcrossedlovers` cheat + updated credits
+made `starcrossedlovers` 10000x times funnier
+stuff gtg aaaaaaaaaa
+added timestop and some scratch card stuff
+STILL EntityAddComponent2 string mistakes!!!🔨🔨🔨
+finished timestop stuff
+Update hamis_reworked.lua
+oh i cant be bothered, just push everything.
+fixed decor randomiser on nullpointerexception
+added `chosen1` cheatcode
+changed workshop image
+Update commit_log.txt
+minor maintenance stuff
+added cheats counter to progress menu
+few more tweaks and optimisations
+improved `nullpointerexception` code cheat scraping
+minor cheat stuff
+added zoom rebind, fixed konami cheat
+fixed zoom key
+Update gui.lua
+added controller support, improved cheat system

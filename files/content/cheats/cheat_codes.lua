@@ -1,4 +1,5 @@
 --stylua: ignore start
+dofile_once("mods/noita.fairmod/files/scripts/utils/utilities.lua")
 local markers = dofile_once("mods/noita.fairmod/files/content/better_world/map_helper.lua")
 local cheats = {
 	{
@@ -24,10 +25,10 @@ local cheats = {
 		name = "GOD HAMIS ARTIST-MARTIAL IMMORTALITY GAMER MODE",
 		description = "Enabled GHAMING MODE",
 		func = function(player)
-			if HasFlagPersistent("fairmod_copimail_letter") == false then
-				GamePrintImportant("This power is too great for you, young hämis.","Come back when you have recieved the dark lord's mail.")
+			if HasFlagPersistent("fairmod_noitillionare_winner") == false then
+				GamePrintImportant("This power is too great for you, young hämis.","Come back when you've completed your journey.")
 				GamePrint("This power is too great for you, young hämis.")
-				GamePrint("Come back when you have recieved the dark lord's mail.")
+				GamePrint("Come back when you've completed your journey.")
 				LoadGameEffectEntityTo( player, "mods/noita.fairmod/files/content/cheats/misc/polymorph_hamis.xml" )
 			else
 				if EntityHasTag(player, "no_hamis_bullet") then return end
@@ -285,6 +286,7 @@ local cheats = {
 	},
 	{
 		code = "haveanygamesonyourphone",
+		aliases = {"3310"},
 		name = "kbidhbny",
 		description = "nokia get",
 		func = function(player)
@@ -292,15 +294,6 @@ local cheats = {
 			EntityLoad("mods/noita.fairmod/files/content/payphone/entities/nokia/nokia.xml", x, y)
 		end,
 	},
-	{
-		code = "3310",
-		name = "kbidhbny",
-		description = "nokia get",
-		func = function(player)
-			local x, y = EntityGetTransform(player)
-			EntityLoad("mods/noita.fairmod/files/content/payphone/entities/nokia/nokia.xml", x, y)
-		end,
-	},	
 	{
 		code = "whatsadotexey",
 		name = "installing ram",
@@ -311,12 +304,7 @@ local cheats = {
 	},
 	{
 		code = "copibuddy",
-		func = function(player)
-			GameAddFlagRun("copibuddy")
-		end,
-	},
-	{
-		code = "qqqqq",
+		aliases = {"qqqqq"},
 		func = function(player)
 			GameAddFlagRun("copibuddy")
 		end,
@@ -380,6 +368,7 @@ local cheats = {
 		code = function()
 			return StatsGetValue("world_seed") or "12345"
 		end,
+		progress_id = "world_reincarnation",
 		name = "World Reincarnation",
 		description = "The world has been regenerated with a new seed.",
 		func = function(player)
@@ -407,6 +396,7 @@ local cheats = {
 	},
 	{
 		code = "/kill",
+		progress_id = "killplayer",
 		name = "Ouch!",
 		description = "Player fell out of the world.",
 		do_not_random = true,
@@ -417,22 +407,11 @@ local cheats = {
 	},
 	{
 		code = "boobs",
-		do_not_random = true,
-		func = function(player)
-			EntityInflictDamage( player, 9999999999999999999999999, "DAMAGE_PHYSICS_BODY_DAMAGED", "yuor a looser", "DISINTEGRATED", 0, 0 )
-			EntityKill(player)
-		end,
-	},
-	{
-		code = "ariral.boobs",
-		do_not_random = true,
-		func = function(player)
-			EntityInflictDamage( player, 9999999999999999999999999, "DAMAGE_PHYSICS_BODY_DAMAGED", "yuor a looser", "DISINTEGRATED", 0, 0 )
-			EntityKill(player)
-		end,
-	},
-	{
-		code = "sex",
+		aliases = {
+			"ariral.boobs",
+			"sex",
+		},
+		progress_id = "killplayer",
 		do_not_random = true,
 		func = function(player)
 			EntityInflictDamage( player, 9999999999999999999999999, "DAMAGE_PHYSICS_BODY_DAMAGED", "yuor a looser", "DISINTEGRATED", 0, 0 )
@@ -518,14 +497,12 @@ local cheats = {
 	},
 	{
 		code = "killhammies",
-		devmode = true,
 		name = "killhammies",
-		description = "FOR TESTING!!!!!!",
-		func = function(player)
-			local x, y = EntityGetTransform(player)
+		description = "look at what you've done.",
+		func = function(player, x, y)
 			for _,v in ipairs(GetEnemiesInRadius(x, y, 256) or {}) do
 				if EntityGetName(v) == "$animal_longleg" then
-					EntityInflictDamage(v, 4000, "DAMAGE_PHYSICS_BODY_DAMAGED", "", "NONE", 0, 0)
+					EntityInflictDamage(v, 4000, "NONE", "", "NONE", 0, 0, player)
 				end
 			end
 		end,
@@ -541,16 +518,13 @@ local cheats = {
 	},
 	{
 		code = "wasdwasd",
+		aliases = {
+			"wdsawdsa",
+			"upleftdownrightupleftdownright",
+			"uprightdownleftuprightdownleft",
+		},
 		not_cheat = true,
-		name = "oops!",
-		description = "be more careful!",
-		func = function(player)
-			GameDropAllItems(player)
-		end,
-	},
-	{
-		code = "wdsawdsa",
-		not_cheat = true,
+		not_progress = true,
 		name = "oops!",
 		description = "be more careful!",
 		func = function(player)
@@ -560,6 +534,7 @@ local cheats = {
 	{
 		code = "credits",
 		not_cheat = true,
+		not_progress = true,
 		func = function(player)
 			if HasFlagPersistent("fairmod_unlocked_credits") then
 				--yeah i didnt finish this
@@ -667,6 +642,7 @@ local cheats = {
 	},
 	{
 		code = "blacklight",
+		devmode = true,
 		func = function(player)
 			local x,y = EntityGetTransform(player)
 			EntityLoad( "mods/noita.fairmod/files/content/backrooms/props/ceiling_light_blacklight.xml", x, y - 20)
@@ -684,6 +660,7 @@ local cheats = {
 	{
 		code = "printuserdiagnostic",
 		not_cheat = true,
+		not_progress = true,
 		func = function()
 			GamePrint(tostring(ModSettingGet("fairmod.user_seed")))
 		end
@@ -752,7 +729,8 @@ local cheats = {
 		end
 	},
 	{
-		code = "gullible", --i still personally think itd be funny if we referenced code gullible in a few places but it didnt do anything
+		code = "gullible",
+		--name = "YOU ARE AN IDIOT", disabled cuz i made a 3piece for this before i knew there wasnt actually a name for it, add it back if someone's thinks its neat
 		func = function(player)
 			ModSettingSet("noita.fairmod.popups", (ModSettingGet("noita.fairmod.popups") or "") .. "idiot,")
 		end,
@@ -830,6 +808,7 @@ local cheats = {
         description = "A mysterious seal has been enforced",
 		do_not_random = true,
         not_cheat = true,
+		not_progress = true,
         func = function(player)
             GameAddFlagRun("fairmod.no_cheats")
         end,
@@ -840,6 +819,7 @@ local cheats = {
         description = "The mysterious seal has been vanquished",
 		do_not_random = true,
         not_cheat = true,
+		not_progress = true,
         func = function(player)
 			if GameHasFlagRun("fairmod.no_cheats") then
 				GameAddFlagRun("infinite_karmic_debt")
@@ -852,6 +832,7 @@ local cheats = {
 		not_cheat = true,
 		do_not_random = true,
 		do_not_sudo = true,
+		not_progress = true,
 		func = function() --counter to track gullible idiots
 			ModSettingSet("fairmod.photocopier_attempts", (ModSettingGet("fairmod.photocopier_attempts") or 0) + 1)
 		end
@@ -935,9 +916,10 @@ local cheats = {
 	},
 	{
 		code = "fixperformance",
+		decoration = "mods/empty.png",
 		func = function(p, x, y)
 			SetRandomSeed(y, x-GameGetFrameNum())
-			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!")
+			GamePrintImportant("Cheat activated: Fix Performance", Random() < .01 and "and then there were two." or "removed of all those pesky entities!", "mods/noita.fairmod/empty.png")
 			local tags = {
 				"player_unit",
 				"world_state",
@@ -967,13 +949,23 @@ local cheats = {
 		end
 	},
 	{
+		code = "ihatelarpa",
+		name = "I Hate Larpa",
+		description = "Too bad!",
+		do_not_random = true, --added this as do_not_random because casting a box2d projectile froze my game for 3 hours and 50 minutes before eventually crashing.
+		func = function()
+			GameRemoveFlagRun("payphone_larpa")
+			GameAddFlagRun("payphone_larpa_evil")
+		end
+	},
+	{
 		code = "neveragain",
 		name = "Never Again :)",
 		description = "Life is simpler in the cube.",
 		func = function(p, x, y)
-			GameScreenshake(70)
-			GamePlaySound("data/audio/Desktop/events.bank", "event_cues/chest/create", x, y)
-			LoadPixelScene("mods/noita.fairmod/files/content/cheats/misc/safety_box.png", "", x-23, y-23, "", true, nil, nil, nil, true)
+			GameScreenshake(10)
+			GamePlaySound("data/audio/Desktop/explosion.bank", "explosions/box", x, y)
+			LoadPixelScene("mods/noita.fairmod/files/content/cheats/misc/safety_box.png", "", x-23, y-23, "", true, false, nil, nil, true)
 		end
 	},
 	{
@@ -1005,7 +997,7 @@ local cheats = {
 	{
 		code = "refreshimg",
 		name = "REFRESHIMG",
-		description = "You are filled with joy and wonder.",
+		description = "You flourish before you die.",
 		func = function(p,x,y) --maybe remove status effects too?
 			if not p then  return end
 			GameRegenItemActionsInPlayer(p)
@@ -1035,7 +1027,7 @@ local cheats = {
 	{
 		code = "refreshing",
 		name = "REFRESHING",
-		description = "You are filled with FUCKING HATE AND MALICE.",
+		description = "You die before you flourish.",
 		func = function(p,x,y) --todo, make it deplete all charges on spells
 			if not p then  return end
 			local current_frame = GameGetFrameNum()
@@ -1077,16 +1069,124 @@ local cheats = {
 			--dunk facecam in bottom right that says stuff sometimes, similar to copibuddy but without actual power
 		end
 	},
+	{
+		code = "starcrossedlovers",
+		name = "Star-Crossed Lovers",
+		description = "Package deal, must have eyes on one another at all times!",
+		func = function(p,x,y)
+			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x-15, y-10), "romeo")
+			EntitySetName(EntityLoad("mods/noita.fairmod/files/content/cheats/lovers/lover.xml", x+15, y-10), "juliet")
+		end
+	}, --todo, add "romeo" and "juliet" cheatcodes that only spawn one of each, use those for cheat disks
+	{
+		code = "pause",
+		name = "Pause,",
+		description = "some meat bringing you all that joy?",
+		func = function(p,x,y)
+			pause(600, 2)
+		end
+	},
+	{
+		code = "chosen1",
+		name = "Chosen One",
+		description = "",
+		func = function(p,x,y)
+			perk_pickup( nil, p, perk_list[Random(1, #perk_list)].id, true, false, true )
+		end
+	},
+	{
+		code = "ohdeeer",
+		name = "Oh- wait deeer?",
+		description = "huh.",
+		func = function(p,x,y)
+			LoadGameEffectEntityTo(p, "data/entities/misc/effect_polymorph.xml")
+		end
+	},
+	{ --todo: add bind to explode like deercoy
+		code = "ohdeer",
+		name = "Oh, deer.",
+		description = "this pun would probably work better if you weren't manually typing it on your keyboard",
+		do_not_random = true,
+		func = function(p,x,y)
+			if not p then return end
+			local d = EntityCreateNew("deer_morph")
+			EntityAddComponent2(d, "GameEffectComponent", {
+				effect = "POLYMORPH",
+				frames = -1,
+				disable_movement = false,
+				polymorph_target = "data/entities/animals/deer.xml",
+			})
+			EntityAddChild(p, d)
+		end
+	},
+	{
+		code = "amightycocktail",
+		name = "A Mighty Cocktail",
+		description = "The Strongest Potion.",
+		func = function(p,x,y)
+			local potion = EntityLoad("data/entities/items/pickup/potion_empty.xml", x, y)
+			local mat_inv = EntityGetFirstComponent(potion, "MaterialInventoryComponent")
+			if not mat_inv then return end
+			ComponentSetValue2(mat_inv, "do_reactions", 0)
+
+			local mat_count = 0
+			while true do
+				local name = CellFactory_GetName(mat_count)
+				if name == "unknown" then break
+				else
+					mat_count = mat_count + 1
+					AddMaterialInventoryMaterial(potion, name, 2)
+				end
+			end
+			GamePickUpInventoryItem(p, potion)
+		end
+	},
+	{ --wip
+		code = "importantigravity",
+		name = "\"import antigravity\"",
+		description = "No [medicalhelp] Required!",
+		func = function(p,x,y)
+			local existing_antigravity = EntityGetWithName("fairmod_antigravity")
+			if existing_antigravity == 0 then
+				local eid = EntityLoad("antigravity.xml", x, y)
+				if p then EntityAddChild(p, eid) end
+			else
+				EntityKill(existing_antigravity)
+			end
+		end
+	},
+	{
+		code = "medicalhelp",
+		name = "LOSEWALLET",
+		description = "WEEWOOWEEWOOWEEWOOWEEWOOWEEWOOWEEWOOWEEWOOWEEWOO",
+		func = function(p,x,y)
+			if not p then return end
+			local amount = Randomf(-1, 2)
+			local type = "DAMAGE_HEALING"
+			if amount < 0 then type = "NONE" end
+			EntityInflictDamage(p, -amount, type, "malpractice", "BLOOD_EXPLOSION", 0, 0)
+
+			local owed = 1000
+			local wallet = EntityGetFirstComponent(p, "WalletComponent")
+			if wallet then
+				local money = ComponentGetValue2(wallet, "money") - owed
+				owed = -math.min(money, 0)
+				ComponentSetValue2(wallet, "money", money + owed)
+			end
+			GlobalsSetValue("loan_shark_debt", tostring(tonumber(GlobalsGetValue("loan_shark_debt", "0")) + owed))
+		end
+	}
 	--gamemode3 spectator
 	--easymode increment ng+
 	--hardmode decrement ng+
 	--badinternet glitches movement
+	-- every 2 frames have 10% chance to set marker that warps player back after 10-120 frames
+	-- when warping, 50% chance to leave another marker at current positio
 	--lightmode
 	--cool freezes everything
 	--uncool sets everything on fire
-	--refill resets mana, flight and breath meters
-	--endofeverything summons end of everything
 }
+
 
 local num_cheats = #cheats
 for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations.lua")) do
@@ -1096,8 +1196,11 @@ for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations
 
 	cheats[num_cheats + i] = {
 		code = id,
+		progress_id = id,
 		name = value.name or id,
 		description = value.desc,
+		decoration = value.decor or "",
+		is_teleport = true,
 		func = function(player)
 			if value.pw_local then x = x + GetParallelWorldPosition(EntityGetTransform(player)) * BiomeMapGetSize() * 512 end
 			EntityApplyTransform(player, x, y)
@@ -1105,9 +1208,9 @@ for i, value in ipairs(dofile("mods/noita.fairmod/files/content/cheats/locations
 	}
 end
 
-
 table.insert(cheats, {
 	code = "nullpointerexception",
+	progress_id = "nullpointerexception"
 })
 
 local r = 0 --external recursion factor to avoid infinite recursion
@@ -1115,8 +1218,8 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 	SetRandomSeed(GameGetFrameNum() - x, y + p - r)
 	r = r + 1
 
+	local random_symbols = {'', '"', '<', '>', '@', '#', ';', '0', '£', '!', ',', '.', ':', '?', '~', '\'', '%', '*', '&', '$', '(', ')', 'ERROR', '//', '/', '\\', 'null', 'Void', '+', '_', '-', '|', '∅', '∞'}
 	local function corrupt_text(str, prob)
-		local random_symbols = {'', '"', '<', '>', '@', '#', ';', '0', '£', '!', ',', '.', ':', '?', '~', '\'', '%', '*', '&', '$', '(', ')', 'ERROR', '//', '/', '\\', 'null', 'Void', '+', '_', '-', '|', '∅', '∞'}
 		local output = ""
 		for i = 1, #str do
 			if Random() < prob then output = output .. random_symbols[Random(1, #random_symbols)]
@@ -1129,9 +1232,8 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 	local targets = {}
 
 	local list_of_cheats = {}
-	local twitch_enabled = StreamingGetIsConnected()
 	for _,cheat in ipairs(cheats) do
-		if (not cheat.twitch or twitch_enabled) and not cheat.do_not_random then
+		if condition_met and not (cheat.twitch or cheat.devmode or cheat.do_not_random or cheat.is_alias) then
 			list_of_cheats[#list_of_cheats+1] = cheat
 		end
 	end
@@ -1140,14 +1242,6 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 		targets[#targets+1] = target
 	end
 
-	local name = corrupt_text("ERROR - Null Pointer Exception encountered...", .1)
-
-	local description = ""
-	for i = 1, 10 do
-		print("Calling cheat:" .. tostring(targets[i].code))
-		local target_desc = tostring(targets[i].description)
-		description = description .. target_desc:sub(Random(1,#target_desc), Random(1,#target_desc))
-	end
 
 	local amounts = {
 		.01,
@@ -1157,19 +1251,87 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 		.8,
 	}
 
+
+	local description = ""
+	local decorations = {}
+	local decorations_keyed = {}
+
+	local godprint = GamePrintImportant
+	GamePrintImportant = function(name,desc,decor)
+		random_symbols[#random_symbols+1] = name:sub(Random(0, #name), Random(0, #name))
+		description = description .. desc:sub(Random(0,#desc), Random(0,#desc))
+
+		decor = decor or ""
+		if not decorations_keyed[decor] then
+			decorations[#decorations+1] = decor
+			decorations_keyed[decor] = true
+		end
+	end
+	for _,value in ipairs(targets) do
+		print("Calling cheat:" .. tostring(value.code))
+		if value.name then GamePrintImportant(value.name, value.description, value.decoration) end
+		value.func(p, x, y)
+	end
+	GamePrintImportant = godprint
+
+
+	local name = corrupt_text("ERROR - Null Pointer Exception encountered...", .1)
 	description =  corrupt_text(description, amounts[Random(1, #amounts)])
+	local decoration = decorations[Random(1, #decorations)] or ""
+
+
+	GamePrintImportant(name, description, decoration)
 
 	print(name)
 	print(description)
-	GamePrintImportant(name, description)
-	local godprint = GamePrintImportant
-	GamePrintImportant = function() end
+	print(decoration)
+end
 
-	for _,value in ipairs(targets) do
-		value.func(p, x, y)
+
+
+local remove_list = {}
+for i = 1, #cheats do
+	local cheat = cheats[i]
+	if not cheat.description then cheat.description = "" end
+	if not cheat.decoration then
+		local code_decor_filepath = "mods/noita.fairmod/files/content/cheats/3pieces/" .. tostring(cheat.code) .. ".png"
+		if ModDoesFileExist(code_decor_filepath) then
+			cheat.decoration = code_decor_filepath
+		else
+			cheat.decoration = ""
+		end
 	end
 
-	GamePrintImportant = godprint
+	cheat.progress_id = cheat.progress_id or cheat.code
+
+	if cheat.twitch then
+		cheat.not_progress = true --twitch cheats shouldnt count towards progress imo
+		cheat.condition = StreamingGetIsConnected
+	end
+
+	if cheat.devmode then
+		cheat.not_progress = true
+		cheat.condition = function() return GameHasFlagRun("fairmod_developer_mode") end
+	end
+
+	if cheat.condition == nil then cheat.condition = true end
+
+	if cheat.aliases then --do last so correct info is applied correctly
+		for _,alias in ipairs(cheat.aliases) do
+			local new_cheat = {}
+			for key, value in pairs(cheat) do
+				new_cheat[key] = value
+			end
+			new_cheat.code = alias
+			new_cheat.progress_id = cheat.progress_id or cheat.code
+			new_cheat.is_alias = true
+			cheats[#cheats+1] = new_cheat
+		end
+	end
+end
+
+for i = 0, #remove_list-1 do
+	table.remove(cheats, remove_list[#remove_list-i])
 end
 
 print("num cheats: " .. #cheats)

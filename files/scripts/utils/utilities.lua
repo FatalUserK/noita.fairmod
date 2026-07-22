@@ -1,6 +1,14 @@
 --- Hardcoded world width for scripts that don't have access to BiomeMapGetSize.
 WORLD_WIDTH_HARDCODED = 70 * 512
 
+-- de-patterning function for dealing with string.gsub() and other pattern-utilising Lua functions.
+function escape(str) return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1") end
+
+-- Convenient function to simplify modifying files, gsub \r\n to \n to edit multiple lines at a time.
+function modifile(file, target, sub)
+	ModTextFileSetContent(file, ModTextFileGetContent(file):gsub("\r\n", "\n"):gsub(escape(target), sub))
+end
+
 ---@vararg table
 ---@return table
 function MergeTables(...)
@@ -254,4 +262,38 @@ function RandomFromTableConditional(t, context)
 
 	if #temp == 0 then return end
 	return RandomFromTable(temp)
+end
+
+function pause(lifetime, delay) --delay cuz fucking race condition bullshit stopping the greyscale/audio fx from working
+	lifetime = lifetime or 60
+	delay = delay or 0
+
+	local gr_mult = math.max(math.min(1-(1-(lifetime * 1/600))^4, 1), 0)
+	local st_mult = math.max(math.min(1-(1-(lifetime * 1/600))^4, 1), 0)
+	if lifetime == -1 then gr_mult = 1 st_mult = 1 end
+
+	--spawning an ent like this so we can have fun greyscale + static noise shenanigans
+	local stop_ent = EntityCreateNew("stop")
+	EntityAddChild(GetPlayers()[1] or GameGetWorldStateEntity(), stop_ent)
+	EntityAddComponent2(stop_ent, "InheritTransformComponent")
+
+	EntityAddComponent2(stop_ent, "VariableStorageComponent", {
+		name = "timestop",
+		value_int = lifetime,
+		value_string = GameGetFrameNum() + delay
+	})
+
+	EntityAddComponent2(stop_ent, "LuaComponent", {
+		script_source_file = "mods/noita.fairmod/files/scripts/stop_time.lua"
+	})
+
+
+	GameSetPostFxParameter("grayscale", 0, 0, 0, gr_mult)
+
+	EntityAddComponent2(stop_ent, "AudioLoopComponent", {
+		file="mods/noita.fairmod/fairmod.bank",
+		event_name="radio/static",
+		auto_play=true,
+		m_volume=st_mult,
+	})
 end

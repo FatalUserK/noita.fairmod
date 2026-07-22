@@ -115,7 +115,7 @@ dofile_once("mods/noita.fairmod/files/content/more_aggressive_potions/init.lua")
 dofile_once("mods/noita.fairmod/files/content/statue_revenge/init.lua")
 dofile_once("mods/noita.fairmod/files/content/new_materium/init.lua")
 dofile_once("mods/noita.fairmod/files/content/teleporter_item/init.lua")
-dofile_once("mods/noita.fairmod/files/content/new_spells/init.lua")
+dofile_once("mods/noita.fairmod/files/content/better_spells/init.lua")
 dofile_once("mods/noita.fairmod/files/content/credits/init.lua")
 dofile_once("mods/noita.fairmod/files/content/necopumpkin/init.lua")
 dofile_once("mods/noita.fairmod/files/content/stronger_bosses/init.lua")
@@ -475,6 +475,29 @@ function OnPlayerDied(player)
 	end
 	hescoming.OnPlayerDied(player)
 	corpses.OnPlayerDied(player)
+end
+
+--ive repurposed OnCountSecrets to be a cheatcodes list since i think thats more fun than having some vague list of "secrets"
+local cheats_list = dofile_once("mods/noita.fairmod/files/content/cheats/cheat_codes.lua")
+function OnCountSecrets()
+	local shared_cheat_id = {}
+	local total_cheats = 0
+	local known_cheats = 0
+	for _,cheat in ipairs(cheats_list) do
+		if not cheat.not_progress then
+			if shared_cheat_id[cheat.progress_id] == nil then
+				total_cheats = total_cheats + 1
+				shared_cheat_id[cheat.progress_id] = false
+			end
+
+			if not shared_cheat_id[cheat.progress_id] and ModSettingGet("fairmod.cheat_executed." .. cheat.progress_id) > 0 then
+				known_cheats = known_cheats + 1
+				shared_cheat_id[cheat.progress_id] = true
+			end
+		end
+	end
+
+	return total_cheats,known_cheats
 end
 
 -- Copi was here
