@@ -3,6 +3,8 @@ local user_seeds = {}
 
 
 --NO RATS ALLOWED, STAY OUT (this means YOU nathan)
+-- ^lmao, relic of the formatter days
+
 local allow_dev_mode = true --set to false to disable dev_mode
 
 

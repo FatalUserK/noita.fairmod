@@ -428,6 +428,7 @@ end
 
 function OnWorldPostUpdate()
 	interactable_manager.update()
+	strategems.OnWorldPostUpdate()
 end
 
 local time_paused = 0
