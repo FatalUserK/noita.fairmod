@@ -551,6 +551,7 @@ local cheats = {
 		func = function(player)
 			local x, y = EntityGetTransform(player)
 			EntityLoad("mods/noita.fairmod/files/content/chemical_horror/pandorium/sea_of_chaotic_pandorium_nerfed.xml", x, y)
+			-- "nerfed" :(
 		end,
 	},
 	{
@@ -1022,7 +1023,12 @@ local cheats = {
 					ComponentSetValue2(ability_comp, "mReloadNextFrameUsable", current_frame)
 				end
 			end
-		end
+		end,
+		disk_data = {
+			--name = "",
+			description = "A clean disk that sparkles like new.\nEngraved with the phrase \"REFRESHIMG\".",
+			probability = 1,
+		}
 	},
 	{
 		code = "refreshing",
@@ -1175,7 +1181,15 @@ local cheats = {
 			end
 			GlobalsSetValue("loan_shark_debt", tostring(tonumber(GlobalsGetValue("loan_shark_debt", "0")) + owed))
 		end
-	}
+	},
+	{
+		code = "tfem",
+		name = "Thanks For Edit Mands",
+		description = "You're Melcowe :)",
+		func = function(player)
+			perk_pickup( nil, player, "EDIT_WANDS_EVERYWHERE", true, false, true )
+		end
+	},
 	--gamemode3 spectator
 	--easymode increment ng+
 	--hardmode decrement ng+
@@ -1305,13 +1319,17 @@ for i = 1, #cheats do
 	cheat.progress_id = cheat.progress_id or cheat.code
 
 	if cheat.twitch then
-		cheat.not_progress = true --twitch cheats shouldnt count towards progress imo
-		cheat.condition = StreamingGetIsConnected
+		cheat.not_progress = true --twitch cheats shouldnt count towards progress
+		local old_condition = cheat.condition or true
+		if type(old_condition) == "function" then old_condition = old_condition() end
+		cheat.condition = function() return StreamingGetIsConnected() and old_condition end
 	end
 
 	if cheat.devmode then
 		cheat.not_progress = true
-		cheat.condition = function() return GameHasFlagRun("fairmod_developer_mode") end
+		local old_condition = cheat.condition or true
+		if type(old_condition) == "function" then old_condition = old_condition() end
+		cheat.condition = function() return GameHasFlagRun("fairmod_developer_mode") and old_condition end
 	end
 
 	if cheat.condition == nil then cheat.condition = true end
@@ -1334,7 +1352,6 @@ for i = 0, #remove_list-1 do
 	table.remove(cheats, remove_list[#remove_list-i])
 end
 
-print("num cheats: " .. #cheats)
 return cheats
 
 --stylua: ignore end

@@ -1,0 +1,17 @@
+<Entity>
+	<SpriteComponent
+		image_file="mods/noita.fairmod/files/content/cheat_disks/disk_gfx/blank.png"
+	/>
+
+	<ItemComponent
+		item_name="Cheat Disk"
+		ui_description="It's blank."
+		ui_sprite="mods/noita.fairmod/files/content/cheat_disks/disk_gfx/blank.png"
+	/>
+
+	<LuaComponent
+		execute_on_added="1"
+		remove_after_executed="1"
+		script_source_file="mods/noita.fairmod/files/content/cheat_disks/generate_disk.lua"
+	/>
+</Entity>
