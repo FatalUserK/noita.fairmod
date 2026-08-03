@@ -1247,6 +1247,8 @@ cheats[#cheats].func = function(p, x, y) --set up like this so it can call itsel
 
 	local list_of_cheats = {}
 	for _,cheat in ipairs(cheats) do
+		local condition_met = cheat.condition
+		if type(cheat.condition) == "function" then condition_met = condition_met end
 		if condition_met and not (cheat.twitch or cheat.devmode or cheat.do_not_random or cheat.is_alias) then
 			list_of_cheats[#list_of_cheats+1] = cheat
 		end
