@@ -1169,6 +1169,7 @@ Update hamis_reworked.lua
 oh i cant be bothered, just push everything.
 fixed decor randomiser on nullpointerexception
 added `chosen1` cheatcode
+skimmed, doesnt look like i broke anything, MERGE THAT SHIT #363
 changed workshop image
 Update commit_log.txt
 minor maintenance stuff
@@ -1180,3 +1181,5 @@ added zoom rebind, fixed konami cheat
 fixed zoom key
 Update gui.lua
 added controller support, improved cheat system
+added jackpot to scratchcards and cheatcodes
+gave deer polymorph a polymorph ability (will expand this later)
